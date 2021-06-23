@@ -4,16 +4,17 @@
         <div class="col-md-12 text-center mb-3 new_sec">
             <button type="button" class="btn btn-primary price">New</button>
         </div>
-        <h2 class="text-center">PREMIUM SNEAKERS</h2>
+        <h2 class="text-center">{{data.product[0].category_name|uppercase}}</h2>
         <div class="col-md-12 product_slide" style="background-image: url({{data.product[0].image}});">
             <h3>{{data.product[0].title}}</h3>
             <p>{{data.product[0].description}}</p>
             <div class="row pricing_sec">
                 <div class="col-md-6 p-0">
-                    <button type="button" class="btn btn-primary price">${{data.product[0].original_price}}</button>
+                    <button type="button" class="btn btn-primary price"><s>${{data.product[0].original_price}}</s>
+                        ${{data.product[0].sale_price}}</button>
                 </div>
                 <div class="col-md-6 text-right buy_sec">
-                    <button type="button" class="btn btn-primary buy">BUY NOW</button>
+                    <a href="{{data.product[0].link}}" class="btn btn-primary buy">BUY NOW</a>
                 </div>
             </div>
         </div>

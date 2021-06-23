@@ -1,7 +1,6 @@
 body {
     padding: 0;
     margin: 0;
-    /* font-family: "Gilroy";  */
 }
 
 img {
@@ -29,14 +28,6 @@ p {
 a:hover {
     text-decoration: none;
 }
-
-
-/* @font-face {
-    font-family: 'Gilroy';
-    src: url("/font/Gilroy-ExtraBold.otf"); 
-    src: url("font/Gilroy-ExtraBold.otf") format("opentype");
-    font-style: normal;
-} */
 
 
 /**********************banner***************************/
@@ -208,6 +199,8 @@ header .breadcrumb-item.active {
     color: #ffffff;
     width: 80%;
     font-weight: 500;
+    max-height: 145px;
+    overflow: hidden;
 }
 
 .product_slide {
