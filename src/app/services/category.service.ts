@@ -8,7 +8,7 @@ import { Category } from '../models/category';
 })
 export class CategoryService {
 
-  API_URL: string = "https://myshopfinder.com/api/getFeaturedCategories";
+  API_URL: string = "http://myshopfinder.com/api/getFeaturedCategories";
  constructor(private _httpClient:HttpClient) {
     
   }

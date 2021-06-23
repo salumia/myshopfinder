@@ -5,12 +5,12 @@
             <button type="button" class="btn btn-primary price">New</button>
         </div>
         <h2 class="text-center">PREMIUM SNEAKERS</h2>
-        <div class="col-md-12 product_slide">
-            <h3>{{data.product.title}}</h3>
-            <p>Nike's first lifestyle Air Max brings you style, comfort and big attitude in the Nike Air Max 270. The design draws inspiration from Air Max icons,</p>
+        <div class="col-md-12 product_slide" style="background-image: url({{data.product[0].image}});">
+            <h3>{{data.product[0].title}}</h3>
+            <p>{{data.product[0].description}}</p>
             <div class="row pricing_sec">
                 <div class="col-md-6 p-0">
-                    <button type="button" class="btn btn-primary price">$155.66</button>
+                    <button type="button" class="btn btn-primary price">${{data.product[0].original_price}}</button>
                 </div>
                 <div class="col-md-6 text-right buy_sec">
                     <button type="button" class="btn btn-primary buy">BUY NOW</button>
