@@ -1,7 +1,7 @@
 <!-------------------------products------------------->
 <div class="row categories" *ngIf="!loading">
     <div *ngFor="let category of data.categories; index as i;" class="col-md-3 categories_bg col{{i%8+1}} text-center">
-        <img src="{{category.category_image}}" />
+        <img src="{{category.category_image}}" class="img-fluid" />
         <h2 class="category_title">{{category.category_name}}</h2>
         <h4 class="total_products">{{category.status}} Products</h4>
         <a href="#">Shop Now</a>

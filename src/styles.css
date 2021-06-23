@@ -206,9 +206,12 @@ header .breadcrumb-item.active {
 .product_slide {
     background-image: url(assets/images/shoes.png);
     background-repeat: no-repeat;
-    background-position: right 142px bottom -76px;
+    /*background-position: right 142px bottom -76px;*/
+    background-position: right 9px bottom -170px;
     min-height: 394px;
-    background-size: contain;
+    /* background-size: contain; */
+    background-size: cover;
+    margin-bottom: 10px;
 }
 
 form {
