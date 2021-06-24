@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from '../models/category';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  API_URL: string = "http://myshopfinder.com/api/getFeaturedCategories";
+  API_URL: string =  environment.BASE_API_URL + "getFeaturedCategories";
+  
  constructor(private _httpClient:HttpClient) {
     
   }

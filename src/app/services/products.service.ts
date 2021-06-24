@@ -6,14 +6,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class FeatureService {
+export class ProductsService {
 
-  API_URL: string =  environment.BASE_API_URL + "getFeaturedProduct";
+  API_URL: string =  environment.BASE_API_URL + "getProducts";
   constructor(private _httpClient: HttpClient) {
 
   }
 
-  getFeatureProduct(): Observable<any> {
+  getAllProducts(): Observable<any> {
     return this._httpClient.get<any>(this.API_URL);
   }
 }

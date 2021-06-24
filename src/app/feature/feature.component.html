@@ -1,12 +1,13 @@
-<div class="row mt-5 " *ngIf="!loading">
+<div class="row mt-5 " *ngIf="view_status && !loading">
     <div class="col-md-1"></div>
-    <div class="col-md-10">
+    <div class="col-md-10 feature">
         <div class="col-md-12 text-center mb-3 new_sec">
             <button type="button" class="btn btn-primary price">New</button>
         </div>
         <h2 class="text-center">{{data.product[0].category_name|uppercase}}</h2>
-        <div class="col-md-12 product_slide" style="background-image: url({{data.product[0].image}});">
+        <div class="col-md-12 product_slide">
             <h3>{{data.product[0].title}}</h3>
+            <img id="feature-image" src="{{data.product[0].image}}">
             <p>{{data.product[0].description}}</p>
             <div class="row pricing_sec">
                 <div class="col-md-6 p-0">
@@ -20,6 +21,6 @@
         </div>
     </div>
 </div>
-<div class="loader" *ngIf="loading">
+<div class="loader" *ngIf="view_status && loading">
     <p-progressSpinner></p-progressSpinner>
 </div>

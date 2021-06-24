@@ -1,0 +1,58 @@
+<div class="container">
+    <p-dataView #dv [value]="products.products" layout="grid" columns='3' [paginator]="true" [rows]="9" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+        <ng-template pTemplate="header">
+            <div class="row">
+                <div class="col-md-4">
+                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortField" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                     <input type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
+                </span> -->
+                <!-- <p-dataViewLayoutOptions></p-dataViewLayoutOptions> -->
+            </div>
+        </ng-template>
+        <!-- <ng-template let-product pTemplate="listItem">
+            <div class="col-12">
+                <div class="product-list-item">
+                    <img [src]="product.image" [alt]="product.title" />
+                    <div class="product-list-detail">
+                        <div class="product-name">{{product.title}}</div>
+                        <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.brand}}</span>
+                    </div>
+                    <div class="product-list-action">
+                        <span class="product-price"><s>${{product.original_price}}</s></span>
+                        <span class="product-price">${{product.sale_price}}</span>
+                        <button>Buy</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template> -->
+        <ng-template let-product pTemplate="gridItem">
+            <div class="col-12 col-md-4 d-inline-block h-100">
+                <div class="product-grid-item card mb-1 mt-1">
+                    <img class="card-img-top img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title">
+                    <div class="product-grid-item-content card-body">
+                        <div class="d-flex flex-row">
+                            <div class="product-name mr-auto">{{product.title|uppercase}} <br> {{product.brand|uppercase}}
+                            </div>
+                            <div>
+                                <span class="product-price mr-2"><s>${{product.original_price}}</s></span>
+                                <span class="product-price">${{product.sale_price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+    </p-dataView>
+</div>

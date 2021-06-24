@@ -199,19 +199,30 @@ header .breadcrumb-item.active {
     color: #ffffff;
     width: 80%;
     font-weight: 500;
-    max-height: 145px;
+    max-height: 70px;
     overflow: hidden;
 }
 
+.feature {}
+
+#feature-image {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    top: 5px;
+    max-height: 100%;
+}
+
 .product_slide {
-    background-image: url(assets/images/shoes.png);
-    background-repeat: no-repeat;
-    /*background-position: right 142px bottom -76px;*/
-    background-position: right 9px bottom -170px;
-    min-height: 394px;
-    /* background-size: contain; */
-    background-size: cover;
+    position: relative;
+    padding-bottom: 50px;
     margin-bottom: 10px;
+    min-height: 400px;
+    z-index: 9;
+}
+
+.top {
+    /* z-index: 2; */
 }
 
 form {
@@ -545,9 +556,24 @@ header .breadcrumb-item+.breadcrumb-item::before {
         font-size: 78px;
     }
     .product_slide {
-        background-image: url(assets/images/shoes.png);
+        /* background-image: url(assets/images/shoes.png);
         background-repeat: no-repeat;
-        background-position: right 63px bottom -76px;
+        background-position: right 63px bottom -76px; */
+    }
+}
+
+
+/* For Mobile Screen */
+
+@media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    #feature-image {
+        position: static;
+        top: 0;
+        max-height: auto;
+    }
+    .product_slide {
+        min-height: fit-content;
+        padding-bottom: 0px;
     }
 }
 
@@ -568,12 +594,12 @@ header .breadcrumb-item+.breadcrumb-item::before {
         font-size: 20px;
     }
     .banner h3 {
-        font-size: 40px;
+        font-size: 30px;
     }
     .product_slide {
-        background-image: url(assets/images/shoes.png);
+        /* background-image: url(assets/images/shoes.png);
         background-repeat: no-repeat;
-        background-position: right -12px bottom 212px;
+        background-position: right -12px bottom 212px; */
     }
     .buy_sec {
         text-align: center !important;
@@ -583,7 +609,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
         line-height: 20px;
         text-align: center;
         width: 100%;
-        margin-top: 215px;
+        margin-top: 90px;
+        overflow: auto;
     }
     .new_sec .btn {
         margin-top: -35px !important;
