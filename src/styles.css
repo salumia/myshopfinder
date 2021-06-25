@@ -31,6 +31,27 @@
         min-height: fit-content;
         padding-bottom: 0px;
     }
+    .logo {
+        width: 200px;
+    }
+    .navbar-toggler {
+        margin-left: 30px;
+    }
+    .navbar-toggler:focus {
+        outline: none;
+    }
+    .nav-item {
+        text-align: center;
+    }
+    .nav-item a:hover {
+        background: #827eda !important;
+    }
+    .navbar {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        padding: 0;
+        background-color: #ae4eae;
+    }
 }
 
 @media screen and (max-width: 767px) {

@@ -1,5 +1,5 @@
 <div class="container">
-    <p-dataView #dv [value]="products.products" layout="grid" columns='3' [paginator]="true" [rows]="9" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+    <p-dataView #dv [value]="products.products" layout="grid" columns='4' [paginator]="true" [rows]="8" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
         <ng-template pTemplate="header">
             <div class="row">
                 <div class="col-md-4">
@@ -38,7 +38,7 @@
             </div>
         </ng-template> -->
         <ng-template let-product pTemplate="gridItem">
-            <div class="col-12 col-md-4 d-inline-block h-100">
+            <div class="col-12 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card mb-1 mt-1">
                     <img class="card-img-top img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title">
                     <div class="product-grid-item-content card-body">
