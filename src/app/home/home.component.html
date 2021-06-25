@@ -4,7 +4,7 @@
         <img src="{{category.category_image}}" class="img-fluid" />
         <h2 class="category_title">{{category.category_name}}</h2>
         <h4 class="total_products">{{category.total_items}} Products</h4>
-        <a href="#">Shop Now</a>
+        <a [routerLink]="['/products',category.slug]">Shop Now</a>
     </div>
 </div>
 

@@ -28,7 +28,7 @@
         max-height: none;
     }
     .product_slide {
-        min-height: fit-content;
+        min-height: none;
         padding-bottom: 0px;
     }
     .logo {

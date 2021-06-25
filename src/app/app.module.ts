@@ -15,6 +15,7 @@ import { ProductsComponent } from './products/products.component';
 import {DataViewModule} from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { CategoryProductComponent } from './category-product/category-product.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     HomeComponent,
     FeatureComponent,
-    ProductsComponent
+    ProductsComponent,
+    CategoryProductComponent
   ],
   imports: [
     BrowserModule,

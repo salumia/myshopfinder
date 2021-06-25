@@ -1,6 +1,9 @@
 body {
-    padding: 0;
+    width: 100vw !important;
+    min-height: 100vh;
+    height: auto;
     margin: 0;
+    overflow: auto;
 }
 
 img {

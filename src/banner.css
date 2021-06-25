@@ -170,6 +170,7 @@ header .breadcrumb-item.active {
     font-weight: 500;
     max-height: 70px;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #feature-image {
@@ -184,7 +185,7 @@ header .breadcrumb-item.active {
     position: relative;
     padding-bottom: 50px;
     margin-bottom: 10px;
-    min-height: 400px;
+    min-height: 500px;
     z-index: 9;
 }
 

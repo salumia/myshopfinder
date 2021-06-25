@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { ProductsService } from '../services/products.service';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  selector: 'app-category-product',
+  templateUrl: './category-product.component.html',
+  styleUrls: ['./category-product.component.css']
 })
-export class ProductsComponent implements OnInit {
-
-  
+export class CategoryProductComponent implements OnInit {
 
   products: any = [];
   sortOptions: SelectItem[] = [];
@@ -47,5 +45,5 @@ export class ProductsComponent implements OnInit {
       this.sortField = value;
     }
   }
- 
+
 }
