@@ -6,7 +6,8 @@
                     <p-dropdown [options]="sortOptions" [(ngModel)]="sortField" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
                 </div>
                 <div class="col-md-4">
-                    <div class="input-group">
+                    <div class="form-group has-search">
+                        <span class="fa fa-search form-control-feedback"></span>
                         <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
                     </div>
                 </div>
@@ -41,12 +42,12 @@
                 <div class="product-grid-item card mb-1 mt-1">
                     <img class="card-img-top img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title">
                     <div class="product-grid-item-content card-body">
-                        <div class="d-flex flex-row">
-                            <div class="product-name mr-auto">{{product.title|uppercase}} <br> {{product.brand|uppercase}}
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="mr-auto font-weight-bolder">{{product.title|uppercase}} <br> {{product.brand|uppercase}}
                             </div>
-                            <div>
-                                <span class="product-price mr-2"><s>${{product.original_price}}</s></span>
-                                <span class="product-price">${{product.sale_price}}</span>
+                            <div class="font-weight-bold">
+                                <span class="mr-2 text-danger"><s>${{product.original_price}}</s></span>
+                                <span>${{product.sale_price}}</span>
                             </div>
                         </div>
                     </div>
