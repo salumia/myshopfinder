@@ -1,34 +1,35 @@
 <header>
     <div class="row">
-        <div class="container p-0">
+        <div class="container-fluid p-0">
             <nav class="navbar navbar-expand-md navbar-dark">
                 <!-- Brand -->
-                <a class="navbar-brand" routerLink="/home"><img class="logo" src="assets/images/logo.png"></a>
+                <a class="navbar-brand ml-4 ml-md-0" routerLink="/home"><img class="logo" style="width:200px;" src="assets/images/logo.png"></a>
 
                 <!-- Toggler/collapsibe Button -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                     <span class="navbar-toggler-icon"></span>
+                    <!-- <span><i class="fa fa-bars" aria-hidden="false" style="color:#e6e6ff"></i></span> -->
                   </button>
 
                 <!-- Navbar links -->
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/products">Products</a>
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item mr-2 ml-3">
+                            <a class="nav-link" routerLink="/products" routerLinkActive="active-link">PRODUCTS</a>
+                        </li>
+                        <li class="nav-item mr-2 ml-3">
+                            <a class="nav-link" routerLink="/home" routerLinkActive="active-link">CATEGORIES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact Us</a>
+                            <a class="nav-link" href="#" routerLinkActive="active-link">CONTACT US</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
+                            <a class="nav-link pt-0 pb-0" href="javascript:void(0)">
                                 <form action="">
                                     <input type="search" placeholder="Search here ...">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-search fa-rotate-90"></i>
                                 </form>
                             </a>
                         </li>
@@ -46,6 +47,6 @@
         </ul>
     </div>
     <div class="col-md-6">
-        <button type="button" class="btn btn-primary filter">fILTERS</button>
+        <button type="button" class="btn btn-primary filter">FILTERS</button>
     </div>
 </div>

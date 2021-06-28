@@ -1,3 +1,46 @@
+/*****************Font Text-----------------------------*/
+
+@font-face {
+    font-family: 'Gilroy-Bold';
+    font-style: normal;
+    font-weight: bold;
+    src: url('assets/fonts/Gilroy-Bold.woff') format('woff');
+}
+
+.active-link {
+    border-bottom: 1px solid white;
+}
+
+.bg-light-grey {
+    background-color: #C4C4C4;
+}
+
+.navbar-dark .navbar-toggler {
+    border: none;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: none;
+    transform: rotate(180deg);
+}
+
+.navbar-dark .navbar-toggler-icon::after {
+    /* content: "\f036"; */
+    content: "\f038";
+    font-family: "FontAwesome";
+    font-size: 30px;
+    letter-spacing: -20px;
+    color: #e6e6ff;
+}
+
+@media screen and (max-width:576px) {
+    .active-link {
+        border-bottom: none;
+        background-color: #7785dd;
+    }
+}
+
+
 /*******************products***************************/
 
 .col1 {

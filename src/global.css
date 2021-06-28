@@ -1,5 +1,5 @@
 body {
-    width: 100vw !important;
+    width: 100% !important;
     min-height: 100vh;
     height: auto;
     margin: 0;
@@ -30,4 +30,8 @@ p {
 
 a:hover {
     text-decoration: none;
+}
+
+.heading-font {
+    font-family: 'Gilroy-Bold';
 }

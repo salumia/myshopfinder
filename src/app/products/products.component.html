@@ -38,15 +38,16 @@
             </div>
         </ng-template> -->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
-            <div class="col-12 col-md-3 d-inline-block h-100">
-                <div class="product-grid-item card mb-1 mt-1">
-                    <img class="card-img-top col{{index%8+1}} img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title">
+            <div class="col-6 col-md-3 d-inline-block h-100">
+                <div class="product-grid-item card border-0 mb-1 mt-1">
+                    <img class="card-img-top bg-light-grey img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title">
                     <div class="product-grid-item-content card-body">
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="mr-auto font-weight-bolder">{{product.title|uppercase}} <br> {{product.brand|uppercase}}
+                        <div class="d-flex flex-md-row flex-column align-items-md-center">
+                            <div class="mr-auto font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>
+                                <span class="d-md-inline d-none">{{product.brand|uppercase}}</span>
                             </div>
                             <div class="font-weight-bold">
-                                <span class="mr-2 text-danger"><s>${{product.original_price}}</s></span>
+                                <span class="mr-2 text-danger d-md-inline d-none"><s>${{product.original_price}}</s></span>
                                 <span>${{product.sale_price}}</span>
                             </div>
                         </div>
