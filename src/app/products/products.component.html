@@ -1,5 +1,6 @@
-<div class="container" *ngIf="!loading && !error_status">
-    <p-dataView #dv [value]="products.products" layout="grid" [paginator]="true" [rows]="8" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+<!-- <div class="container" *ngIf="!loading && !error_status"> -->
+<div class="container">
+    <p-dataView #dv [value]="products.products" layout="grid" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder">
         <ng-template pTemplate="header">
             <div class="row">
                 <div class="col-md-4 col-12 mb-2 mr-2 p-0">
