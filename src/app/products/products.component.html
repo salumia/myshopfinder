@@ -1,5 +1,5 @@
 <div class="container" *ngIf="!loading">
-    <p-dataView #dv [value]="products.products" layout="grid" columns='4' [paginator]="true" [rows]="8" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+    <p-dataView #dv [value]="products.products" layout="grid" [paginator]="true" [rows]="8" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
         <ng-template pTemplate="header">
             <div class="row">
                 <div class="col-md-4 col-12 mb-2">
@@ -40,7 +40,7 @@
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card border-0 mb-1 mt-1">
-                    <img class="card-img-top bg-light-grey img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title">
+                    <img class="card-img-top bg-light-grey img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title" onerror="this.src='./app/assets/images/placeholder.png';">
                     <div class="product-grid-item-content card-body">
                         <div class="d-flex flex-md-row flex-column align-items-md-center">
                             <div class="mr-auto font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>

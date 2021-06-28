@@ -30,14 +30,7 @@
     font-family: "FontAwesome";
     font-size: 30px;
     letter-spacing: -20px;
-    color: #e6e6ff;
-}
-
-@media screen and (max-width:576px) {
-    .active-link {
-        border-bottom: none;
-        background-color: #7785dd;
-    }
+    color: white;
 }
 
 
