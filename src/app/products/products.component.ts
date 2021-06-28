@@ -21,6 +21,8 @@ export class ProductsComponent implements OnInit {
 
   loading: boolean = true;
 
+  error_status:boolean = false;
+
   category:string = "";
 
   data:string[] = [];
@@ -53,6 +55,11 @@ export class ProductsComponent implements OnInit {
       (data) => {
         this.products = data;
         this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+        this.error_status = true;
       }
     );
   }
@@ -62,6 +69,11 @@ export class ProductsComponent implements OnInit {
       (data) => {
         this.products = data;
         this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+        this.error_status = true;
       }
     );
   }

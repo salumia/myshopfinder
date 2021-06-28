@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
 
   data: any = [];
   loading:boolean = true;
-
+  error_status:boolean = false;
   constructor(private _serviceCategory: CategoryService) { }
 
   ngOnInit(): void {
@@ -21,6 +21,11 @@ export class HomeComponent implements OnInit {
         // console.log(this.data.categories);
         console.log("Category Service")  ;
         this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+        this.error_status = true;
       }
     );
   }

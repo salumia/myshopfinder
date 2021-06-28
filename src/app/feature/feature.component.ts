@@ -16,6 +16,7 @@ export class FeatureComponent implements OnInit {
   loading:boolean = true;
   view_status:boolean = true;
   already_loaded:boolean = false;
+  error_status:boolean = false;
 
   constructor(private _serviceFeature: FeatureService,private location:Location,private router:Router) {
     router.events.subscribe(val => {
@@ -34,6 +35,11 @@ export class FeatureComponent implements OnInit {
           console.log("Feature Service")  ;
           this.loading = false;
           //this.already_loaded = true;
+        },
+        (error) => {
+          console.log(error);
+          this.loading = false;
+          this.error_status = true;
         }
       );
   }

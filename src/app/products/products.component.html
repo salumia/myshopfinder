@@ -1,9 +1,9 @@
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!loading && !error_status">
     <p-dataView #dv [value]="products.products" layout="grid" [paginator]="true" [rows]="8" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
         <ng-template pTemplate="header">
             <div class="row">
-                <div class="col-md-4 col-12 mb-2">
-                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortField" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+                <div class="col-md-4 col-12 mb-2 mr-2 p-0">
+                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortField" placeholder="Sort By Price" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
                 <div class="col-md-4 col-12 mb-2">
                     <div class="form-group has-search">
@@ -40,11 +40,11 @@
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card border-0 mb-1 mt-1">
-                    <img class="card-img-top bg-light-grey img-fluid" style="width:350px;height:250px;" [src]="product.image" [alt]="product.title" onerror="this.src='./app/assets/images/placeholder.png';">
+                    <img class="card-img-top rounded-0  bg-light-grey img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                     <div class="product-grid-item-content card-body">
                         <div class="d-flex flex-md-row flex-column align-items-md-center">
-                            <div class="mr-auto font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>
-                                <span class="d-md-inline d-none">{{product.brand|uppercase}}</span>
+                            <div class="mr-auto text-dark font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>
+                                <span class="d-md-inline text-secondary d-none">{{product.brand|uppercase}}</span>
                             </div>
                             <div class="font-weight-bold">
                                 <span class="mr-2 text-danger d-md-inline d-none"><s>${{product.original_price}}</s></span>

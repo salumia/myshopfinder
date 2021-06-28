@@ -1,7 +1,7 @@
 <!-------------------------products------------------->
-<div class="row categories" *ngIf="!loading">
+<div class="row categories" *ngIf="!loading  && !error_status">
     <div *ngFor="let category of data.categories; index as i;" class="col-md-3 categories_bg col{{i%8+1}} text-center">
-        <img src="{{category.category_image}}" class="img-fluid" onerror="this.src='./app/assets/images/placeholder.png';" />
+        <img src="{{category.category_image}}" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
         <h2 class="category_title">{{category.category_name}}</h2>
         <h4 class="total_products">{{category.total_items}} Products</h4>
         <a [routerLink]="['/products',category.slug]">Shop Now</a>

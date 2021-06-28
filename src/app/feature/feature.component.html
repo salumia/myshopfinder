@@ -1,4 +1,4 @@
-<div class="row mt-5 " *ngIf="view_status && !loading">
+<div class="row mt-5 " *ngIf="view_status && !loading  && !error_status">
     <div class="col-md-1"></div>
     <div class="col-md-10 feature">
         <div class="col-12 text-center mb-3 new_sec">
@@ -10,7 +10,7 @@
             <img id="feature-image" src="{{data.product[0].image}}">
 
             <div class="row pricing_sec d-flex justify-content-space-between">
-                <div class="col-md-12 item1 order-md-0 pl-0 order-1 mb-md-2 mb-5">
+                <div class="col-md-12 item1 order-md-0 pl-0  order-1 mb-md-2 mb-5">
                     <p>{{data.product[0].description}}</p>
                 </div>
                 <div class="col-12 col-md-6 p-0 sale_sec order-md-1 order-0 text-md-left text-center mb-3">
