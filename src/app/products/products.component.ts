@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SelectItem } from 'primeng/api';
+import { CommonDataService } from '../services/common-data.service';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -9,8 +10,6 @@ import { ProductsService } from '../services/products.service';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-
-
 
   products: any = [];
   sortOptions: SelectItem[] = [];
@@ -21,23 +20,48 @@ export class ProductsComponent implements OnInit {
 
   loading: boolean = true;
 
-  error_status:boolean = false;
+  error_status: boolean = false;
 
-  category:string = "";
+  category: string = "";
 
-  data:string[] = [];
+  data: string[] = [];
 
-  constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute) { }
+  query: string = "";
+
+  constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute,private commonService: CommonDataService) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params) => {
-      if(params.category){
-        this.data.push(params.category);
-        this.fetchCategoryProducts(this.data);
-      }else{
-        this.fetchProducts();
-      }      
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params["q"]) {
+        this.query = params["q"];
+        this.commonService.updateSearchText(this.query);
+      }
     });
+    this.activatedRoute.params.subscribe((params: Params) => {
+      if (params.category) {
+        this.data.push(params.category);
+        //this.fetchCategoryProducts(this.data);
+      } else {
+        //this.fetchProducts();
+      }
+    });
+
+    setTimeout(() => {
+      console.log(this.query);
+      console.log(this.data.length);
+      if (this.query != "") {
+        this.searchProducts(this.query);
+        this._serviceProduct.setSearchText(this.query);
+      } else if (this.data.length > 0) {
+        this.fetchCategoryProducts(this.data);        
+      } else {        
+        this._serviceProduct.setSearchText("");
+        this.fetchProducts();    
+        console.log("Yes I Am Also Running")    
+      }
+    }, 50);
+
+
 
     this.sortOptions = [
       { label: 'Price High to Low', value: '!sale_price' },
@@ -45,12 +69,12 @@ export class ProductsComponent implements OnInit {
     ];
   }
 
-  fetchCategoryProducts(category:string[]): void {
+  fetchCategoryProducts(category: string[]): void {
     var formData: any = new FormData();
-    for(let i = 0; i < category.length; i++){
+    for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
     }
-    
+
     this._serviceProduct.getCategoryProducts(formData).subscribe(
       (data) => {
         this.products = data;
@@ -66,6 +90,20 @@ export class ProductsComponent implements OnInit {
 
   fetchProducts(): void {
     this._serviceProduct.getAllProducts().subscribe(
+      (data) => {
+        this.products = data;
+        this.loading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+        this.error_status = true;
+      }
+    );
+  }
+
+  searchProducts(query: string): void {
+    this._serviceProduct.getSearchProducts(query).subscribe(
       (data) => {
         this.products = data;
         this.loading = false;

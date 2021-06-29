@@ -19,11 +19,11 @@ export class HomeComponent implements OnInit {
       (data) => {
         this.data = data;
         // console.log(this.data.categories);
-        console.log("Category Service")  ;
+        // console.log("Category Service")  ;
         this.loading = false;
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
         this.loading = false;
         this.error_status = true;
       }

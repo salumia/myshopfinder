@@ -32,12 +32,12 @@ export class FeatureComponent implements OnInit {
     this._serviceFeature.getFeatureProduct().subscribe(
         (data) => {
           this.data = data;       
-          console.log("Feature Service")  ;
+          // console.log("Feature Service");
           this.loading = false;
           //this.already_loaded = true;
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
           this.loading = false;
           this.error_status = true;
         }

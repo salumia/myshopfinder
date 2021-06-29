@@ -9,6 +9,9 @@ import { environment } from 'src/environments/environment';
 export class ProductsService {
 
   API_URL: string =  environment.BASE_API_URL + "getProducts";
+
+  searchText:string = "";
+
   constructor(private _httpClient: HttpClient) {
 
   }
@@ -19,5 +22,17 @@ export class ProductsService {
 
   getCategoryProducts(data:any): Observable<any> {
     return this._httpClient.post<any>(this.API_URL,data);
+  }
+
+  getSearchProducts(query:string): Observable<any> {
+    return this._httpClient.get<any>(this.API_URL + "?s=" + query);
+  }
+
+  setSearchText(text:string):void{
+    this.searchText = text;
+  }
+
+  getSearchText():string{
+    return this.searchText;
   }
 }

@@ -16,7 +16,7 @@
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    font-size: 20px;
+    font-size: 15px;
     letter-spacing: 2px;
     color: #fff;
     font-weight: 500;
@@ -29,7 +29,7 @@
 .price {
     background-color: #000000;
     /* border-radius: 3px; */
-    font-size: 26px;
+    font-size: 20px;
     font-weight: bold;
     color: #ffffff;
     border: none;
@@ -43,14 +43,16 @@ header {
 .buy {
     background-color: #b098df;
     border: none;
-    font-size: 26px;
+    font-size: 20px;
     color: #ffffff;
     padding: 5px 25px;
 }
 
-.banner .products_list {
+
+/* .banner .products_list {
     display: none;
 }
+*/
 
 .filter {
     font-size: 15px;
@@ -151,20 +153,20 @@ header .breadcrumb-item.active {
 }
 
 .banner h2 {
-    font-size: 39px;
+    /* font-size: 39px; */
     color: #ffffff;
     /* font-weight: bold; */
 }
 
 .banner h3 {
-    font-size: 5em;
+    font-size: 4em;
     text-align: center;
     color: #ffffff;
     z-index: -1;
 }
 
 .banner p {
-    font-size: 25px;
+    font-size: 20px;
     /* text-align: center; */
     line-height: 35px;
     color: #ffffff;
@@ -182,7 +184,7 @@ header .breadcrumb-item.active {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+    width: 85%;
     z-index: 0;
     top: 10px;
     max-height: 100%;
@@ -225,6 +227,20 @@ input {
     font-size: 1em;
     border-radius: 20px;
     padding: 0 20px;
+}
+
+.show-class {
+    display: block !important;
+}
+
+.show-form {
+    width: 300px !important;
+    cursor: pointer !important;
+}
+
+.show-fa {
+    background: #07051a !important;
+    color: white !important;
 }
 
 .fa {
