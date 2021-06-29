@@ -31,7 +31,7 @@ export class FeatureComponent implements OnInit {
   ngOnInit(): void {
     this._serviceFeature.getFeatureProduct().subscribe(
         (data) => {
-          this.data = data;       
+          this.data = data;
           // console.log("Feature Service");
           this.loading = false;
           //this.already_loaded = true;
