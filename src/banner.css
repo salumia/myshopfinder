@@ -160,6 +160,7 @@ header .breadcrumb-item.active {
     font-size: 5em;
     text-align: center;
     color: #ffffff;
+    z-index: -1;
 }
 
 .banner p {
@@ -177,15 +178,23 @@ header .breadcrumb-item.active {
 
 #feature-image {
     position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
     z-index: 0;
-    top: 5px;
+    top: 10px;
     max-height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .product_slide {
     position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
     padding-bottom: 50px;
     margin-bottom: 10px;
     min-height: 500px;

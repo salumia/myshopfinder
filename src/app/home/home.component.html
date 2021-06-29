@@ -1,14 +1,16 @@
 <!-------------------------products------------------->
-<div class="row categories" *ngIf="!loading  && !error_status">
-    <div *ngFor="let category of data.categories; index as i;" class="col-md-3 categories_bg col{{i%8+1}} text-center">
-        <img src="{{category.category_image}}" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
-        <h2 class="category_title">{{category.category_name}}</h2>
-        <h4 class="total_products">{{category.total_items}} Products</h4>
-        <a [routerLink]="['/products',category.slug]">Shop Now</a>
+<div class="custom-container mt-2 mb-2">
+    <div class="row categories" *ngIf="!loading  && !error_status">
+        <div *ngFor="let category of data.categories; index as i;" class="col-md-3 categories_bg category-color text-center col-md-offset-2">
+            <img src="{{category.category_image}}" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
+            <h2 class="category_title">{{category.category_name}}</h2>
+            <h4 class="total_products">{{category.total_items}} Products</h4>
+            <a [routerLink]="['/products',category.slug]" class="btn btn-primary">Shop Now</a>
+        </div>
     </div>
-</div>
 
-<div class="loader" *ngIf="loading">
-    <p-progressSpinner></p-progressSpinner>
+    <div class="loader" *ngIf="loading">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
 </div>
 <!-------------------------end products------------------->

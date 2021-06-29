@@ -41,6 +41,10 @@
     color: white;
 }
 
+.price-color {
+    color: #ae4eae;
+}
+
 
 /*******************products***************************/
 
@@ -79,7 +83,7 @@
 .category_title {
     font-size: 38px;
     line-height: 50px;
-    color: #ffffff;
+    /* color: #ffffff; */
     font-weight: 700;
     font-family: "Bebas Neue" !important;
 }
@@ -93,7 +97,7 @@
     font-size: 19px;
     letter-spacing: 2px;
     line-height: 40px;
-    color: #ffffff;
+    /* color: #ffffff; */
     margin-bottom: 15px;
     font-weight: 500;
 }
@@ -107,7 +111,7 @@
     font-size: 18px;
     line-height: 17px;
     padding: 12px 50px;
-    color: #ffffff;
+    /* color: #ffffff; */
     font-weight: 800;
 }
 

@@ -1,6 +1,58 @@
 @import "global.css";
 @import "banner.css";
 @import "main.css";
+
+/* Category Color */
+
+.category-color {
+    background-color: white;
+}
+
+.category-color:hover {
+    border: 1px solid grey;
+}
+
+
+/* Custom Container CSS */
+
+.custom-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .custom-container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .custom-container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .custom-container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .custom-container {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1300px) {
+    .custom-container {
+        max-width: 1210px;
+    }
+}
+
 @media screen and (min-width:768px) and (max-width: 991px) {
     .foot_sec h2 {
         font-size: 25px !important;
@@ -101,6 +153,15 @@
     }
     header .products_list {
         display: block;
+    }
+}
+
+
+/* Landscape */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+    #feature-image {
+        width: 90%;
     }
 }
 
