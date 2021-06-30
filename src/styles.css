@@ -8,6 +8,12 @@
     background-color: white;
 }
 
+.option-class {
+    position: absolute;
+    right: 0;
+    top: -50px;
+}
+
 .category-color:hover,
 .product-grid-item:hover {
     /* border: 1px solid grey;
@@ -21,8 +27,18 @@
     box-shadow: 0 0.0625rem 0.0625rem -0.125rem #000;
 }
 
+.p-dataview .p-dataview-header {
+    background: white;
+    border: none;
+}
+
 
 /* Product Color */
+
+.p-listbox .p-listbox-header {
+    background-color: white;
+    text-align: center;
+}
 
 
 /* Button Style */
@@ -35,7 +51,7 @@
 
 .button-primary {
     color: black;
-    /* background-image: linear-gradient( 120deg, #d346be 0%, #7785dd 100%); */
+    background-color: white;
     border: 2px solid black;
 }
 

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { FeatureService } from '../services/feature.service';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-feature',
@@ -18,9 +19,9 @@ export class FeatureComponent implements OnInit {
   already_loaded:boolean = false;
   error_status:boolean = false;
 
-  constructor(private _serviceFeature: FeatureService,private location:Location,private router:Router) {
+  constructor(private _serviceFeature: FeatureService,private location:Location,private router:Router,private serviceProduct:ProductsService) {
     router.events.subscribe(val => {
-      if (location.path() != "" && location.path().indexOf("home") == -1) {
+      if (location.path() != "" && location.path().indexOf("/home") == -1) {
         this.view_status = false;
       } else{
         this.view_status = true;
@@ -42,6 +43,20 @@ export class FeatureComponent implements OnInit {
           this.error_status = true;
         }
       );
+  }
+
+  generateRequest(product: any): void {
+    console.log(product);
+    var formData: any = new FormData();
+    formData.append(`id`, product.id);
+    this.serviceProduct.updateCounterRequest(formData).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
 }

@@ -17,42 +17,22 @@
 <div class="custom-container">
     <p-dataView #dv [value]="products.products" (onPage)="paginate($event)" layout="grid" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder">
         <ng-template pTemplate="header">
+            <p-dataViewLayoutOptions class="option-class d-md-none"></p-dataViewLayoutOptions>
             <div class="row">
-                <div class="col-md-4 col-12 mb-2 mr-2 p-0">
-                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sorted By" (onChange)="onSortChange($event)"></p-dropdown>
-                </div>
-                <div class="col-md-4 col-12 mb-2">
+                <div class="col-md-4 col-12 mb-md-2 mb-4">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
                     </div>
                 </div>
-                <div class="col-md-4 col-12 mb-2">
-
+                <div class="col-md-4 col-12 mb-2 p-0 pl-md-2 pr-md-2">
+                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sorted By" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
-                <!-- <span class="p-input-icon-left p-mb-2 p-mb-md-0">
-                    <i class="pi pi-search"></i>
-                     <input type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
-                </span> -->
-                <!-- <p-dataViewLayoutOptions></p-dataViewLayoutOptions> -->
+                <div class="col-md-4 col-12 mb-md-2 mb-4 p-0">
+                    <button type="button" (click)="openFilterSidebar()" class="button button-primary p-2">FILTERS</button>
+                </div>
             </div>
         </ng-template>
-        <!-- <ng-template let-product pTemplate="listItem">
-            <div class="col-12">
-                <div class="product-list-item">
-                    <img [src]="product.image" [alt]="product.title" />
-                    <div class="product-list-detail">
-                        <div class="product-name">{{product.title}}</div>
-                        <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.brand}}</span>
-                    </div>
-                    <div class="product-list-action">
-                        <span class="product-price"><s>${{product.original_price}}</s></span>
-                        <span class="product-price">${{product.sale_price}}</span>
-                        <button>Buy</button>
-                    </div>
-                </div>
-            </div>
-        </ng-template> -->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
@@ -70,10 +50,54 @@
                     </div>
                 </div>
             </div>
+        </ng-template>
+        <ng-template let-product pTemplate="listItem">
+            <div class="col-md-12 feature">
+                <h2 class="text-center">{{product.brand|uppercase}}</h2>
+                <div class="col-md-12 product_slide">
+                    <h3 class="heading-font text-center">{{product.title|uppercase}}</h3>
+                    <img [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
 
+                    <div class="row pricing_sec d-flex justify-content-space-between mt-4">
+                        <div class="col-12 p-0 sale_sec order-md-1 order-0 text-md-left text-center mb-3">
+                            <button type="button" class="btn btn-primary price"><s>${{product.original_price}}</s>
+                            ${{product.sale_price}}</button>
+                        </div>
+                        <div class="col-12 item1  pl-0  mb-5">
+                            <p>{{product.description}}</p>
+                        </div>
+                        <div class="col-12 text-right buy_sec mb-5">
+                            <a href="javascript:void(0)" (click)="generateRequest(product)" class="btn btn-primary buy font-weight-bold">BUY NOW</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ng-template>
     </p-dataView>
 </div>
-<!-- <div class="loader" *ngIf="loading">
-    <p-progressSpinner></p-progressSpinner>
-</div> -->
+<p-sidebar [(visible)]="filter_sidebar" position="right" [baseZIndex]="10000">
+    <h3>Filters</h3>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <strong>Price: {{rangeValues[0] + ' - ' + rangeValues[1]}}</strong><br><br>
+            <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider><br>
+            <button type="button" (click)="submitPriceForm()">Search</button>
+        </div>
+        <div class="col-12">
+            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem','border':'none'}">
+                <ng-template pTemplate="header">
+                    <strong>Brand</strong>
+                </ng-template>
+                <ng-template let-brand pTemplate="item">
+                    <div class="country-item">
+                        <div>{{brand}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+            <button type="button" (click)="submitBrandForm()">Search</button>
+        </div>
+        <div class="col-12">
+
+        </div>
+    </div>
+</p-sidebar>

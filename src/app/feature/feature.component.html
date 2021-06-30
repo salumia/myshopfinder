@@ -18,7 +18,7 @@
                         ${{data.product[0].sale_price}}</button>
                     </div>
                     <div class="col-12 col-md-6 text-right buy_sec pr-md-5 order-md-2 mb-5 order-2">
-                        <a href="{{data.product[0].link}}" class="btn btn-primary buy font-weight-bold">BUY NOW</a>
+                        <a href="{{data.product[0].link}}" target="_blank" (click)="generateRequest(data.product[0])" class="btn btn-primary buy font-weight-bold">BUY NOW</a>
                     </div>
                 </div>
             </div>

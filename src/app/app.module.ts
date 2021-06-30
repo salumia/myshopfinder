@@ -14,8 +14,12 @@ import {SkeletonModule} from 'primeng/skeleton';
 import { ProductsComponent } from './products/products.component';
 import {DataViewModule} from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import {SidebarModule} from 'primeng/sidebar';
 import { CategoryProductComponent } from './category-product/category-product.component';
+import {ButtonModule} from 'primeng/button';
+import {ListboxModule} from 'primeng/listbox';
+import {SliderModule} from 'primeng/slider';
 
 
 @NgModule({
@@ -37,6 +41,11 @@ import { CategoryProductComponent } from './category-product/category-product.co
     DataViewModule,
     DropdownModule,
     FormsModule,
+    ReactiveFormsModule,
+    SidebarModule,
+    ButtonModule,
+    ListboxModule,
+    SliderModule,
     BrowserAnimationsModule
   ],
   providers: [],

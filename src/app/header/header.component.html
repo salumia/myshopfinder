@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link pt-0 pb-0 not" href="javascript:void(0)">
                                 <form action="" [class.show-form]="search_opened">
-                                    <input [class.show-class]="search_opened" type="search" name="searchText" [(ngModel)]="searchText" (keydown.enter)="searchProduct()" placeholder="Search here ...">
+                                    <input [class.show-class]="search_opened" autocomplete="off" type="search" name="searchText" [(ngModel)]="searchText" (keydown.enter)="searchProduct()" placeholder="Search here ...">
                                     <i class="fa fa-search fa-rotate-90" [class.show-fa]="search_opened"></i>
                                 </form>
                             </a>

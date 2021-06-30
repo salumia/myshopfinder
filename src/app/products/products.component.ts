@@ -12,8 +12,9 @@ import { ProductsService } from '../services/products.service';
 })
 export class ProductsComponent implements OnInit {
 
-  breadcrumb_data:any = null;
-  breadcrumb_status:boolean = false;
+  breadcrumb_data: any = null;
+  breadcrumb_status: boolean = false;
+  filter_sidebar: boolean = false;
 
   products: any = [];
   sortOptions: SelectItem[] = [];
@@ -22,7 +23,7 @@ export class ProductsComponent implements OnInit {
 
   sortField: string = "";
 
-  sortKey:string = "";
+  sortKey: string = "";
 
   loading: boolean = true;
 
@@ -34,10 +35,19 @@ export class ProductsComponent implements OnInit {
 
   query: string = "";
 
+  brands: any = [];
+  selectedBrand: any = [];
+  rangeValues: number[] = [20,80];
+
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
-    private route:Router) { }
+    private route: Router) {
+    
+  }
 
   ngOnInit(): void {
+    // this.brands.push("Nike");
+    // this.brands.push("Adidas");
+    // this.brands.push("Puma");
     this.activatedRoute.queryParams.subscribe(params => {
       if (params["q"]) {
         this.query = params["q"];
@@ -57,7 +67,7 @@ export class ProductsComponent implements OnInit {
       } else if (this.data.length > 0) {
         this.fetchCategoryProducts(this.data);
         this.fetchBreadcrumbs(this.data[0]);
-      } else {        
+      } else {
         this.breadcrumb_data = null;
         this.breadcrumb_status = false;
         this.fetchProducts();
@@ -96,9 +106,9 @@ export class ProductsComponent implements OnInit {
     this._serviceProduct.getBreadcrumbs(formData).subscribe(
       (data) => {
         this.breadcrumb_data = data;
-        if(data!=null){
+        if (data != null) {
           this.breadcrumb_status = true;
-        }else{
+        } else {
           this.breadcrumb_status = false;
         }
       },
@@ -113,6 +123,7 @@ export class ProductsComponent implements OnInit {
     this._serviceProduct.getAllProducts().subscribe(
       (data) => {
         this.products = data;
+        console.log(this.products.brands);
         this.loading = false;
       },
       (error) => {
@@ -163,7 +174,7 @@ export class ProductsComponent implements OnInit {
     }, 16);
   }
 
-  generateRequest(product:any):void{
+  generateRequest(product: any): void {
     console.log(product);
     var formData: any = new FormData();
     formData.append(`id`, product.id);
@@ -175,21 +186,36 @@ export class ProductsComponent implements OnInit {
         console.log(error);
       }
     );
-    window.open( 
+    window.open(
       product.link, "_blank");
   }
 
   genereateBreadcrumbRequest(slug: string): void {
     this.route.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.onSameUrlNavigation = 'reload';
-    if(slug==''){
+    if (slug == '') {
       this.route.navigate(['/products']);
-    }else{
-      this.route.navigate(['/products',slug]);
-    }    
+    } else {
+      this.route.navigate(['/products', slug]);
+    }
   }
 
   checkLast(i: number): boolean {
     return this.breadcrumb_data != null && i == this.breadcrumb_data.data.length - 1;
   }
+
+  openFilterSidebar(): void {
+    this.filter_sidebar = true;
+  }
+
+  submitBrandForm(): void {
+    for(let item of this.selectedBrand){
+      console.log(item);
+    }
+  }
+
+  submitPriceForm():void{
+    console.log(this.rangeValues);
+  }
+
 }
