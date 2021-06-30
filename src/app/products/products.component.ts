@@ -22,6 +22,8 @@ export class ProductsComponent implements OnInit {
 
   sortField: string = "";
 
+  sortKey:string = "";
+
   loading: boolean = true;
 
   error_status: boolean = false;
@@ -51,12 +53,11 @@ export class ProductsComponent implements OnInit {
     setTimeout(() => {
       if (this.query != "") {
         this.searchProducts(this.query);
-        this._serviceProduct.setSearchText(this.query);
+        this.commonService.updateSearchText(this.query);
       } else if (this.data.length > 0) {
         this.fetchCategoryProducts(this.data);
         this.fetchBreadcrumbs(this.data[0]);
-      } else {
-        this._serviceProduct.setSearchText("");
+      } else {        
         this.breadcrumb_data = null;
         this.breadcrumb_status = false;
         this.fetchProducts();
@@ -76,7 +77,6 @@ export class ProductsComponent implements OnInit {
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
     }
-
     this._serviceProduct.getCategoryProducts(formData).subscribe(
       (data) => {
         this.products = data;
@@ -138,15 +138,15 @@ export class ProductsComponent implements OnInit {
   }
 
   onSortChange(event: any) {
-    let value = event.value;
+    this.sortKey = event.value;
 
-    if (value.indexOf('!') === 0) {
+    if (this.sortKey.indexOf('!') === 0) {
       this.sortOrder = -1;
-      this.sortField = value.substring(1, value.length);
+      this.sortField = this.sortKey.substring(1, this.sortKey.length);
     }
     else {
       this.sortOrder = 1;
-      this.sortField = value;
+      this.sortField = this.sortKey;
     }
   }
 

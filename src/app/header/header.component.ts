@@ -16,13 +16,7 @@ export class HeaderComponent implements OnInit {
   search_opened: boolean = false;  
 
   constructor(private location: Location, private route: Router, private commonService: CommonDataService) {
-    // route.events.subscribe(val => {
-    //   if (location.path() != "" && location.path().indexOf("products") == -1) {
-    //     this.breadcrumb_status = false;
-    //   } else {
-    //     this.breadcrumb_status = true;
-    //   }
-    // });
+   
   }
 
   ngOnInit(): void {
@@ -36,9 +30,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  
-
-  searchProduct(): void {
+    searchProduct(): void {
     if (this.searchText.length != 0) {
       this.search_opened = true;
       let navigationExtras: NavigationExtras = {
