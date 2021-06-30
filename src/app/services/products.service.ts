@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 export class ProductsService {
 
   API_URL: string =  environment.BASE_API_URL + "getProducts";
+  BREADCRUMB_API_URL: string =  environment.BASE_API_URL + "getBreadCrumbs";
+  UPDATE_COUNTER_API_URL: string =  environment.BASE_API_URL + "updatePopularCounter";
 
   searchText:string = "";
 
@@ -28,8 +30,16 @@ export class ProductsService {
     return this._httpClient.get<any>(this.API_URL + "?s=" + query);
   }
 
+  getBreadcrumbs(data:any): Observable<any> {
+    return this._httpClient.post<any>(this.BREADCRUMB_API_URL,data);
+  }
+
   setSearchText(text:string):void{
     this.searchText = text;
+  }
+
+  updateCounterRequest(data:any):Observable<any> {
+    return this._httpClient.post<any>(this.UPDATE_COUNTER_API_URL,data);
   }
 
   getSearchText():string{

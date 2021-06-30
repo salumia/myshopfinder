@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { CommonBreadcrumbDataService } from '../services/common-breadcrumb-data.service';
 import { CommonDataService } from '../services/common-data.service';
 import { ProductsService } from '../services/products.service';
 
@@ -11,18 +12,17 @@ import { ProductsService } from '../services/products.service';
 })
 export class HeaderComponent implements OnInit {
 
-  searchText: string = "";
-  breadcrumb_status: boolean = false;
-  search_opened: boolean = false;
+  searchText: string = "";  
+  search_opened: boolean = false;  
 
   constructor(private location: Location, private route: Router, private commonService: CommonDataService) {
-    route.events.subscribe(val => {
-      if (location.path() != "" && location.path().indexOf("products") == -1) {
-        this.breadcrumb_status = false;
-      } else {
-        this.breadcrumb_status = true;
-      }
-    });
+    // route.events.subscribe(val => {
+    //   if (location.path() != "" && location.path().indexOf("products") == -1) {
+    //     this.breadcrumb_status = false;
+    //   } else {
+    //     this.breadcrumb_status = true;
+    //   }
+    // });
   }
 
   ngOnInit(): void {
@@ -35,6 +35,8 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
+
+  
 
   searchProduct(): void {
     if (this.searchText.length != 0) {

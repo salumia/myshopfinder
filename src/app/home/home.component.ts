@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../models/category';
 import { CategoryService } from '../services/category.service';
+import { CommonBreadcrumbDataService } from '../services/common-breadcrumb-data.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
   error_status:boolean = false;
   constructor(private _serviceCategory: CategoryService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this._serviceCategory.getAllCategories().subscribe(
       (data) => {
         this.data = data;

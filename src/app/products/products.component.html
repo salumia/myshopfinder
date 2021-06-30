@@ -1,10 +1,26 @@
 <!-- <div class="container" *ngIf="!loading && !error_status"> -->
-<div class="container">
-    <p-dataView #dv [value]="products.products" layout="grid" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder">
+<div class="custom-container pt-2" *ngIf="breadcrumb_status">
+    <div class="row products_list">
+        <div class="col-md-6 p-0">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)" class="active">{{breadcrumb_data.section}}</a></li>
+                <li class="breadcrumb-item" *ngFor="let bread of breadcrumb_data.data; index as i;">
+                    <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)" [class.active]="checkLast(i)">{{bread.category_name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <!-- <button type="button" class="btn btn-primary filter">FILTERS</button> -->
+        </div>
+    </div>
+</div>
+<div class="custom-container">
+    <p-dataView #dv [value]="products.products" (onPage)="paginate($event)" layout="grid" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder">
         <ng-template pTemplate="header">
             <div class="row">
                 <div class="col-md-4 col-12 mb-2 mr-2 p-0">
-                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortField" placeholder="Sort By Price" (onChange)="onSortChange($event)"></p-dropdown>
+                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortField" placeholder="Sorted By" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
                 <div class="col-md-4 col-12 mb-2">
                     <div class="form-group has-search">
@@ -40,7 +56,7 @@
         </ng-template> -->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
-                <div class="product-grid-item card border-0 mb-1 mt-1">
+                <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
                     <img class="card-img-top rounded-0  bg-light-grey img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                     <div class="product-grid-item-content card-body pt-2 p-0">
                         <div class="d-flex flex-md-row flex-column align-items-md-center">
