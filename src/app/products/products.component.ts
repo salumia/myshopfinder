@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { SelectItem } from 'primeng/api';
 import { CommonBreadcrumbDataService } from '../services/common-breadcrumb-data.service';
 import { CommonDataService } from '../services/common-data.service';
@@ -36,12 +37,25 @@ export class ProductsComponent implements OnInit {
   query: string = "";
 
   brands: any = [];
+  categories: any = [];
   selectedBrand: any = [];
-  rangeValues: number[] = [20,80];
+  selectedCategory:any = [];
+  rangeValues: number[] = [0,100];
+  selectedRangeValues: number[]= [0,100];
+  backgroud_status:boolean = false;
+  all_product_status:boolean = false;
+  mobile_filter_view:boolean = false;
+
+  switchChecked:boolean = true;
+  currentLayout:string="grid";
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
-    private route: Router) {
-    
+    private route: Router,private deviceService:DeviceDetectorService) {
+    if(deviceService.isMobile()){
+      this.mobile_filter_view = true;
+    }else{
+      this.mobile_filter_view = false;
+    }
   }
 
   ngOnInit(): void {
@@ -70,6 +84,7 @@ export class ProductsComponent implements OnInit {
       } else {
         this.breadcrumb_data = null;
         this.breadcrumb_status = false;
+        this.all_product_status = true;
         this.fetchProducts();
         console.log("Yes I Am Also Running")
       }
@@ -122,9 +137,9 @@ export class ProductsComponent implements OnInit {
   fetchProducts(): void {
     this._serviceProduct.getAllProducts().subscribe(
       (data) => {
-        this.products = data;
-        console.log(this.products.brands);
+        this.products = data;        
         this.loading = false;
+        this.getFilterData();
       },
       (error) => {
         console.log(error);
@@ -134,6 +149,22 @@ export class ProductsComponent implements OnInit {
     );
   }
 
+
+  getFilterData():void{
+    this._serviceProduct.getFilterData().subscribe(
+      (data) => {
+        this.brands = data.brand;
+        this.selectedRangeValues[0] = data.price[0].min_price;
+        this.selectedRangeValues[1] = data.price[0].max_price;
+        this.rangeValues[0] = data.price[0].min_price;
+        this.rangeValues[1] = data.price[0].max_price;
+        this.categories = data.category;
+      },
+      (error) => {
+        console.log(error);        
+      }
+    );
+  }
   searchProducts(query: string): void {
     this._serviceProduct.getSearchProducts(query).subscribe(
       (data) => {
@@ -174,6 +205,26 @@ export class ProductsComponent implements OnInit {
     }, 16);
   }
 
+  changeLayout(event:any):void{
+    
+    if(event.layout == 'list'){
+      this.backgroud_status = true;
+    }else{
+      this.backgroud_status = false;
+    }
+  }
+
+  checkValue(event:any):void{
+    console.log(event);
+    if(event == 'List'){
+      this.backgroud_status = false;
+      this.currentLayout = "grid";
+    }else{
+      this.backgroud_status = true;
+      this.currentLayout = "list";
+    }
+  }
+
   generateRequest(product: any): void {
     console.log(product);
     var formData: any = new FormData();
@@ -208,14 +259,12 @@ export class ProductsComponent implements OnInit {
     this.filter_sidebar = true;
   }
 
-  submitBrandForm(): void {
-    for(let item of this.selectedBrand){
-      console.log(item);
-    }
-  }
-
-  submitPriceForm():void{
+  submitFilter(): void {
     console.log(this.rangeValues);
+    for(let item of this.selectedBrand){
+      console.log(item.brand);
+    }
+    console.log(this.selectedCategory);
   }
 
 }

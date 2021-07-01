@@ -20,6 +20,7 @@ import { CategoryProductComponent } from './category-product/category-product.co
 import {ButtonModule} from 'primeng/button';
 import {ListboxModule} from 'primeng/listbox';
 import {SliderModule} from 'primeng/slider';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {SliderModule} from 'primeng/slider';
     ButtonModule,
     ListboxModule,
     SliderModule,
+    InputSwitchModule,
     BrowserAnimationsModule
   ],
   providers: [],

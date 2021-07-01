@@ -1,6 +1,6 @@
-<div class="custom-container pt-2" *ngIf="breadcrumb_status">
+<div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status" [class.back-color]="backgroud_status">
     <div class="row products_list">
-        <div class="col-md-6 p-0">
+        <div class="col-8 p-0">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)" class="active">{{breadcrumb_data.section}}</a></li>
@@ -9,16 +9,36 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-6">
-            <!-- <button type="button" class="btn btn-primary filter">FILTERS</button> -->
+        <div class="col-4">
+            <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">FILTERS</button>
         </div>
     </div>
 </div>
-<div class="custom-container">
-    <p-dataView #dv [value]="products.products" (onPage)="paginate($event)" layout="grid" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder">
+<div class="custom-container pt-2 pb-2 d-md-none" *ngIf="all_product_status && mobile_filter_view" [class.back-color]="backgroud_status">
+    <div class="row products_list">
+        <div class="col-8 p-0">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
+            </ul>
+        </div>
+        <div class="col-4">
+            <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary">FILTERS</button>
+        </div>
+    </div>
+</div>
+<div class="custom-container p-0">
+    <div id="switch_button" class="optionClass d-md-none" *ngIf="mobile_filter_view">
+        <label class="switch1">
+            <input type="checkbox" [(ngModel)]="switchChecked" (change)="checkValue(switchChecked?'List':'Single')">
+            <span class="slider1 round"></span>
+            <span class="absolute-no">Single</span>
+          </label>
+    </div>
+    <p-dataView #dv [value]="products.products" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder"
+        class="p-0">
         <ng-template pTemplate="header">
-            <p-dataViewLayoutOptions class="option-class d-md-none"></p-dataViewLayoutOptions>
-            <div class="row">
+            <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
+            <div class="row d-none d-md-flex p-2">
                 <div class="col-md-4 col-12 mb-md-2 mb-4">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
@@ -29,7 +49,7 @@
                     <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sorted By" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
                 <div class="col-md-4 col-12 mb-md-2 mb-4 p-0">
-                    <button type="button" (click)="openFilterSidebar()" class="button button-primary p-2">FILTERS</button>
+                    <button type="button" (click)="openFilterSidebar()" class="button button-secondary p-2">FILTERS</button>
                 </div>
             </div>
         </ng-template>
@@ -52,19 +72,20 @@
             </div>
         </ng-template>
         <ng-template let-product pTemplate="listItem">
-            <div class="col-md-12 feature">
-                <h2 class="text-center">{{product.brand|uppercase}}</h2>
+            <div class="col-md-12 feature p-2" style="background-color:#7785dd">
+                <h2 class="text-center text-white">{{product.category_name|uppercase}}</h2>
                 <div class="col-md-12 product_slide">
-                    <h3 class="heading-font text-center">{{product.title|uppercase}}</h3>
-                    <img [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
-
+                    <h3 class="heading-font text-center text-white">{{product.title|uppercase}}</h3>
+                    <div class="row d-flex justify-content-center">
+                        <img [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+                    </div>
                     <div class="row pricing_sec d-flex justify-content-space-between mt-4">
                         <div class="col-12 p-0 sale_sec order-md-1 order-0 text-md-left text-center mb-3">
                             <button type="button" class="btn btn-primary price"><s>${{product.original_price}}</s>
                             ${{product.sale_price}}</button>
                         </div>
                         <div class="col-12 item1  pl-0  mb-5">
-                            <p>{{product.description}}</p>
+                            <p class="text-white text-center">{{product.description}}</p>
                         </div>
                         <div class="col-12 text-right buy_sec mb-5">
                             <a href="javascript:void(0)" (click)="generateRequest(product)" class="btn btn-primary buy font-weight-bold">BUY NOW</a>
@@ -79,9 +100,8 @@
     <h3>Filters</h3>
     <div class="row">
         <div class="col-12 mb-3">
-            <strong>Price: {{rangeValues[0] + ' - ' + rangeValues[1]}}</strong><br><br>
-            <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider><br>
-            <button type="button" (click)="submitPriceForm()">Search</button>
+            <strong>Price: {{selectedRangeValues[0] + ' - ' + selectedRangeValues[1]}}</strong><br><br>
+            <p-slider [(ngModel)]="selectedRangeValues" [min]="rangeValues[0]" [max]="rangeValues[1]" [range]="true"></p-slider><br>
         </div>
         <div class="col-12">
             <p-listbox [options]="brands" [(ngModel)]="selectedBrand" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem','border':'none'}">
@@ -90,14 +110,25 @@
                 </ng-template>
                 <ng-template let-brand pTemplate="item">
                     <div class="country-item">
-                        <div>{{brand}}</div>
+                        <div>{{brand.brand|uppercase}}</div>
                     </div>
                 </ng-template>
             </p-listbox>
-            <button type="button" (click)="submitBrandForm()">Search</button>
         </div>
         <div class="col-12">
-
+            <p-listbox [options]="categories" [(ngModel)]="selectedCategory" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem','border':'none'}">
+                <ng-template pTemplate="header">
+                    <strong>Category</strong>
+                </ng-template>
+                <ng-template let-category pTemplate="item">
+                    <div class="category-item">
+                        <div>{{category.category_name|uppercase}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+        <div class="col-12">
+            <button type="button" (click)="submitFilter()">Apply Filter</button>
         </div>
     </div>
 </p-sidebar>

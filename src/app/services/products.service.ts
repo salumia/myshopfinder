@@ -11,6 +11,7 @@ export class ProductsService {
   API_URL: string =  environment.BASE_API_URL + "getProducts";
   BREADCRUMB_API_URL: string =  environment.BASE_API_URL + "getBreadCrumbs";
   UPDATE_COUNTER_API_URL: string =  environment.BASE_API_URL + "updatePopularCounter";
+  GET_FILTER_DATA_API_URL: string =  environment.BASE_API_URL + "getFilter";  
 
   searchText:string = "";
 
@@ -20,6 +21,10 @@ export class ProductsService {
 
   getAllProducts(): Observable<any> {
     return this._httpClient.get<any>(this.API_URL);
+  }
+
+  getFilterData(): Observable<any> {
+    return this._httpClient.get<any>(this.GET_FILTER_DATA_API_URL);
   }
 
   getCategoryProducts(data:any): Observable<any> {

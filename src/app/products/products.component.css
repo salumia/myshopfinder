@@ -11,3 +11,106 @@
     left: 0px;
     top: 0px;
 }
+
+.switch1 {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 20px;
+}
+
+.switch1 input {
+    display: none;
+}
+
+.slider1 {
+    position: absolute;
+    cursor: pointer;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #da9ada;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider1:before {
+    position: absolute;
+    z-index: 2;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+    -webkit-transition: .4s;
+    transition: all 0.4s ease-in-out;
+}
+
+.slider1:after {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    content: "List";
+    font-size: 15px;
+    text-align: left !important;
+    line-height: 20px;
+    padding-left: 0;
+    width: 80px;
+    color: #fff;
+    height: 20px;
+    border-radius: 20px;
+    /* background-color: #ff6418; */
+    background-color: #da9ada;
+    -webkit-transform: translateX(-160px);
+    -ms-transform: translateX(-160px);
+    transform: translateX(-160px);
+    transition: all 0.4s ease-in-out;
+}
+
+input:checked+.slider1:after {
+    -webkit-transform: translateX(0px);
+    -ms-transform: translateX(0px);
+    transform: translateX(0px);
+    /*width: 235px;*/
+    padding-left: 25px;
+}
+
+input:checked+.slider1:before {
+    background-color: #fff;
+}
+
+input:checked+.slider1:before {
+    -webkit-transform: translateX(60px);
+    -ms-transform: translateX(60px);
+    transform: translateX(60px);
+}
+
+
+/* Rounded sliders */
+
+.slider1.round {
+    border-radius: 15px;
+}
+
+.slider1.round:before {
+    border-radius: 50%;
+}
+
+.absolute-no {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    /* color: darkslwhiategrey; */
+    color: white;
+    text-align: right !important;
+    font-size: 15px;
+    width: calc(100% - 15px);
+    height: 20px;
+    line-height: 15px;
+    cursor: pointer;
+}
