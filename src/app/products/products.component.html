@@ -97,26 +97,25 @@
     </p-dataView>
 </div>
 <p-sidebar [(visible)]="filter_sidebar" position="right" [baseZIndex]="10000">
-    <h3>Filters</h3>
     <div class="row">
-        <div class="col-12 mb-3">
-            <strong>Price: {{selectedRangeValues[0] + ' - ' + selectedRangeValues[1]}}</strong><br><br>
+        <div class="col-12">
+            <p class="ml-3 font-weight-bold mb-1">Price: $ {{selectedRangeValues[0] + ' - ' + selectedRangeValues[1]}}</p>
             <p-slider [(ngModel)]="selectedRangeValues" [min]="rangeValues[0]" [max]="rangeValues[1]" [range]="true"></p-slider><br>
         </div>
-        <div class="col-12">
-            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem','border':'none'}">
+        <div class="col-12 mb-2">
+            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>Brand</strong>
                 </ng-template>
                 <ng-template let-brand pTemplate="item">
-                    <div class="country-item">
+                    <div class="brand-item">
                         <div>{{brand.brand|uppercase}}</div>
                     </div>
                 </ng-template>
             </p-listbox>
         </div>
-        <div class="col-12">
-            <p-listbox [options]="categories" [(ngModel)]="selectedCategory" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'250px'}" [style]="{'width':'15rem','border':'none'}">
+        <div class="col-12 mb-2">
+            <p-listbox [options]="categories" [(ngModel)]="selectedCategory" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>Category</strong>
                 </ng-template>
@@ -128,7 +127,7 @@
             </p-listbox>
         </div>
         <div class="col-12">
-            <button type="button" (click)="submitFilter()">Apply Filter</button>
+            <button type="button" class="button1" (click)="submitFilter()">Apply Filter</button>
         </div>
     </div>
 </p-sidebar>

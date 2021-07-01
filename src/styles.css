@@ -569,8 +569,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 .optionClass {
     position: absolute;
-    right: 10px;
-    top: 25px;
+    right: 15px;
+    top: 30px;
 }
 
 .p-dataview {
@@ -900,3 +900,33 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 
 /* Footer CSS Ends */
+
+
+/* Sidebar Changes */
+
+.p-sidebar .p-sidebar-header {
+    padding: 0 !important;
+}
+
+.p-listbox .p-listbox-header {
+    padding: 0 1rem;
+}
+
+.p-listbox .p-listbox-list {
+    padding: 0 0;
+}
+
+.p-listbox .p-checkbox,
+.p-listbox .p-checkbox .p-checkbox-box {
+    width: 16px;
+    height: 16px;
+}
+
+.p-listbox-list .p-listbox-item .p-component {
+    font-size: 13px !important;
+}
+
+.brand-item,
+.category-item {
+    font-size: 13px;
+}
