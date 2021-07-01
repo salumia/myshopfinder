@@ -49,22 +49,7 @@ a:hover {
 /* Global CSS Ends */
 
 
-/* Main CSS Start */
-
-
-/*****************Font Text-----------------------------*/
-
-.btn {
-    border-radius: 0px !important;
-}
-
-.active-link {
-    border-bottom: 1px solid white;
-}
-
-.bg-light-grey {
-    background-color: #F1F3F5;
-}
+/* Navigation Related CSS Start */
 
 .navbar-dark .navbar-toggler {
     border: none;
@@ -86,6 +71,40 @@ a:hover {
     font-size: 30px;
     letter-spacing: -20px;
     color: white;
+}
+
+.navbar-brand {
+    font-size: 39px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #fff;
+    font-weight: 500;
+}
+
+
+/* Navigation Related CSS Ends */
+
+
+/* Main CSS Start */
+
+
+/*****************Font Text-----------------------------*/
+
+.btn {
+    border-radius: 0px !important;
+}
+
+.active-link {
+    border-bottom: 1px solid white;
+}
+
+.bg-light-grey {
+    background-color: #F1F3F5;
 }
 
 .price-color {
@@ -242,102 +261,6 @@ a:hover {
 }
 
 
-/*********************footer********************/
-
-.footer {
-    background-image: linear-gradient(104deg, #d346be 0%, #7388de 100%);
-}
-
-.footer_top img {
-    margin-bottom: 10px;
-    width: 220px;
-}
-
-.footer h3 {
-    font-size: 23px;
-    line-height: 55px;
-    color: #ffffff;
-    font-weight: 800;
-}
-
-.footer h2 {
-    font-size: 35px;
-    color: #ffffff;
-    font-weight: 800;
-}
-
-.footer label {
-    font-size: 16px;
-    color: #ffffff;
-    font-weight: 500;
-}
-
-.footer_bottom p {
-    font-size: 12px !important;
-    line-height: 24px !important;
-    color: #ffffff !important;
-}
-
-.footer .form-control {
-    border-radius: 10px;
-    background-color: #ac58af;
-    border: none;
-    font-size: 17px;
-}
-
-.footer .form-control::placeholder {
-    color: #ffffff;
-}
-
-.footer .input-group-text {
-    border-radius: 10px;
-    background-color: #ffffff;
-    font-size: 15px;
-    color: #000000;
-    font-weight: 600;
-}
-
-.footer .head {
-    display: flex;
-    align-items: center;
-}
-
-.foot_sec h2 {
-    font-size: 20px !important;
-    line-height: 55px !important;
-    color: #ffffff !important;
-    font-weight: bold !important;
-    margin-left: 50px;
-}
-
-.foot_sec p {
-    font-size: 15px !important;
-    color: #ffffff !important;
-    line-height: 24px !important;
-}
-
-.footer p {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 45px;
-    color: #CFCFCF;
-}
-
-.footer li a {
-    font-size: 15px;
-    line-height: 35px;
-    color: #ffffff;
-    font-weight: 300;
-}
-
-.footer ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-
 /* Main CSS Ends */
 
 
@@ -353,19 +276,6 @@ a:hover {
 
 .product_page {
     height: 80px;
-}
-
-.navbar-brand {
-    font-size: 39px;
-    color: #ffffff;
-    font-weight: 800;
-}
-
-.navbar-dark .navbar-nav .nav-link {
-    font-size: 15px;
-    letter-spacing: 2px;
-    color: #fff;
-    font-weight: 500;
 }
 
 .banner .fa {
@@ -734,6 +644,9 @@ header .breadcrumb-item+.breadcrumb-item::before {
     margin-left: auto;
 }
 
+
+/* Media Query Begins */
+
 @media (min-width: 576px) {
     .custom-container {
         max-width: 540px;
@@ -878,6 +791,9 @@ header .breadcrumb-item+.breadcrumb-item::before {
 }
 
 
+/* Media Query Ends */
+
+
 /* Added for Loader */
 
 .loader {
@@ -885,3 +801,102 @@ header .breadcrumb-item+.breadcrumb-item::before {
     text-align: center;
     min-height: 500px;
 }
+
+
+/* Footer CSS Start */
+
+.footer {
+    background-image: linear-gradient(104deg, #d346be 0%, #7388de 100%);
+}
+
+.footer_top img {
+    margin-bottom: 10px;
+    width: 220px;
+}
+
+.footer h3 {
+    font-size: 23px;
+    line-height: 55px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.footer h2 {
+    font-size: 35px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.footer label {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.footer_bottom p {
+    font-size: 12px !important;
+    line-height: 24px !important;
+    color: #ffffff !important;
+}
+
+.footer .form-control {
+    border-radius: 10px;
+    background-color: #ac58af;
+    border: none;
+    font-size: 17px;
+}
+
+.footer .form-control::placeholder {
+    color: #ffffff;
+}
+
+.footer .input-group-text {
+    border-radius: 10px;
+    background-color: #ffffff;
+    font-size: 15px;
+    color: #000000;
+    font-weight: 600;
+}
+
+.footer .head {
+    display: flex;
+    align-items: center;
+}
+
+.foot_sec h2 {
+    font-size: 20px !important;
+    line-height: 55px !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    margin-left: 50px;
+}
+
+.foot_sec p {
+    font-size: 15px !important;
+    color: #ffffff !important;
+    line-height: 24px !important;
+}
+
+.footer p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 45px;
+    color: #CFCFCF;
+}
+
+.footer li a {
+    font-size: 15px;
+    line-height: 35px;
+    color: #ffffff;
+    font-weight: 300;
+}
+
+.footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Footer CSS Ends */
