@@ -1,4 +1,4 @@
-<div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status" [class.back-color]="backgroud_status">
+<div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status && mobile_filter_view" [class.back-color]="backgroud_status">
     <div class="row products_list">
         <div class="col-8 p-0">
             <ul class="breadcrumb">
@@ -34,21 +34,39 @@
             <span class="absolute-no">Single</span>
           </label>
     </div>
-    <p-dataView #dv [value]="products.products" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField" [sortOrder]="sortOrder"
-        class="p-0">
+    <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField"
+        [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
             <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
             <div class="row d-none d-md-flex p-2">
-                <div class="col-md-4 col-12 mb-md-2 mb-4">
+                <div class="col-md-8">
+                    <div class="pt-2 pb-2" *ngIf="breadcrumb_status" [class.back-color]="backgroud_status">
+                        <div class="row products_list">
+                            <div class="col-8 p-0">
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)" class="active">{{breadcrumb_data.section}}</a></li>
+                                    <li class="breadcrumb-item" *ngFor="let bread of breadcrumb_data.data; index as i;">
+                                        <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)" [class.active]="checkLast(i)">{{bread.category_name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">FILTERS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3 col-12 mb-md-2 mb-4">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
                     </div>
-                </div>
-                <div class="col-md-4 col-12 mb-2 p-0 pl-md-2 pr-md-2">
+                </div> -->
+                <div class="col-md-3 col-12 mb-2 p-0 pl-md-2 pr-md-2">
                     <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sorted By" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
-                <div class="col-md-4 col-12 mb-md-2 mb-4 p-0">
+                <div class="col-md-1 col-12 mb-md-2 mb-4 p-0 text-right">
                     <button type="button" (click)="openFilterSidebar()" class="button button-secondary p-2">FILTERS</button>
                 </div>
             </div>

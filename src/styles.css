@@ -930,3 +930,19 @@ header .breadcrumb-item+.breadcrumb-item::before {
 .category-item {
     font-size: 13px;
 }
+
+
+/* Scroll Bar */
+
+.p-listbox-list-wrapper::-webkit-scrollbar {
+    width: 0.3em;
+}
+
+.p-listbox-list-wrapper::-webkit-scrollbar-thumb {
+    background-color: #2196F3;
+    outline: 1px solid #2196F3;
+}
+
+.p-inputtext {
+    padding: 0.4rem 0.5rem;
+}

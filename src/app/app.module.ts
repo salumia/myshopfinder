@@ -21,7 +21,7 @@ import {ButtonModule} from 'primeng/button';
 import {ListboxModule} from 'primeng/listbox';
 import {SliderModule} from 'primeng/slider';
 import {InputSwitchModule} from 'primeng/inputswitch';
-
+import {ScrollPanelModule} from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
@@ -48,6 +48,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     ListboxModule,
     SliderModule,
     InputSwitchModule,
+    ScrollPanelModule,
     BrowserAnimationsModule
   ],
   providers: [],
