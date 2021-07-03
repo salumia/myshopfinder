@@ -22,6 +22,7 @@ import {ListboxModule} from 'primeng/listbox';
 import {SliderModule} from 'primeng/slider';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     HomeComponent,
     FeatureComponent,
     ProductsComponent,
-    CategoryProductComponent
+    CategoryProductComponent,
+    ContactUsComponent
   ],
   imports: [
     BrowserModule,

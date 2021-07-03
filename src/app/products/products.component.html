@@ -1,4 +1,5 @@
-<div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status && mobile_filter_view" [class.back-color]="backgroud_status">
+<!-- This is the Mobile Bread Crumb and Filter Button in Product Category Status -->
+<div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status && mobile_filter_view">
     <div class="row products_list">
         <div class="col-8 p-0">
             <ul class="breadcrumb">
@@ -9,24 +10,26 @@
                 </li>
             </ul>
         </div>
-        <div class="col-4">
-            <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">FILTERS</button>
+        <div class="col-4 text-right p-0">
+            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3 d-md-none">Filters</button>
         </div>
     </div>
 </div>
-<div class="custom-container pt-2 pb-2 d-md-none" *ngIf="all_product_status && mobile_filter_view" [class.back-color]="backgroud_status">
+<!-- This is the Mobile Bread Crumb and Filter Button in All Product Status -->
+<div class="custom-container pt-2 pb-2 d-md-none" *ngIf="all_product_status && mobile_filter_view">
     <div class="row products_list">
         <div class="col-8 p-0">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
             </ul>
         </div>
-        <div class="col-4">
-            <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary">FILTERS</button>
+        <div class="col-4 text-right  p-0">
+            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3">Filters</button>
         </div>
     </div>
 </div>
 <div class="custom-container p-0">
+    <!-- Switch Button For Mobile View -->
     <div id="switch_button" class="optionClass d-md-none" *ngIf="mobile_filter_view">
         <label class="switch1">
             <input type="checkbox" [(ngModel)]="switchChecked" (change)="checkValue(switchChecked?'List':'Single')">
@@ -34,6 +37,7 @@
             <span class="absolute-no">Single</span>
           </label>
     </div>
+    <!-- Data View For Displaying Product -->
     <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField"
         [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
@@ -52,7 +56,7 @@
                                 </ul>
                             </div>
                             <div class="col-4">
-                                <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">FILTERS</button>
+                                <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">Filters</button>
                             </div>
                         </div>
                     </div>
@@ -64,10 +68,10 @@
                     </div>
                 </div> -->
                 <div class="col-md-3 col-12 mb-2 p-0 pl-md-2 pr-md-2">
-                    <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sorted By" (onChange)="onSortChange($event)"></p-dropdown>
+                    <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
                 <div class="col-md-1 col-12 mb-md-2 mb-4 p-0 text-right">
-                    <button type="button" (click)="openFilterSidebar()" class="button button-secondary p-2">FILTERS</button>
+                    <button type="button" (click)="openFilterSidebar()" class="button button-secondary pt-2 pb-2 pl-4 pr-4">Filters</button>
                 </div>
             </div>
         </ng-template>
@@ -89,27 +93,13 @@
                 </div>
             </div>
         </ng-template>
+        <!-- Mobile View Display For Single Product -->
         <ng-template let-product pTemplate="listItem">
-            <div class="col-md-12 feature p-2" style="background-color:#7785dd">
-                <h2 class="text-center text-white">{{product.category_name|uppercase}}</h2>
-                <div class="col-md-12 product_slide">
-                    <h3 class="heading-font text-center text-white">{{product.title|uppercase}}</h3>
-                    <div class="row d-flex justify-content-center">
-                        <img [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
-                    </div>
-                    <div class="row pricing_sec d-flex justify-content-space-between mt-4">
-                        <div class="col-12 p-0 sale_sec order-md-1 order-0 text-md-left text-center mb-3">
-                            <button type="button" class="btn btn-primary price"><s>${{product.original_price}}</s>
-                            ${{product.sale_price}}</button>
-                        </div>
-                        <div class="col-12 item1  pl-0  mb-5">
-                            <p class="text-white text-center">{{product.description}}</p>
-                        </div>
-                        <div class="col-12 text-right buy_sec mb-5">
-                            <a href="javascript:void(0)" (click)="generateRequest(product)" class="btn btn-primary buy font-weight-bold">BUY NOW</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12 categories_bg category-color text-center">
+                <img [src]="product.image" [alt]="product.title" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
+                <h2 class="category_title text-dark">{{product.title}}</h2>
+                <h4 class="price-color mb-3 font-weight-bold">$ {{product.sale_price}}</h4>
+                <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)" class="button button-primary button-primary-style">Buy Now</a>
             </div>
         </ng-template>
     </p-dataView>

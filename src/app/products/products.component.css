@@ -20,8 +20,8 @@
 .switch1 {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 16px;
+    width: 55px;
+    height: 20px;
 }
 
 .switch1 input {
@@ -45,8 +45,8 @@
     position: absolute;
     z-index: 2;
     content: "";
-    height: 13px;
-    width: 13px;
+    height: 16px;
+    width: 16px;
     left: 2px;
     bottom: 2px;
     background-color: white;
@@ -61,14 +61,15 @@
     left: 0;
     z-index: 1;
     content: "List";
-    font-size: 10px;
+    font-size: 11px;
     text-align: left !important;
-    line-height: 14px;
+    line-height: 20px;
     padding-left: 0;
+    font-weight: bold;
     width: 60px;
     color: #fff;
-    height: 14px;
-    border-radius: 14px;
+    height: 20px;
+    border-radius: 20px;
     /* background-color: #ff6418; */
     background-color: #da9ada;
     -webkit-transform: translateX(-80px);
@@ -108,15 +109,16 @@ input:checked+.slider1:before {
 
 .absolute-no {
     position: absolute;
-    left: 3px;
-    top: 2px;
+    left: 6px;
+    top: 0px;
     /* color: darkslwhiategrey; */
     color: white;
     text-align: right !important;
-    font-size: 10px;
+    font-weight: bold;
+    font-size: 11px;
     width: calc(100% - 10px);
     height: 20px;
-    line-height: 13px;
+    line-height: 20px;
     cursor: pointer;
 }
 

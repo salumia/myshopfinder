@@ -631,6 +631,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
     color: #000;
     border: none;
     padding: 5px;
+    background-color: #F1F3F5;
 }
 
 
@@ -945,4 +946,15 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 .p-inputtext {
     padding: 0.4rem 0.5rem;
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+    color: black;
+}
+
+.button-primary-style {
+    font-size: 18px;
+    line-height: 17px;
+    padding: 12px 50px;
+    font-weight: 800;
 }
