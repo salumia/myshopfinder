@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../models/category';
+import { environment } from 'src/environments/environment';
 import { CategoryService } from '../services/category.service';
-import { CommonBreadcrumbDataService } from '../services/common-breadcrumb-data.service';
+import { MetaServiceService } from '../services/meta-service.service';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +13,11 @@ export class HomeComponent implements OnInit {
   data: any = [];
   loading:boolean = true;
   error_status:boolean = false;
-  constructor(private _serviceCategory: CategoryService) { }
+  constructor(private _serviceCategory: CategoryService,private metaService:MetaServiceService) { }
 
   ngOnInit(): void {    
+    this.metaService.addTitle(environment.BASE_TITLE);
+    this.metaService.addDescription(environment.BASE_DESCRIPTION);
     this._serviceCategory.getAllCategories().subscribe(
       (data) => {
         this.data = data;

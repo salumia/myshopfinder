@@ -12,19 +12,29 @@
                 <div class="form-group">
                     <label class="col-sm-2" for="name">Name:</label>
                     <div class="col-sm-10">
-                        <input type="text" required minlength="3" class="form-control" [(ngModel)]="model.name" id="name" placeholder="Enter Name" name="name" #name="ngModel" [ngClass]="{ 'is-invalid': myForm.submitted && name.invalid }">
+                        <input type="text" required class="form-control" [(ngModel)]="model.name" id="name" placeholder="Enter Name" name="name" #nameRef="ngModel" [class.is-invalid]="nameRef.invalid && (nameRef.touched || myForm.submitted)">
+                        <div *ngIf="(nameRef.invalid && (nameRef.touched || myForm.submitted)) || nameRef.dirty">
+                            <small *ngIf="nameRef.errors?.required" class="text-danger">Name is required</small>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2" for="email">Email:</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" #email="ngModel" [(ngModel)]="model.email" id="email" placeholder="Enter email" name="email" required [ngClass]="{ 'is-invalid': myForm.submitted && email.invalid }">
+                        <input type="email" class="form-control" #emailRef="ngModel" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="model.email" id="email" placeholder="Enter email" name="email" required [class.is-invalid]="emailRef.invalid && (emailRef.touched || myForm.submitted)">
+                        <div *ngIf="(emailRef.invalid && (emailRef.touched || myForm.submitted)) || emailRef.dirty">
+                            <small *ngIf="emailRef.errors?.required" class="text-danger">Email is required</small>
+                            <small class="text-danger" *ngIf="emailRef.errors?.pattern">Email is invalid</small>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2" for="message">Message:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" #message="ngModel" required [ngClass]="{ 'is-invalid': myForm.submitted && message.invalid }" [(ngModel)]="model.message" name="message" rows="5" id="message"></textarea>
+                        <textarea class="form-control" #messageRef="ngModel" required [class.is-invalid]="messageRef.invalid && (messageRef.touched || myForm.submitted)" [(ngModel)]="model.message" name="message" rows="5" id="message"></textarea>
+                        <div *ngIf="(messageRef.invalid && (messageRef.touched || myForm.submitted)) || messageRef.dirty">
+                            <small *ngIf="messageRef.errors?.required" class="text-danger">Message is required</small>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -32,7 +42,7 @@
                         <button type="submit" class="button button-primary button-primary-style">Submit</button>
                     </div>
                 </div>
-                <p>{{server_response}}</p>
+                <p class="text-green">{{server_response}}</p>
             </form>
         </div>
     </div>

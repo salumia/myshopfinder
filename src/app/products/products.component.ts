@@ -3,7 +3,9 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { SelectItem } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 import { CommonDataService } from '../services/common-data.service';
+import { MetaServiceService } from '../services/meta-service.service';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -54,7 +56,7 @@ export class ProductsComponent implements OnInit {
   currentLayout: string = "grid";
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
-    private route: Router, private deviceService: DeviceDetectorService, private location: Location) {
+    private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService) {
     if (deviceService.isMobile()) {
       this.mobile_filter_view = true;
     } else {
@@ -63,7 +65,8 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.metaService.addTitle(environment.BASE_TITLE);
+    this.metaService.addDescription(environment.BASE_DESCRIPTION);
     this.activatedRoute.queryParams.subscribe(params => {
       if (params["q"]) {
         this.query = params["q"];
@@ -86,7 +89,6 @@ export class ProductsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       if (params.category) {
         this.data.push(params.category);
-
       }
     });
 
@@ -131,49 +133,30 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  resetFilterParameter():void{
+  resetFilterParameter(): void {
     this.selectedRangeValues[0] = this.paramRangeValues[0];
     this.selectedRangeValues[1] = this.paramRangeValues[1];
     this.selectedRangeValues = [this.paramRangeValues[0], this.paramRangeValues[1]]; // Unusual
-    if(this.paramCategories!=""){
+    if (this.paramCategories != "") {
       let values = this.paramCategories.split(",");
-      for(let value of values){
-        for(let category of this.categories){
-          if(category.slug == value){
+      for (let value of values) {
+        for (let category of this.categories) {
+          if (category.slug == value) {
             this.selectedCategory.push(category);
           }
         }
       }
     }
-    if(this.paramBrands!=""){
+    if (this.paramBrands != "") {
       let values = this.paramBrands.split(",");
-      for(let value of values){
-        for(let brand of this.brands){
-          if(brand.brand == value){
+      for (let value of values) {
+        for (let brand of this.brands) {
+          if (brand.brand == value) {
             this.selectedBrand.push(brand);
           }
         }
       }
     }
-  }
-
-
-  fetchCategoryProducts(category: string[]): void {
-    var formData: any = new FormData();
-    for (let i = 0; i < category.length; i++) {
-      formData.append(`category[${i}]`, category[i]);
-    }
-    this._serviceProduct.getCategoryProducts(formData).subscribe(
-      (data) => {
-        this.products = data;
-        this.loading = false;
-      },
-      (error) => {
-        console.log(error);
-        this.loading = false;
-        this.error_status = true;
-      }
-    );
   }
 
   fetchBreadcrumbs(category: string): void {
@@ -375,15 +358,16 @@ export class ProductsComponent implements OnInit {
   }
 
 
-  fetchFilterCategoryProducts(category: string[], query: string): void {
+  fetchCategoryProducts(category: string[]): void {
     var formData: any = new FormData();
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
     }
-    this._serviceProduct.getFilterCategoryProducts(formData, query).subscribe(
+    this._serviceProduct.getCategoryProducts(formData).subscribe(
       (data) => {
         this.products = data;
         this.loading = false;
+        this.updateMetaTags();
       },
       (error) => {
         console.log(error);
@@ -393,4 +377,43 @@ export class ProductsComponent implements OnInit {
     );
   }
 
+  fetchFilterCategoryProducts(category: string[], query: string): void {
+    var formData: any = new FormData();
+    for (let i = 0; i < category.length; i++) {
+      formData.append(`category[${i}]`, category[i]);
+    }
+    this._serviceProduct.getFilterCategoryProducts(formData, query).subscribe(
+      (data) => {
+        this.products = data;
+        this.loading = false;
+        this.updateMetaTags();
+      },
+      (error) => {
+        console.log(error);
+        this.loading = false;
+        this.error_status = true;
+      }
+    );
+  }
+
+  capitalizeWords(text: string): string {
+    return text.replace(/(?:^|\s)\S/g, (res) => { return res.toUpperCase(); })
+  }
+
+  updateMetaTags() {
+    if (this.products.count !== undefined && this.products.count > 0) {
+      let category_name = "";
+      for (let product of this.products.products) {
+        if (product.slug == this.data[0]) {
+          category_name = product.category_name;
+          break;
+        }
+      }
+      category_name = this.capitalizeWords(category_name);
+      let description = `Shop thousands of ${category_name} from top brands. Get the latest prices, and find the hottest trending items now | MyShopFinder`;
+      this.metaService.addTitle(category_name + environment.COMMON_TITLE);
+      this.metaService.addDescription(description);
+    }
+    console.log(this.products);
+  }
 }
