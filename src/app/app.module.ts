@@ -23,6 +23,8 @@ import {SliderModule} from 'primeng/slider';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     FeatureComponent,
     ProductsComponent,
     CategoryProductComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    TermsComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,

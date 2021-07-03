@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CategoryProductComponent } from './category-product/category-product.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 import { ProductsComponent } from './products/products.component';
+import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     path:'contact',
     component:ContactUsComponent
+  },
+  {
+    path:'terms',
+    component:TermsComponent
+  },
+  {
+    path:'privacy-policy',
+    component:PrivacyComponent
   },
   {
     path:'',
