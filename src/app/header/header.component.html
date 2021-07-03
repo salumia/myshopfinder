@@ -21,14 +21,14 @@
                             <a class="nav-link" routerLink="/home" (click)="updateText()" routerLinkActive="active-link">CATEGORIES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" (click)="updateText()" routerLinkActive="active-link">CONTACT US</a>
+                            <a class="nav-link" routerLink="/contact" (click)="updateText()" routerLinkActive="active-link">CONTACT US</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link pt-0 pb-0 not" href="javascript:void(0)">
-                                <form action="" [class.show-form]="search_opened">
-                                    <input [class.show-class]="search_opened" autocomplete="off" type="search" name="searchText" [(ngModel)]="searchText" (keydown.enter)="searchProduct()" placeholder="Search here ...">
+                                <form class="search-form" action="" [class.show-form]="search_opened">
+                                    <input [class.show-class]="search_opened" class="search-input" autocomplete="off" type="search" name="searchText" [(ngModel)]="searchText" (keydown.enter)="searchProduct()" placeholder="Search here ...">
                                     <i class="fa fa-search fa-rotate-90" [class.show-fa]="search_opened"></i>
                                 </form>
                             </a>

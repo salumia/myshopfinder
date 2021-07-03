@@ -453,7 +453,7 @@ header {
     z-index: 9;
 }
 
-form {
+.search-form {
     position: relative;
     top: 25px;
     left: 50%;
@@ -464,7 +464,7 @@ form {
     padding: 5px;
 }
 
-input {
+.search-input {
     position: absolute;
     top: 0;
     left: 0;
@@ -506,17 +506,17 @@ input {
     font-size: 1.2em;
 }
 
-form:hover {
+.search-form:hover {
     width: 300px;
     cursor: pointer;
     /* top: 35px; */
 }
 
-form:hover input {
+.search-form:hover .search-input {
     display: block;
 }
 
-form:hover .fa {
+.search-form:hover .fa {
     background: #07051a;
     color: white;
 }
@@ -615,6 +615,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 .button-primary {
     color: #000;
+    background-color: white;
     border: 2px solid #000;
 }
 
@@ -957,4 +958,9 @@ header .breadcrumb-item+.breadcrumb-item::before {
     line-height: 17px;
     padding: 12px 50px;
     font-weight: 800;
+    border-radius: 0;
+}
+
+.custom-container-height {
+    min-height: 400px;
 }
