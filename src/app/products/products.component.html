@@ -38,8 +38,8 @@
           </label>
     </div>
     <!-- Data View For Displaying Product -->
-    <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="8" [loading]="loading" filterBy="title" [sortField]="sortField"
-        [sortOrder]="sortOrder" class="p-0">
+    <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title" [sortField]="sortField"
+        [lazy]="true" (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
             <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
             <div class="row d-none d-md-flex p-2">

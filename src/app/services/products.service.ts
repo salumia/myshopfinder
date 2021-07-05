@@ -19,11 +19,12 @@ export class ProductsService {
 
   }
 
-  getAllProducts(): Observable<any> {
-    return this._httpClient.get<any>(this.API_URL);
+  getAllProducts(offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
+    let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
+    return this._httpClient.get<any>(url);
   }
 
-  getFilterData(query: string): Observable<any> {
+  getFilterData(query: string): Observable<any> {    
     if (query == '') {
       return this._httpClient.get<any>(this.GET_FILTER_DATA_API_URL);
     } else {
@@ -31,24 +32,28 @@ export class ProductsService {
     }
   }
 
-  getCategoryProducts(data: any): Observable<any> {
-    return this._httpClient.post<any>(this.API_URL, data);
+  getCategoryProducts(data: any,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
+    let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
+    return this._httpClient.post<any>(url, data);
   }
 
-  getFilterCategoryProducts(data: any,query:string): Observable<any> {
-    return this._httpClient.post<any>(this.API_URL + "?" + query, data);
+  getFilterCategoryProducts(data: any,query:string,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
+    let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
+    return this._httpClient.post<any>(url + query, data);
   }
 
-  getSearchProducts(query: string): Observable<any> {
-    return this._httpClient.get<any>(this.API_URL + "?s=" + query);
+  getSearchProducts(query: string,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
+    let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
+    return this._httpClient.get<any>(url + "&s=" + query);
   }
 
-  getBreadcrumbs(data: any): Observable<any> {
+  getBreadcrumbs(data: any): Observable<any> {    
     return this._httpClient.post<any>(this.BREADCRUMB_API_URL, data);
   }
 
-  getSearchFilterProducts(query: string): Observable<any> {
-    return this._httpClient.get<any>(this.API_URL + "?" + query);
+  getSearchFilterProducts(query: string,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
+    let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
+    return this._httpClient.get<any>(url + query);
   }
 
   setSearchText(text: string): void {

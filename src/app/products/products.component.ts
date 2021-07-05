@@ -54,6 +54,11 @@ export class ProductsComponent implements OnInit {
 
   switchChecked: boolean = true;
   currentLayout: string = "grid";
+  pageNumber: number = 1;
+  limits: number = environment.LIMIT_RECORD;
+  totalRecords: number = environment.LIMIT_RECORD;
+  sort_order: string = "asc";
+  sort_column: string = "id";
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
     private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService) {
@@ -71,6 +76,9 @@ export class ProductsComponent implements OnInit {
       if (params["q"]) {
         this.query = params["q"];
         this.commonService.updateSearchText(this.query);
+      }
+      if (params["pageNumber"]) {
+        this.pageNumber = params["pageNumber"];
       }
       if (params["mp"] && params["xp"]) {
         this.paramRangeValues[0] = params["mp"];
@@ -134,11 +142,14 @@ export class ProductsComponent implements OnInit {
   }
 
   resetFilterParameter(): void {
-    this.selectedRangeValues[0] = this.paramRangeValues[0];
-    this.selectedRangeValues[1] = this.paramRangeValues[1];
-    this.selectedRangeValues = [this.paramRangeValues[0], this.paramRangeValues[1]]; // Unusual
+    if (this.paramRangeValues[0] != 0 && this.paramRangeValues[1] != 0) {
+      this.selectedRangeValues[0] = this.paramRangeValues[0];
+      this.selectedRangeValues[1] = this.paramRangeValues[1];
+      this.selectedRangeValues = [this.paramRangeValues[0], this.paramRangeValues[1]]; // Unusual
+    }
     if (this.paramCategories != "") {
       let values = this.paramCategories.split(",");
+      this.selectedCategory = [];
       for (let value of values) {
         for (let category of this.categories) {
           if (category.slug == value) {
@@ -149,6 +160,7 @@ export class ProductsComponent implements OnInit {
     }
     if (this.paramBrands != "") {
       let values = this.paramBrands.split(",");
+      this.selectedBrand = [];
       for (let value of values) {
         for (let brand of this.brands) {
           if (brand.brand == value) {
@@ -179,10 +191,13 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this._serviceProduct.getAllProducts().subscribe(
+    let offset = (this.pageNumber - 1) * this.limits;
+    this._serviceProduct.getAllProducts(offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
+        this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
+        this.updateMetaTags();
       },
       (error) => {
         console.log(error);
@@ -197,10 +212,12 @@ export class ProductsComponent implements OnInit {
     this._serviceProduct.getFilterData(query).subscribe(
       (data) => {
         this.brands = data.brand;
-        this.selectedRangeValues[0] = data.price[0].min_price;
-        this.selectedRangeValues[1] = data.price[0].max_price;
-        this.rangeValues[0] = data.price[0].min_price;
-        this.rangeValues[1] = data.price[0].max_price;
+        // this.selectedRangeValues[0] = data.price[0].min_price;
+        // this.selectedRangeValues[1] = data.price[0].max_price;
+        this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
+        // this.rangeValues[0] = data.price[0].min_price;
+        // this.rangeValues[1] = data.price[0].max_price;
+        this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
         this.categories = data.category;
         this.fetchAllDetails();
       },
@@ -211,10 +228,13 @@ export class ProductsComponent implements OnInit {
   }
 
   searchProducts(query: string): void {
-    this._serviceProduct.getSearchProducts(query).subscribe(
+    let offset = (this.pageNumber - 1) * this.limits;
+    this._serviceProduct.getSearchProducts(query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
+        this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
+        this.updateMetaTags();
       },
       (error) => {
         console.log(error);
@@ -235,6 +255,9 @@ export class ProductsComponent implements OnInit {
       this.sortOrder = 1;
       this.sortField = this.sortKey;
     }
+    this.sort_column = this.sortField;
+    this.sort_order = this.sortOrder == 1 ? "asc" : "desc";
+    this.fetchAllDetails();
   }
 
 
@@ -306,7 +329,10 @@ export class ProductsComponent implements OnInit {
 
 
   prepareFilterQuery(): string {
-    let query = "mp=" + this.selectedRangeValues[0] + "&xp=" + this.selectedRangeValues[1];
+    let query = "";
+    if (this.selectedRangeValues[0] != 0 && this.selectedRangeValues[1] != 0) {
+      query += "&mp=" + this.selectedRangeValues[0] + "&xp=" + this.selectedRangeValues[1];
+    }
     if (this.selectedBrand.length > 0) {
       query += "&fb=";
       for (let i = 0; i < this.selectedBrand.length; i++) {
@@ -344,10 +370,13 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchFilterProducts(query: string) {
-    this._serviceProduct.getSearchFilterProducts(query).subscribe(
+    let offset = (this.pageNumber - 1) * this.limits;
+    this._serviceProduct.getSearchFilterProducts(query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
+        this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
+        this.updateMetaTags();
       },
       (error) => {
         console.log(error);
@@ -363,9 +392,11 @@ export class ProductsComponent implements OnInit {
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
     }
-    this._serviceProduct.getCategoryProducts(formData).subscribe(
+    let offset = (this.pageNumber - 1) * this.limits;
+    this._serviceProduct.getCategoryProducts(formData, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
+        this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
       },
@@ -382,9 +413,11 @@ export class ProductsComponent implements OnInit {
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
     }
-    this._serviceProduct.getFilterCategoryProducts(formData, query).subscribe(
+    let offset = (this.pageNumber - 1) * this.limits;
+    this._serviceProduct.getFilterCategoryProducts(formData, query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
+        this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
       },
@@ -401,19 +434,47 @@ export class ProductsComponent implements OnInit {
   }
 
   updateMetaTags() {
-    if (this.products.count !== undefined && this.products.count > 0) {
+    if (this.totalRecords > 0) {
       let category_name = "";
-      for (let product of this.products.products) {
-        if (product.slug == this.data[0]) {
-          category_name = product.category_name;
-          break;
+      if(this.data.length > 0 ){
+        for (let product of this.products.products) {
+          if (product.slug == this.data[0]) {
+            category_name = product.category_name;
+            break;
+          }
         }
+        category_name = this.capitalizeWords(category_name);
       }
-      category_name = this.capitalizeWords(category_name);
-      let description = `Shop thousands of ${category_name} from top brands. Get the latest prices, and find the hottest trending items now | MyShopFinder`;
-      this.metaService.addTitle(category_name + environment.COMMON_TITLE);
-      this.metaService.addDescription(description);
+      let brand_name = "";
+      if(this.selectedBrand.length == 1)      
+      {
+        brand_name = this.selectedBrand[0].brand;
+        brand_name = this.capitalizeWords(brand_name);
+      }
+      if( category_name != "" && brand_name != ""){
+        let description = `Shop the top ${brand_name}'s ${category_name} and get the latest prices in one place. Get exclusive offers just for you on MyShopFinder.`;
+        this.metaService.addTitle(brand_name + " " + category_name + environment.COMMON_TITLE);
+        this.metaService.addDescription(description);
+      }
+      else if( category_name != ""){
+        let description = `Shop thousands of ${category_name} from top brands. Get the latest prices, and find the hottest trending items now | MyShopFinder`;
+        this.metaService.addTitle(category_name + environment.COMMON_TITLE);
+        this.metaService.addDescription(description);
+      }
+      else if( brand_name != ""){
+        let description = `Shop the top ${brand_name}'s products and get the latest prices in one place. Get exclusive offers just for you on MyShopFinder.`;
+        this.metaService.addTitle(brand_name + environment.COMMON_TITLE);
+        this.metaService.addDescription(description);
+      }
+      console.log(category_name + "\t" + brand_name);
     }
-    console.log(this.products);
+    
+  }
+
+  loadData(event: any) {
+    // console.log(event.first + "\t" + event.rows);
+    this.loading = true;
+    this.pageNumber = Math.floor(event.first / this.limits) + 1;
+    this.fetchAllDetails();
   }
 }
