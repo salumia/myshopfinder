@@ -12,11 +12,11 @@ import { ProductsService } from '../services/products.service';
 })
 export class HeaderComponent implements OnInit {
 
-  searchText: string = "";  
-  search_opened: boolean = false;  
+  searchText: string = "";
+  search_opened: boolean = false;
 
   constructor(private location: Location, private route: Router, private commonService: CommonDataService) {
-   
+
   }
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-    searchProduct(): void {
+  searchProduct(): void {
     if (this.searchText.length != 0) {
       this.search_opened = true;
       let navigationExtras: NavigationExtras = {
@@ -50,6 +50,15 @@ export class HeaderComponent implements OnInit {
     this.searchText = "";
     this.commonService.updateSearchText(this.searchText);
     this.search_opened = false;
+  }
+
+  jumpToProduct(): void {
+    this.searchText = "";
+    this.commonService.updateSearchText(this.searchText);
+    this.search_opened = false;
+    this.route.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.route.onSameUrlNavigation = 'reload';
+    this.route.navigate(['/products']);
   }
 
 }

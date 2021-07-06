@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CategoryService } from '../services/category.service';
+import { FeatureUpdateService } from '../services/feature-update.service';
 import { MetaServiceService } from '../services/meta-service.service';
 
 @Component({
@@ -13,7 +14,9 @@ export class HomeComponent implements OnInit {
   data: any = [];
   loading:boolean = true;
   error_status:boolean = false;
-  constructor(private _serviceCategory: CategoryService,private metaService:MetaServiceService) { }
+  constructor(private _serviceCategory: CategoryService,private metaService:MetaServiceService,private featureUpdateService:FeatureUpdateService) { 
+    this.featureUpdateService.updateStatusText("yes");
+  }
 
   ngOnInit(): void {    
     this.metaService.addTitle(environment.BASE_TITLE);

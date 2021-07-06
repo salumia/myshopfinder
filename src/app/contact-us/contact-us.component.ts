@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { FeatureUpdateService } from '../services/feature-update.service';
 import { MetaServiceService } from '../services/meta-service.service';
 import { SendContactService } from '../services/send-contact.service';
 
@@ -15,7 +16,9 @@ export class ContactUsComponent implements OnInit {
   emailValidation: boolean = true;
   server_response:string = "";
 
-  constructor(private serviceContact:SendContactService,private metaService:MetaServiceService) { }
+  constructor(private serviceContact:SendContactService,private metaService:MetaServiceService,private featureUpdateService:FeatureUpdateService) { 
+    this.featureUpdateService.updateStatusText("no");
+  }
 
   
   ngOnInit(): void {

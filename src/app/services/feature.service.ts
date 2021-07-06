@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
 })
 export class FeatureService {
 
-  API_URL: string =  environment.BASE_API_URL + "getFeaturedProduct";
+  API_URL: string = environment.BASE_API_URL + "getFeaturedProduct";
+  
   constructor(private _httpClient: HttpClient) {
-
   }
 
   getFeatureProduct(): Observable<any> {

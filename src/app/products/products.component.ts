@@ -5,6 +5,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { SelectItem } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { CommonDataService } from '../services/common-data.service';
+import { FeatureUpdateService } from '../services/feature-update.service';
 import { MetaServiceService } from '../services/meta-service.service';
 import { ProductsService } from '../services/products.service';
 
@@ -59,14 +60,19 @@ export class ProductsComponent implements OnInit {
   totalRecords: number = environment.LIMIT_RECORD;
   sort_order: string = "asc";
   sort_column: string = "id";
+  first_time: boolean = true;
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
-    private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService) {
+    private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService
+    , private featureUpdateService: FeatureUpdateService) {
+    this.featureUpdateService.updateStatusText("no");
     if (deviceService.isMobile()) {
       this.mobile_filter_view = true;
     } else {
       this.mobile_filter_view = false;
     }
+    this.first_time = true;
+    console.log("constructor: " + this.first_time);
   }
 
   ngOnInit(): void {
@@ -102,6 +108,7 @@ export class ProductsComponent implements OnInit {
 
     setTimeout(() => {
       if (this.data.length == 0) {
+        console.log("Here");
         this.getFilterData('');
       } else {
         this.getFilterData(this.data[0]);
@@ -212,11 +219,7 @@ export class ProductsComponent implements OnInit {
     this._serviceProduct.getFilterData(query).subscribe(
       (data) => {
         this.brands = data.brand;
-        // this.selectedRangeValues[0] = data.price[0].min_price;
-        // this.selectedRangeValues[1] = data.price[0].max_price;
         this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
-        // this.rangeValues[0] = data.price[0].min_price;
-        // this.rangeValues[1] = data.price[0].max_price;
         this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
         this.categories = data.category;
         this.fetchAllDetails();
@@ -357,9 +360,14 @@ export class ProductsComponent implements OnInit {
   submitFilter(): void {
     let filter_query = this.prepareFilterQuery();
     if (this.all_product_status || this.query != "") {
-      this.fetchFilterProducts(filter_query);
+      this.first_time = true;
+      this.pageNumber = 1;
+      this.fetchFilterProducts(filter_query);      
       this.location.replaceState('/products?' + filter_query);
     } else {
+      this.first_time = true;
+      this.first_time = true;
+      this.pageNumber = 1;
       this.fetchFilterCategoryProducts(this.data, filter_query);
       let url_string = this.route.url;
       if (url_string.indexOf("?") != -1) {
@@ -436,7 +444,7 @@ export class ProductsComponent implements OnInit {
   updateMetaTags() {
     if (this.totalRecords > 0) {
       let category_name = "";
-      if(this.data.length > 0 ){
+      if (this.data.length > 0) {
         for (let product of this.products.products) {
           if (product.slug == this.data[0]) {
             category_name = product.category_name;
@@ -446,35 +454,37 @@ export class ProductsComponent implements OnInit {
         category_name = this.capitalizeWords(category_name);
       }
       let brand_name = "";
-      if(this.selectedBrand.length == 1)      
-      {
+      if (this.selectedBrand.length == 1) {
         brand_name = this.selectedBrand[0].brand;
         brand_name = this.capitalizeWords(brand_name);
       }
-      if( category_name != "" && brand_name != ""){
+      if (category_name != "" && brand_name != "") {
         let description = `Shop the top ${brand_name}'s ${category_name} and get the latest prices in one place. Get exclusive offers just for you on MyShopFinder.`;
         this.metaService.addTitle(brand_name + " " + category_name + environment.COMMON_TITLE);
         this.metaService.addDescription(description);
       }
-      else if( category_name != ""){
+      else if (category_name != "") {
         let description = `Shop thousands of ${category_name} from top brands. Get the latest prices, and find the hottest trending items now | MyShopFinder`;
         this.metaService.addTitle(category_name + environment.COMMON_TITLE);
         this.metaService.addDescription(description);
       }
-      else if( brand_name != ""){
+      else if (brand_name != "") {
         let description = `Shop the top ${brand_name}'s products and get the latest prices in one place. Get exclusive offers just for you on MyShopFinder.`;
         this.metaService.addTitle(brand_name + environment.COMMON_TITLE);
         this.metaService.addDescription(description);
       }
-      console.log(category_name + "\t" + brand_name);
     }
-    
   }
 
   loadData(event: any) {
-    // console.log(event.first + "\t" + event.rows);
-    this.loading = true;
-    this.pageNumber = Math.floor(event.first / this.limits) + 1;
-    this.fetchAllDetails();
+    // console.log("loadData: " + this.first_time);
+
+    if (this.first_time) {
+      this.first_time = false;
+    } else {
+      this.loading = true;
+      this.pageNumber = Math.floor(event.first / this.limits) + 1;
+      this.fetchAllDetails();
+    }
   }
 }
