@@ -218,10 +218,13 @@ export class ProductsComponent implements OnInit {
   getFilterData(query: string): void {
     this._serviceProduct.getFilterData(query).subscribe(
       (data) => {
-        this.brands = data.brand;
-        this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
-        this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
-        this.categories = data.category;
+        console.log(data);
+        if(data.status!=404){
+          this.brands = data.brand;
+          this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
+          this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
+          this.categories = data.category;          
+        }
         this.fetchAllDetails();
       },
       (error) => {
@@ -322,6 +325,10 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  generateSectionRequest(section:string):void{
+    this.genereateBreadcrumbRequest(section);
+  }
+
   checkLast(i: number): boolean {
     return this.breadcrumb_data != null && i == this.breadcrumb_data.data.length - 1;
   }
@@ -375,6 +382,7 @@ export class ProductsComponent implements OnInit {
       }
       this.location.replaceState(url_string + "?" + filter_query);
     }
+    this.filter_sidebar = false;
   }
 
   fetchFilterProducts(query: string) {

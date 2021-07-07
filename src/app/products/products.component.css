@@ -138,3 +138,22 @@ input:checked+.slider1:before {
     background-color: black;
     color: white;
 }
+
+
+/*---------------------Colors----------------------------*/
+
+.color-light-grey {
+    color: #d3d3d3 !important;
+    text-decoration: line-through;
+    font-weight: bold;
+}
+
+.color-purple {
+    color: #800080 !important;
+    font-weight: bold;
+}
+
+.color-black-bold {
+    color: black !important;
+    font-weight: bolder;
+}

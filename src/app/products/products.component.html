@@ -4,7 +4,7 @@
         <div class="col-8 p-0">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)" class="active">{{breadcrumb_data.section}}</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="generateSectionRequest(breadcrumb_data.section)" class="active">{{breadcrumb_data.section}}</a></li>
                 <li class="breadcrumb-item" *ngFor="let bread of breadcrumb_data.data; index as i;">
                     <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)" [class.active]="checkLast(i)">{{bread.category_name}}</a>
                 </li>
@@ -49,7 +49,7 @@
                             <div class="col-8 p-0">
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)" class="active">{{breadcrumb_data.section}}</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="generateSectionRequest(breadcrumb_data.section)">{{breadcrumb_data.section}}</a></li>
                                     <li class="breadcrumb-item" *ngFor="let bread of breadcrumb_data.data; index as i;">
                                         <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)" [class.active]="checkLast(i)">{{bread.category_name}}</a>
                                     </li>
@@ -84,9 +84,9 @@
                             <div class="mr-auto text-dark font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>
                                 <span class="d-md-inline text-secondary d-none">{{product.brand|uppercase}}</span>
                             </div>
-                            <div class="font-weight-bold p-0">
-                                <span class="mr-2 text-danger d-md-inline d-none"><s>${{product.original_price}}</s></span>
-                                <span class="price-color">${{product.sale_price}}</span>
+                            <div class="p-0">
+                                <span class="mr-2 d-md-inline d-none" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                                <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                 </ng-template>
             </p-listbox>
         </div>
-        <div class="col-12 mb-2">
+        <div class="col-12 mb-2" *ngIf="categories.length!=0">
             <p-listbox [options]="categories" [(ngModel)]="selectedCategory" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>Category</strong>
