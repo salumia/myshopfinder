@@ -391,7 +391,7 @@ export class ProductsComponent implements OnInit {
       this.location.replaceState('/products?' + filter_query);
     } else {
       this.first_time = true;
-      this.first_time = true;
+      this.filter_flag = true;
       this.pageNumber = 1;
       this.fetchFilterCategoryProducts(this.data, filter_query);
       let url_string = this.route.url;
