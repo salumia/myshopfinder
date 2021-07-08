@@ -163,3 +163,8 @@ input:checked+.slider1:before {
     font-weight: bolder;
     font-family: 'Gilroy-Bold';
 }
+
+.filter-button {
+    height: 35px;
+    padding-top: 10px;
+}

@@ -27,7 +27,8 @@ import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import {InputText, InputTextModule} from 'primeng/inputtext';
 import {MenubarModule} from 'primeng/menubar';
-
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -60,9 +61,10 @@ import {MenubarModule} from 'primeng/menubar';
     ScrollPanelModule,
     InputTextModule,
     MenubarModule,
+    ToastModule,
     BrowserAnimationsModule
   ],
-  providers: [Meta],
+  providers: [Meta,MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

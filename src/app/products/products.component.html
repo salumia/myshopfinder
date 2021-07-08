@@ -42,11 +42,11 @@
         [lazy]="true" (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
             <!-- Bread Crumb For Desktop View -->
-            <div class="row d-none d-md-flex p-2">
+            <div class="row d-md-flex p-2">
                 <div class="col-md-4 col-12">
-                    <div class="pt-2 pb-2" *ngIf="breadcrumb_status" [class.back-color]="backgroud_status">
+                    <div class="pt-2 pb-2" *ngIf="breadcrumb_status">
                         <div class="row products_list">
-                            <div class="col-8 p-0">
+                            <div class="col-12 p-0">
                                 <ul class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
                                     <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="generateSectionRequest(breadcrumb_data.section)">{{breadcrumb_data.section}}</a></li>
@@ -55,9 +55,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-4">
+                            <!-- <div class="col-4">
                                 <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">Filter</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -72,8 +72,8 @@
             </div>
             <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
             <!-- Desktop View With Title -->
-            <div class="row d-none d-md-flex p-2">
-                <div class="col-md-9">
+            <div class="row d-md-flex p-2">
+                <div class="col-md-9 col-12 order-md-1 order-2 text-center text-md-left">
                     <p class="page-title-font">{{pageTitle}}</p>
                 </div>
                 <!-- <div class="col-md-3 col-12 mb-md-2 mb-4">
@@ -82,11 +82,16 @@
                         <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
                     </div>
                 </div> -->
-                <div class="col-md-2 col-12 mb-2 p-0 pr-md-2">
-                    <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
-                </div>
-                <div class="col-md-1 col-12 mb-2 ">
-                    <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4">Filter</button>
+                <div class="col-md-3 col-12 order-1 order-md-2 mb-2 p-0">
+                    <div class="row">
+                        <div class="col-6 p-0 pr-md-2 text-left text-md-center">
+                            <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
+                        </div>
+                        <div class="col-6 text-right text-md-center p-0">
+                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 d-md-inline-block d-none">Filter</button>
+                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary filter-button pl-4 pr-4 d-md-none d-inline-block"><span class="fa fa-filter fa-lg d-md-none d-inline-block"></span></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </ng-template>
@@ -97,10 +102,10 @@
                     <div class="product-grid-item-content card-body pt-2 p-0">
                         <div class="d-flex flex-md-row flex-column align-items-md-center">
                             <div class="mr-auto text-dark font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>
-                                <span class="d-md-inline text-secondary d-none">{{product.brand|uppercase}}</span>
+                                <span class="d-md-inline text-secondary">{{product.brand|uppercase}}</span>
                             </div>
                             <div class="p-0">
-                                <span class="mr-2 d-md-inline d-none" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                                <span class="mr-2 d-md-inline" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                                 <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
                             </div>
                         </div>
@@ -113,7 +118,9 @@
             <div class="col-md-12 categories_bg category-color text-center">
                 <img [src]="product.image" [alt]="product.title" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
                 <h2 class="category_title text-dark">{{product.title}}</h2>
-                <h4 class="price-color mb-3 font-weight-bold">$ {{product.sale_price}}</h4>
+                <h4 class="total_products">{{product.brand}}</h4>
+                <h4 class="mb-3 " [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</h4>
+                <h4 *ngIf="product.sale_price" class="price-color mb-3 color-purple">${{product.sale_price}}</h4>
                 <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)" class="button button-primary button-primary-style">Buy Now</a>
             </div>
         </ng-template>

@@ -998,3 +998,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
     border-color: #ced4da;
     background-color: #ced4da;
 }
+
+#newsletter_form button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

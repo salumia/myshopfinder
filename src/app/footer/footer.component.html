@@ -6,10 +6,13 @@
                 <img class="logo" style="width:200px;" src="assets/images/logo.png">
                 <label for="subscribe" class="mt-4">Subscribe to our newsletter</label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Email">
-                    <div class="input-group-append">
-                        <span class="input-group-text">Submit</span>
-                    </div>
+                    <form style="display:flex;" [formGroup]="newsletterForm" (ngSubmit)="submitForm()" id="newsletter_form">
+                        <input type="text" class="form-control" formControlName="mail" placeholder="Email">
+                        <div class="input-group-append">
+                            <button type="submit" class="input-group-text">Submit</button>
+                            <!-- <span class="input-group-text">Submit</span> -->
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-3 col-6 foot_cols2">
@@ -54,5 +57,5 @@
     </div>
 </div>
 
-
+<p-toast></p-toast>
 <!------------------------end footer------------------------>
