@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { SelectItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { CommonDataService } from '../services/common-data.service';
 import { FeatureUpdateService } from '../services/feature-update.service';
@@ -61,6 +61,14 @@ export class ProductsComponent implements OnInit {
   sort_order: string = "asc";
   sort_column: string = "id";
   first_time: boolean = true;
+  pageTitle:string = "";
+  sections:string[] = ["women","men","kids","home"];
+  sectionsDropDown:string[] = ["Women","Men","Kids","Home"];
+  categoryName:string = "";
+  searchText:string = "";
+  searchKey:string = "";
+  menuItems: MenuItem[] = [];
+
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
     private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService
@@ -72,7 +80,6 @@ export class ProductsComponent implements OnInit {
       this.mobile_filter_view = false;
     }
     this.first_time = true;
-    console.log("constructor: " + this.first_time);
   }
 
   ngOnInit(): void {
@@ -179,32 +186,42 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchBreadcrumbs(category: string): void {
-    var formData: any = new FormData();
-    formData.append(`category`, category);
-    this._serviceProduct.getBreadcrumbs(formData).subscribe(
-      (data) => {
-        this.breadcrumb_data = data;
-        if (data != null) {
-          this.breadcrumb_status = true;
-        } else {
+    if(this.sections.indexOf(category)==-1){
+      var formData: any = new FormData();
+      formData.append(`category`, category);
+      this._serviceProduct.getBreadcrumbs(formData).subscribe(
+        (data) => {
+          this.breadcrumb_data = data;
+          if (data != null) {
+            this.breadcrumb_status = true;
+            this.categoryName = this.breadcrumb_data.data[this.breadcrumb_data.data.length-1].category_name;    
+            let index = this.sections.indexOf(this.breadcrumb_data.section);
+            if(index!=-1){
+              this.searchKey = this.sectionsDropDown[index];
+            }
+          } else {
+            this.breadcrumb_status = false;
+            this.categoryName = "";
+          }
+          this.initializePageTitle();
+        },
+        (error) => {
           this.breadcrumb_status = false;
+          this.breadcrumb_data = null;
         }
-      },
-      (error) => {
-        this.breadcrumb_status = false;
-        this.breadcrumb_data = null;
-      }
-    );
+      );
+    }
   }
 
   fetchProducts(): void {
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getAllProducts(offset, this.limits, this.sort_column, this.sort_order).subscribe(
-      (data) => {
+      (data) => {        
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
+        this.initializePageTitle();
       },
       (error) => {
         console.log(error);
@@ -241,6 +258,7 @@ export class ProductsComponent implements OnInit {
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
+        this.initializePageTitle();
       },
       (error) => {
         console.log(error);
@@ -393,6 +411,7 @@ export class ProductsComponent implements OnInit {
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
+        this.initializePageTitle();
       },
       (error) => {
         console.log(error);
@@ -415,6 +434,7 @@ export class ProductsComponent implements OnInit {
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
+        this.initializePageTitle();
       },
       (error) => {
         console.log(error);
@@ -431,11 +451,12 @@ export class ProductsComponent implements OnInit {
     }
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getFilterCategoryProducts(formData, query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
-      (data) => {
+      (data) => {        
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
         this.updateMetaTags();
+        this.initializePageTitle();
       },
       (error) => {
         console.log(error);
@@ -495,4 +516,33 @@ export class ProductsComponent implements OnInit {
       this.fetchAllDetails();
     }
   }
+
+  initializePageTitle():void{
+    this.pageTitle = "All Products";
+    console.log(this.data + " " + this.filter_flag);
+    if(this.data.length == 1){
+      if(this.sections.indexOf(this.data[0])!=-1){
+        this.pageTitle = this.capitalizeWords(this.data[0]) + " Products";
+        if(this.selectedBrand.length == 1){
+          this.pageTitle = this.capitalizeWords(this.selectedBrand[0].brand) + " " + this.pageTitle;
+        }        
+      }else{
+        this.pageTitle = this.capitalizeWords(this.categoryName);
+        if(this.selectedBrand.length == 1){
+          this.pageTitle = this.capitalizeWords(this.selectedBrand[0].brand) + " " + this.pageTitle;
+        }
+      }
+    }else if(this.filter_flag){
+      if(this.selectedBrand.length == 1){
+        this.pageTitle = "All Products of " + this.capitalizeWords(this.selectedBrand[0].brand);
+      }else{ 
+        this.pageTitle = "Filtered Products";         
+      }
+    }
+  }
+
+  searchBySection():void{
+    console.log(this.searchText);
+  }
+
 }

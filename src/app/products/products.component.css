@@ -157,3 +157,9 @@ input:checked+.slider1:before {
     color: black !important;
     font-weight: bolder;
 }
+
+.page-title-font {
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: 'Gilroy-Bold';
+}

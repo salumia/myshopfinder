@@ -25,6 +25,9 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import {InputText, InputTextModule} from 'primeng/inputtext';
+import {MenubarModule} from 'primeng/menubar';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +58,8 @@ import { PrivacyComponent } from './privacy/privacy.component';
     SliderModule,
     InputSwitchModule,
     ScrollPanelModule,
+    InputTextModule,
+    MenubarModule,
     BrowserAnimationsModule
   ],
   providers: [Meta],

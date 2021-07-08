@@ -1,5 +1,5 @@
 <!-- This is the Mobile Bread Crumb and Filter Button in Product Category Status -->
-<div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status && mobile_filter_view">
+<!-- <div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status && mobile_filter_view">
     <div class="row products_list">
         <div class="col-8 p-0">
             <ul class="breadcrumb">
@@ -11,12 +11,12 @@
             </ul>
         </div>
         <div class="col-4 text-right p-0">
-            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3 d-md-none">Filters</button>
+            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3 d-md-none">Filter</button>
         </div>
     </div>
-</div>
+</div> -->
 <!-- This is the Mobile Bread Crumb and Filter Button in All Product Status -->
-<div class="custom-container pt-2 pb-2 d-md-none" *ngIf="all_product_status && mobile_filter_view">
+<!-- <div class="custom-container pt-2 pb-2 d-md-none" *ngIf="all_product_status && mobile_filter_view">
     <div class="row products_list">
         <div class="col-8 p-0">
             <ul class="breadcrumb">
@@ -24,10 +24,10 @@
             </ul>
         </div>
         <div class="col-4 text-right  p-0">
-            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3">Filters</button>
+            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3">Filter</button>
         </div>
     </div>
-</div>
+</div> -->
 <div class="custom-container p-0 custom-container-height">
     <!-- Switch Button For Mobile View -->
     <div id="switch_button" class="optionClass d-md-none" *ngIf="mobile_filter_view">
@@ -41,9 +41,9 @@
     <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title" [sortField]="sortField"
         [lazy]="true" (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
-            <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
+            <!-- Bread Crumb For Desktop View -->
             <div class="row d-none d-md-flex p-2">
-                <div class="col-md-8">
+                <div class="col-md-4 col-12">
                     <div class="pt-2 pb-2" *ngIf="breadcrumb_status" [class.back-color]="backgroud_status">
                         <div class="row products_list">
                             <div class="col-8 p-0">
@@ -56,10 +56,25 @@
                                 </ul>
                             </div>
                             <div class="col-4">
-                                <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">Filters</button>
+                                <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">Filter</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-4 col-12 mb-2 p-0 pl-md-2 pr-md-2">
+                    <div class="p-inputgroup global-search">
+                        <input type="text" [(ngModel)]="searchText" pInputText placeholder="What Are You Looking for?" (keyup.enter)="searchBySection()">
+                        <p-dropdown autoWidth="true" [options]="sectionsDropDown" [(ngModel)]="searchKey"></p-dropdown>
+                        <button type="button" (click)="searchBySection()" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
+            <!-- Desktop View With Title -->
+            <div class="row d-none d-md-flex p-2">
+                <div class="col-md-9">
+                    <p class="page-title-font">{{pageTitle}}</p>
                 </div>
                 <!-- <div class="col-md-3 col-12 mb-md-2 mb-4">
                     <div class="form-group has-search">
@@ -67,11 +82,11 @@
                         <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
                     </div>
                 </div> -->
-                <div class="col-md-3 col-12 mb-2 p-0 pl-md-2 pr-md-2">
+                <div class="col-md-2 col-12 mb-2 p-0 pr-md-2">
                     <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
                 </div>
-                <div class="col-md-1 col-12 mb-md-2 mb-4 p-0 text-right">
-                    <button type="button" (click)="openFilterSidebar()" class="button button-secondary pt-2 pb-2 pl-4 pr-4">Filters</button>
+                <div class="col-md-1 col-12 mb-2 ">
+                    <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4">Filter</button>
                 </div>
             </div>
         </ng-template>
