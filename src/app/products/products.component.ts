@@ -61,12 +61,12 @@ export class ProductsComponent implements OnInit {
   sort_order: string = "asc";
   sort_column: string = "id";
   first_time: boolean = true;
-  pageTitle:string = "";
-  sections:string[] = ["women","men","kids","home"];
-  sectionsDropDown:string[] = ["Women","Men","Kids","Home"];
-  categoryName:string = "";
-  searchText:string = "";
-  searchKey:string = "";
+  pageTitle: string = "";
+  sections: string[] = ["women", "men", "kids", "home"];
+  sectionsDropDown: string[] = ["Women", "Men", "Kids", "Home"];
+  categoryName: string = "";
+  searchText: string = "";
+  searchKey: string = "";
   menuItems: MenuItem[] = [];
 
 
@@ -90,6 +90,9 @@ export class ProductsComponent implements OnInit {
         this.query = params["q"];
         this.commonService.updateSearchText(this.query);
       }
+      if (params["s"]) {
+        this.searchText = params["s"];
+      }
       if (params["pageNumber"]) {
         this.pageNumber = params["pageNumber"];
       }
@@ -110,6 +113,10 @@ export class ProductsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params: Params) => {
       if (params.category) {
         this.data.push(params.category);
+        let index = this.sections.indexOf(this.data[0]);
+        if (index != -1) {
+          this.searchKey = this.sectionsDropDown[index];
+        }
       }
     });
 
@@ -118,13 +125,14 @@ export class ProductsComponent implements OnInit {
         console.log("Here");
         this.getFilterData('');
       } else {
+
         this.getFilterData(this.data[0]);
       }
     }, 50);
 
     this.sortOptions = [
-      { label: 'Price High to Low', value: '!sale_price' },
-      { label: 'Price Low to High', value: 'sale_price' },
+      { label: 'Price High to Low', value: '!price' },
+      { label: 'Price Low to High', value: 'price' },
       { label: 'Recently Added', value: '!created_at' },
       { label: 'Most Popular', value: '!popular' }
     ];
@@ -134,13 +142,21 @@ export class ProductsComponent implements OnInit {
     if (this.query != "") {
       this.searchProducts(this.query);
       this.commonService.updateSearchText(this.query);
+      this.searchText="";
     } else if (this.data.length > 0) {
       this.fetchBreadcrumbs(this.data[0]);
       if (this.filter_flag) {
         this.resetFilterParameter();
         this.fetchFilterCategoryProducts(this.data, this.prepareFilterQuery());
+        this.searchText="";
       } else {
-        this.fetchCategoryProducts(this.data);
+        if (this.sections.indexOf(this.data[0]) != -1 && this.searchText != "") {
+          this.fetchFilterCategoryProducts(this.data, "&q=" + this.searchText);
+        } else {
+          this.fetchCategoryProducts(this.data);
+          this.searchText="";
+        }
+
       }
     } else {
       this.breadcrumb_data = null;
@@ -149,8 +165,10 @@ export class ProductsComponent implements OnInit {
       if (this.filter_flag) {
         this.resetFilterParameter();
         this.fetchFilterProducts(this.prepareFilterQuery());
+        this.searchText="";
       } else {
         this.fetchProducts();
+        this.searchText="";
       }
     }
   }
@@ -186,7 +204,7 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchBreadcrumbs(category: string): void {
-    if(this.sections.indexOf(category)==-1){
+    if (this.sections.indexOf(category) == -1) {
       var formData: any = new FormData();
       formData.append(`category`, category);
       this._serviceProduct.getBreadcrumbs(formData).subscribe(
@@ -194,9 +212,9 @@ export class ProductsComponent implements OnInit {
           this.breadcrumb_data = data;
           if (data != null) {
             this.breadcrumb_status = true;
-            this.categoryName = this.breadcrumb_data.data[this.breadcrumb_data.data.length-1].category_name;    
+            this.categoryName = this.breadcrumb_data.data[this.breadcrumb_data.data.length - 1].category_name;
             let index = this.sections.indexOf(this.breadcrumb_data.section);
-            if(index!=-1){
+            if (index != -1) {
               this.searchKey = this.sectionsDropDown[index];
             }
           } else {
@@ -216,7 +234,7 @@ export class ProductsComponent implements OnInit {
   fetchProducts(): void {
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getAllProducts(offset, this.limits, this.sort_column, this.sort_order).subscribe(
-      (data) => {        
+      (data) => {
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
@@ -236,11 +254,11 @@ export class ProductsComponent implements OnInit {
     this._serviceProduct.getFilterData(query).subscribe(
       (data) => {
         console.log(data);
-        if(data.status!=404){
+        if (data.status != 404) {
           this.brands = data.brand;
           this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
           this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
-          this.categories = data.category;          
+          this.categories = data.category;
         }
         this.fetchAllDetails();
       },
@@ -343,7 +361,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  generateSectionRequest(section:string):void{
+  generateSectionRequest(section: string): void {
     this.genereateBreadcrumbRequest(section);
   }
 
@@ -387,7 +405,7 @@ export class ProductsComponent implements OnInit {
     if (this.all_product_status || this.query != "") {
       this.first_time = true;
       this.pageNumber = 1;
-      this.fetchFilterProducts(filter_query);      
+      this.fetchFilterProducts(filter_query);
       this.location.replaceState('/products?' + filter_query);
     } else {
       this.first_time = true;
@@ -423,6 +441,7 @@ export class ProductsComponent implements OnInit {
 
 
   fetchCategoryProducts(category: string[]): void {
+    this.loading = true;
     var formData: any = new FormData();
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
@@ -445,13 +464,14 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchFilterCategoryProducts(category: string[], query: string): void {
+    this.loading = true;
     var formData: any = new FormData();
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
     }
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getFilterCategoryProducts(formData, query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
-      (data) => {        
+      (data) => {
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
@@ -517,32 +537,40 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  initializePageTitle():void{
+  initializePageTitle(): void {
     this.pageTitle = "All Products";
     console.log(this.data + " " + this.filter_flag);
-    if(this.data.length == 1){
-      if(this.sections.indexOf(this.data[0])!=-1){
+    if (this.data.length == 1) {
+      if (this.sections.indexOf(this.data[0]) != -1) {
         this.pageTitle = this.capitalizeWords(this.data[0]) + " Products";
-        if(this.selectedBrand.length == 1){
+        if (this.selectedBrand.length == 1) {
           this.pageTitle = this.capitalizeWords(this.selectedBrand[0].brand) + " " + this.pageTitle;
-        }        
-      }else{
+        }
+      } else {
         this.pageTitle = this.capitalizeWords(this.categoryName);
-        if(this.selectedBrand.length == 1){
+        if (this.selectedBrand.length == 1) {
           this.pageTitle = this.capitalizeWords(this.selectedBrand[0].brand) + " " + this.pageTitle;
         }
       }
-    }else if(this.filter_flag){
-      if(this.selectedBrand.length == 1){
+    } else if (this.filter_flag) {
+      if (this.selectedBrand.length == 1) {
         this.pageTitle = "All Products of " + this.capitalizeWords(this.selectedBrand[0].brand);
-      }else{ 
-        this.pageTitle = "Filtered Products";         
+      } else {
+        this.pageTitle = "Filtered Products";
       }
     }
   }
 
-  searchBySection():void{
-    console.log(this.searchText);
+  searchBySection(): void {
+    if (this.searchText != "") {
+      //console.log(this.searchKey.toLowerCase() + "\t" + this.searchText);
+      this.getFilterData(this.searchKey.toLowerCase());
+      let url_string = this.route.url;
+      if (url_string.indexOf("/") != -1) {
+        url_string = url_string.substring(0, url_string.indexOf("/"));
+      }
+      this.location.replaceState(url_string + "/products/" + this.searchKey.toLowerCase() + "/?s=" + this.searchText);
+    }
   }
 
 }

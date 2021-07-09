@@ -863,6 +863,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 .footer .head {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .foot_sec h2 {
@@ -876,7 +877,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 .foot_sec p {
     font-size: 12px !important;
     color: #ffffff !important;
-    line-height: 24px !important;
+    line-height: 16px !important;
 }
 
 .footer p {
@@ -999,7 +1000,23 @@ header .breadcrumb-item+.breadcrumb-item::before {
     background-color: #ced4da;
 }
 
+.global-search .p-dropdown-label,
+.global-search .p-dropdown-item {
+    font-weight: bold;
+}
+
 #newsletter_form button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.button-filter::after {
+    content: '\f0b0';
+    font-family: fontAwesome;
+}
+
+.text-overflow-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

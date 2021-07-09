@@ -88,27 +88,24 @@
                             <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
                         </div>
                         <div class="col-6 text-right text-md-center p-0">
-                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 d-md-inline-block d-none">Filter</button>
-                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary filter-button pl-4 pr-4 d-md-none d-inline-block"><span class="fa fa-filter fa-lg d-md-none d-inline-block"></span></button>
+                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
                         </div>
                     </div>
                 </div>
             </div>
         </ng-template>
+        <!-- Desktop View with Grid Manner-->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
                     <img class="card-img-top rounded-0  bg-light-grey img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                     <div class="product-grid-item-content card-body pt-2 p-0">
-                        <div class="d-flex flex-md-row flex-column align-items-md-center">
-                            <div class="mr-auto text-dark font-weight-bolder"><span>{{product.title|uppercase}}</span> <br>
-                                <span class="d-md-inline text-secondary">{{product.brand|uppercase}}</span>
-                            </div>
-                            <div class="p-0">
-                                <span class="mr-2 d-md-inline" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
-                                <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
-                            </div>
-                        </div>
+                        <p class="text-dark font-weight-bolder text-overflow-elipsis">{{product.title|uppercase}}</p>
+                        <p class="text-secondary text-overflow-elipsis">{{product.brand|uppercase}}</p>
+                        <p class="font-weight-bold">
+                            <span class="mr-2" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                            <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -119,13 +116,16 @@
                 <img [src]="product.image" [alt]="product.title" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
                 <h2 class="category_title text-dark">{{product.title}}</h2>
                 <h4 class="total_products">{{product.brand}}</h4>
-                <h4 class="mb-3 " [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</h4>
-                <h4 *ngIf="product.sale_price" class="price-color mb-3 color-purple">${{product.sale_price}}</h4>
+                <h4 class="mb-3 ">
+                    <span class="mr-2" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                    <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
+                </h4>
                 <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)" class="button button-primary button-primary-style">Buy Now</a>
             </div>
         </ng-template>
     </p-dataView>
 </div>
+<!-- Sidebar View -->
 <p-sidebar [(visible)]="filter_sidebar" position="right" [baseZIndex]="10000">
     <div class="row">
         <div class="col-12">
