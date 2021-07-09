@@ -39,7 +39,7 @@ export class ProductsService {
 
   getFilterCategoryProducts(data: any,query:string,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
     let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
-    return this._httpClient.post<any>(url + query, data);
+    return this._httpClient.post<any>(url + "&" + query, data);
   }
 
   getSearchProducts(query: string,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
@@ -53,7 +53,7 @@ export class ProductsService {
 
   getSearchFilterProducts(query: string,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {
     let url = this.API_URL + `?offset=${offset}&limit=${limit}&sort_column=${sort_column}&sort_order=${sort_order}`;
-    return this._httpClient.get<any>(url + query);
+    return this._httpClient.get<any>(url + "&" + query);
   }
 
   setSearchText(text: string): void {

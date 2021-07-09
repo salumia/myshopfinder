@@ -1,33 +1,3 @@
-<!-- This is the Mobile Bread Crumb and Filter Button in Product Category Status -->
-<!-- <div class="custom-container pt-2 pb-2" *ngIf="breadcrumb_status && mobile_filter_view">
-    <div class="row products_list">
-        <div class="col-8 p-0">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="generateSectionRequest(breadcrumb_data.section)" class="active">{{breadcrumb_data.section}}</a></li>
-                <li class="breadcrumb-item" *ngFor="let bread of breadcrumb_data.data; index as i;">
-                    <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)" [class.active]="checkLast(i)">{{bread.category_name}}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-4 text-right p-0">
-            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3 d-md-none">Filter</button>
-        </div>
-    </div>
-</div> -->
-<!-- This is the Mobile Bread Crumb and Filter Button in All Product Status -->
-<!-- <div class="custom-container pt-2 pb-2 d-md-none" *ngIf="all_product_status && mobile_filter_view">
-    <div class="row products_list">
-        <div class="col-8 p-0">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
-            </ul>
-        </div>
-        <div class="col-4 text-right  p-0">
-            <button type="button" (click)="openFilterSidebar()" class="button button-secondary  pl-3 pr-3">Filter</button>
-        </div>
-    </div>
-</div> -->
 <div class="custom-container p-0 custom-container-height">
     <!-- Switch Button For Mobile View -->
     <div id="switch_button" class="optionClass d-md-none" *ngIf="mobile_filter_view">
@@ -38,8 +8,8 @@
           </label>
     </div>
     <!-- Data View For Displaying Product -->
-    <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onChangeLayout)="changeLayout($event)" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title" [sortField]="sortField"
-        [lazy]="true" (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
+    <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title" [sortField]="sortField" [lazy]="true" (onLazyLoad)="loadData($event)"
+        [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
             <!-- Bread Crumb For Desktop View -->
             <div class="row d-md-flex p-2">
@@ -55,9 +25,6 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- <div class="col-4">
-                                <button type="button" (click)="openFilterSidebar()" [class.back-color1]="backgroud_status" class="button button-secondary d-md-none">Filter</button>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -70,18 +37,11 @@
                 </div>
                 <div class="col-md-4"></div>
             </div>
-            <!-- <p-dataViewLayoutOptions class="d-md-none optionClass"></p-dataViewLayoutOptions> -->
             <!-- Desktop View With Title -->
             <div class="row d-md-flex p-2">
                 <div class="col-md-9 col-12 order-md-1 order-2 text-center text-md-left">
                     <p class="page-title-font">{{pageTitle}}</p>
                 </div>
-                <!-- <div class="col-md-3 col-12 mb-md-2 mb-4">
-                    <div class="form-group has-search">
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input class="form-control" type="search" pInputText value="" placeholder="Search by Title" (keyup)="dv.filter($any($event.target).value)">
-                    </div>
-                </div> -->
                 <div class="col-md-3 col-12 order-1 order-md-2 mb-2 p-0">
                     <div class="row">
                         <div class="col-6 p-0 pr-md-2 text-left text-md-center">
