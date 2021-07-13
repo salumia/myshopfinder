@@ -612,8 +612,12 @@ export class ProductsComponent implements OnInit {
   }
 
   getSectionIndex(sectionName:string):number{
-    sectionName = sectionName.toLowerCase();
-    return this.sections.indexOf(sectionName);
+    // console.log(typeof(sectionName));s
+    if(typeof(sectionName) != "undefined" && sectionName!="" ){
+      sectionName = sectionName.toLowerCase();
+      return this.sections.indexOf(sectionName);
+    }
+    return -1;
   }
 
 }

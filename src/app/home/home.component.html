@@ -6,7 +6,7 @@
                 <img src="{{category.category_image}}" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
                 <h2 class="category_title">{{category.category_name}}</h2>
                 <h4 class="total_products">{{category.total_items}} Products</h4>
-                <a [routerLink]="['/products',category.slug]" class="button button-primary">Shop Now</a>
+                <a [routerLink]="['/products',encodeURLString(category.slug)]" class="button button-primary">Shop Now</a>
             </div>
         </div>
     </div>

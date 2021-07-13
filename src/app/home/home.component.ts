@@ -36,6 +36,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
- 
+  encodeURLString(input:string){
+    return window.encodeURIComponent(input);
+  }
 
 }
