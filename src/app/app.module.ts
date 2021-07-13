@@ -29,6 +29,7 @@ import {InputText, InputTextModule} from 'primeng/inputtext';
 import {MenubarModule} from 'primeng/menubar';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { SitemapComponent } from './sitemap/sitemap.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MessageService } from 'primeng/api';
     CategoryProductComponent,
     ContactUsComponent,
     TermsComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    SitemapComponent
   ],
   imports: [
     BrowserModule,

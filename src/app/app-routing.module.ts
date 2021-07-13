@@ -5,6 +5,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { HomeComponent } from './home/home.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ProductsComponent } from './products/products.component';
+import { SitemapComponent } from './sitemap/sitemap.component';
 import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path:'privacy-policy',
     component:PrivacyComponent
+  },
+  {
+    path:'sitemap.xml',
+    component:SitemapComponent
   },
   {
     path:'',
