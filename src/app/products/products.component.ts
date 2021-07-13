@@ -80,6 +80,9 @@ export class ProductsComponent implements OnInit {
   searchKey: string = "Women";
   menuItems: MenuItem[] = [];
 
+  // For Filtered Category in Sections
+  sectionCategories: any[] = [];
+  selectedSectionCategories: any[] = [];
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
     private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService
@@ -91,6 +94,11 @@ export class ProductsComponent implements OnInit {
       this.mobile_filter_view = false;
     }
     this.first_time = true;
+    this.selectedCategory = [];
+    for(let index = 0; index < this.sections.length; index++){
+      this.sectionCategories[index] = [];
+      this.selectedSectionCategories[index] = [];
+    }
   }
 
   ngOnInit(): void {
@@ -103,7 +111,10 @@ export class ProductsComponent implements OnInit {
       }
       if (params["s"]) {
         this.searchText = params["s"];
-        console.log(this.searchText);
+        if(params["q"]){
+          this.query = "";
+          this.commonService.updateSearchText(this.query);
+        }
       }
       if (params["pageNumber"]) {
         this.pageNumber = params["pageNumber"];
@@ -195,8 +206,12 @@ export class ProductsComponent implements OnInit {
       this.selectedCategory = [];
       for (let value of values) {
         for (let category of this.categories) {
+          let index = this.getSectionIndex(category.section);
           if (category.slug == value) {
             this.selectedCategory.push(category);
+            if(index!=-1){
+              this.selectedSectionCategories[index].push(category);
+            }            
           }
         }
       }
@@ -263,12 +278,18 @@ export class ProductsComponent implements OnInit {
   getFilterData(query: string): void {
     this._serviceProduct.getFilterData(query).subscribe(
       (data) => {
-        console.log(this.data);        
+        // console.log(this.data);        
         if (data.status != 404) {
           this.brands = data.brand;
           this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
           this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
           this.categories = data.category;
+          for(let category of this.categories){
+             let index = this.getSectionIndex(category.section);
+             if(index != -1){
+                this.sectionCategories[index].push(category);
+             }
+          }
         }
         this.fetchAllDetails();
       },
@@ -389,8 +410,15 @@ export class ProductsComponent implements OnInit {
         }
       }
     }
+    // console.log(this.selectedCategory);
+    this.selectedCategory = [];
+    for(let categories of this.selectedSectionCategories){
+      for(let category of categories){
+        this.selectedCategory.push(category);
+      }
+    }
     if (this.selectedCategory.length > 0) {
-      if(brand_set){
+      if(brand_set || price_set){
         query += "&fc=";
       }else{
         query += "fc=";
@@ -407,13 +435,11 @@ export class ProductsComponent implements OnInit {
 
   submitFilter(): void {
     let filter_query = this.prepareFilterQuery();
-    console.log(filter_query);
     if (this.all_product_status || this.query != "") {
       this.first_time = true;
       this.pageNumber = 1;
       this.fetchFilterProducts(filter_query);
-      this.location.replaceState('/products?' + filter_query);
-      console.log(" SECTION 1 ");
+      this.location.replaceState('/products?' + filter_query);      
     } else {
       this.first_time = true;
       this.filter_flag = true;
@@ -583,6 +609,11 @@ export class ProductsComponent implements OnInit {
       }
       this.location.replaceState(url_string + "/products/" + this.searchKey.toLowerCase() + "?s=" + this.searchText);
     }
+  }
+
+  getSectionIndex(sectionName:string):number{
+    sectionName = sectionName.toLowerCase();
+    return this.sections.indexOf(sectionName);
   }
 
 }

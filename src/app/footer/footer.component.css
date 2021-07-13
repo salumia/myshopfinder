@@ -2,3 +2,7 @@
     color: #FFF;
     text-decoration: underline;
 }
+
+.para-height {
+    line-height: 25px !important;
+}

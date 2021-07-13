@@ -58,13 +58,13 @@
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
-                    <img class="card-img-top rounded-0  bg-light-grey img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+                    <img class="card-img-top rounded-0  img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                     <div class="product-grid-item-content card-body pt-2 p-0">
                         <p class="text-dark font-weight-bolder text-overflow-elipsis">{{product.title|uppercase}}</p>
                         <p class="text-secondary text-overflow-elipsis">{{product.brand|uppercase}}</p>
                         <p class="font-weight-bold">
-                            <span class="mr-2" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
-                            <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
+                            <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
+                            <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                         </p>
                     </div>
                 </div>
@@ -77,8 +77,8 @@
                 <h2 class="category_title text-dark">{{product.title}}</h2>
                 <h4 class="total_products">{{product.brand}}</h4>
                 <h4 class="mb-3 ">
-                    <span class="mr-2" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
-                    <span *ngIf="product.sale_price" class="price-color color-purple">${{product.sale_price}}</span>
+                    <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
+                    <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                 </h4>
                 <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)" class="button button-primary button-primary-style">Buy Now</a>
             </div>
@@ -104,10 +104,50 @@
                 </ng-template>
             </p-listbox>
         </div>
-        <div class="col-12 mb-2" *ngIf="categories.length!=0">
-            <p-listbox [options]="categories" [(ngModel)]="selectedCategory" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
+        <div class="col-12 mb-2" *ngIf="sectionCategories[0].length!=0">
+            <p-listbox [options]="sectionCategories[0]" [(ngModel)]="selectedSectionCategories[0]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
+                [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
-                    <strong>Category</strong>
+                    <strong>{{sections[0]|titlecase }}</strong>
+                </ng-template>
+                <ng-template let-category pTemplate="item">
+                    <div class="category-item">
+                        <div>{{category.category_name|uppercase}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+        <div class="col-12 mb-2" *ngIf="sectionCategories[1].length!=0">
+            <p-listbox [options]="sectionCategories[1]" [(ngModel)]="selectedSectionCategories[1]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
+                [style]="{'width':'15rem','border':'none'}">
+                <ng-template pTemplate="header">
+                    <strong>{{sections[1]|titlecase }}</strong>
+                </ng-template>
+                <ng-template let-category pTemplate="item">
+                    <div class="category-item">
+                        <div>{{category.category_name|uppercase}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+        <div class="col-12 mb-2" *ngIf="sectionCategories[2].length!=0">
+            <p-listbox [options]="sectionCategories[2]" [(ngModel)]="selectedSectionCategories[2]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
+                [style]="{'width':'15rem','border':'none'}">
+                <ng-template pTemplate="header">
+                    <strong>{{sections[2]|titlecase }}</strong>
+                </ng-template>
+                <ng-template let-category pTemplate="item">
+                    <div class="category-item">
+                        <div>{{category.category_name|uppercase}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+        <div class="col-12 mb-2" *ngIf="sectionCategories[3].length!=0">
+            <p-listbox [options]="sectionCategories[3]" [(ngModel)]="selectedSectionCategories[3]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
+                [style]="{'width':'15rem','border':'none'}">
+                <ng-template pTemplate="header">
+                    <strong>{{sections[3]|titlecase }}</strong>
                 </ng-template>
                 <ng-template let-category pTemplate="item">
                     <div class="category-item">
