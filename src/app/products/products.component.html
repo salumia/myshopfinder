@@ -30,8 +30,8 @@
                 </div>
                 <div class="col-md-4 col-12 mb-2 p-0 pl-md-2 pr-md-2">
                     <div class="p-inputgroup global-search">
-                        <input type="text" [(ngModel)]="searchText" pInputText placeholder="What Are You Looking for?" (keyup.enter)="searchBySection()">
-                        <p-dropdown autoWidth="true" [options]="sectionsDropDown" [(ngModel)]="searchKey"></p-dropdown>
+                        <input type="text" [(ngModel)]="searchText" pInputText placeholder="what are you looking for?" (keyup.enter)="searchBySection()">
+                        <p-dropdown autoWidth="true" [options]="sectionsDropDown" (onChange)="sectionChange($event)" [(ngModel)]="searchKey"></p-dropdown>
                         <button type="button" (click)="searchBySection()" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>
                     </div>
                 </div>
@@ -156,8 +156,11 @@
                 </ng-template>
             </p-listbox>
         </div>
-        <div class="col-12">
+        <div class="col-12 mb-1">
             <button type="button" class="button1" (click)="submitFilter()">Apply Filter</button>
+        </div>
+        <div class="col-12">
+            <button type="button" class="button1" (click)="clearFilter()">Clear Filter</button>
         </div>
     </div>
 </p-sidebar>
