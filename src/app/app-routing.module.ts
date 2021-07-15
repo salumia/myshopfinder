@@ -34,10 +34,6 @@ const routes: Routes = [
     component:PrivacyComponent
   },
   {
-    path:'sitemap.xml',
-    component:SitemapComponent
-  },
-  {
     path:'',
     redirectTo:'home',
     pathMatch: 'full'
