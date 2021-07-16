@@ -24,12 +24,15 @@ export class ProductsService {
     return this._httpClient.get<any>(url);
   }
 
-  getFilterData(query: string): Observable<any> {    
-    if (query == '') {
-      return this._httpClient.get<any>(this.GET_FILTER_DATA_API_URL);
-    } else {
-      return this._httpClient.get<any>(this.GET_FILTER_DATA_API_URL + "?slug=" + query);
+  getFilterData(query: string,search_text:string=""): Observable<any> { 
+    var formdata = new FormData();   
+    if(query!=""){
+      formdata.append("slug",query);
     }
+    if(search_text!=""){
+      formdata.append("search_text",search_text);
+    }
+    return this._httpClient.post<any>(this.GET_FILTER_DATA_API_URL,formdata);
   }
 
   getCategoryProducts(data: any,offset:number=0,limit:number=environment.LIMIT_RECORD,sort_column:string="id",sort_order:string="asc"): Observable<any> {

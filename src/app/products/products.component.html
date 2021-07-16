@@ -89,11 +89,20 @@
 <p-sidebar [(visible)]="filter_sidebar" position="right" [baseZIndex]="10000">
     <div class="row">
         <div class="col-12">
-            <p class="ml-3 font-weight-bold mb-1">Price: $ {{selectedRangeValues[0] + ' - ' + selectedRangeValues[1]}}</p>
-            <p-slider [(ngModel)]="selectedRangeValues" [min]="rangeValues[0]" [max]="rangeValues[1]" [range]="true"></p-slider><br>
+            <div class="row">
+                <div class="col-9">
+                    <p class="ml-3 font-weight-bold mb-1">Price: $ {{selectedRangeValues[0] + ' - ' + selectedRangeValues[1]}}</p>
+                    <p-slider [(ngModel)]="selectedRangeValues" [min]="rangeValues[0]" [max]="rangeValues[1]" [range]="true"></p-slider>
+                    <br>
+                </div>
+                <div class="col-3">
+                    <button type="button" class="button2" (click)="submitFilter()">Set</button>
+                </div>
+            </div>
         </div>
         <div class="col-12 mb-2">
-            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
+            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" (onChange)="performBrandFilter()" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
+                [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>Brand</strong>
                 </ng-template>
@@ -104,33 +113,33 @@
                 </ng-template>
             </p-listbox>
         </div>
-        <div class="col-12 mb-2" *ngIf="sectionCategories[0].length!=0">
-            <p-listbox [options]="sectionCategories[0]" [(ngModel)]="selectedSectionCategories[0]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
-                [style]="{'width':'15rem','border':'none'}">
-                <ng-template pTemplate="header">
-                    <strong>{{sections[0]|titlecase }}</strong>
-                </ng-template>
-                <ng-template let-category pTemplate="item">
-                    <div class="category-item">
-                        <div>{{category.category_name|uppercase}}</div>
-                    </div>
-                </ng-template>
-            </p-listbox>
-        </div>
         <div class="col-12 mb-2" *ngIf="sectionCategories[1].length!=0">
-            <p-listbox [options]="sectionCategories[1]" [(ngModel)]="selectedSectionCategories[1]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
-                [style]="{'width':'15rem','border':'none'}">
+            <p-listbox [options]="sectionCategories[1]" (onClick)="performFilter($event)" [(ngModel)]="selectedSectionCategories[1]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="false" optionLabel="category_name" [showToggleAll]="false"
+                [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>{{sections[1]|titlecase }}</strong>
                 </ng-template>
                 <ng-template let-category pTemplate="item">
                     <div class="category-item">
-                        <div>{{category.category_name|uppercase}}</div>
+                        <div class="angle-right">{{category.category_name|uppercase}}</div>
                     </div>
                 </ng-template>
             </p-listbox>
         </div>
         <div class="col-12 mb-2" *ngIf="sectionCategories[2].length!=0">
+            <p-listbox [options]="sectionCategories[2]" (onClick)="performFilter($event)" [(ngModel)]="selectedSectionCategories[2]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="false" optionLabel="category_name" [showToggleAll]="false"
+                [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
+                <ng-template pTemplate="header">
+                    <strong>{{sections[2]|titlecase }}</strong>
+                </ng-template>
+                <ng-template let-category pTemplate="item">
+                    <div class="category-item">
+                        <div class="angle-right">{{category.category_name|uppercase}}</div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+        <!-- <div class="col-12 mb-2" *ngIf="sectionCategories[2].length!=0">
             <p-listbox [options]="sectionCategories[2]" [(ngModel)]="selectedSectionCategories[2]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
                 [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
@@ -142,8 +151,8 @@
                     </div>
                 </ng-template>
             </p-listbox>
-        </div>
-        <div class="col-12 mb-2" *ngIf="sectionCategories[3].length!=0">
+        </div> -->
+        <!-- <div class="col-12 mb-2" *ngIf="sectionCategories[3].length!=0">
             <p-listbox [options]="sectionCategories[3]" [(ngModel)]="selectedSectionCategories[3]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
                 [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
@@ -155,10 +164,10 @@
                     </div>
                 </ng-template>
             </p-listbox>
-        </div>
+        </div> 
         <div class="col-12 mb-1">
             <button type="button" class="button1" (click)="submitFilter()">Apply Filter</button>
-        </div>
+        </div>-->
         <div class="col-12">
             <button type="button" class="button1" (click)="clearFilter()">Clear Filter</button>
         </div>

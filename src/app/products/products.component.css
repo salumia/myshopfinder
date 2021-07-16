@@ -135,9 +135,20 @@ input:checked+.slider1:before {
     width: 100%;
 }
 
-.button1:hover {
+.button1:hover,
+.button2:hover {
     background-color: black;
     color: white;
+}
+
+.button2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 5px;
+    background-color: white;
+    border: 2px solid black;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 
@@ -168,4 +179,10 @@ input:checked+.slider1:before {
 .filter-button {
     height: 35px;
     padding-top: 10px;
+}
+
+.angle-right::before {
+    content: "\f105";
+    padding-right: 5px;
+    font: normal normal normal 14px/1 FontAwesome;
 }
