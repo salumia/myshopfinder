@@ -438,26 +438,6 @@ export class ProductsComponent implements OnInit {
         }
       }
     }
-    // console.log(this.selectedCategory);
-    // this.selectedCategory = [];
-    // for (let categories of this.selectedSectionCategories) {
-    //   for (let category of categories) {
-    //     this.selectedCategory.push(category);
-    //   }
-    // }
-    // if (this.selectedCategory.length > 0) {
-    //   if (brand_set || price_set) {
-    //     query += "&fc=";
-    //   } else {
-    //     query += "fc=";
-    //   }
-    //   for (let i = 0; i < this.selectedCategory.length; i++) {
-    //     query += this.encodeURLString(this.selectedCategory[i].slug);
-    //     if (i < this.selectedCategory.length - 1) {
-    //       query += ",";
-    //     }
-    //   }
-    // }
     return query;
   }
 
@@ -487,7 +467,7 @@ export class ProductsComponent implements OnInit {
 
     }
     this.filter_sidebar = false;
-    this.searchText = "";
+    // this.searchText = "";
   }
 
   fetchFilterProducts(query: string) {
@@ -645,7 +625,7 @@ export class ProductsComponent implements OnInit {
         this.location.replaceState(url_string + "/products/" + this.searchKey.toLowerCase() + "?s=" + this.searchText);
       } else {
         this.data = [];
-        this.getFilterData('');
+        this.getFilterData('',this.searchText);
         let url_string = this.route.url;
         if (url_string.indexOf("/") != -1) {
           url_string = url_string.substring(0, url_string.indexOf("/"));
