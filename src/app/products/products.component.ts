@@ -743,4 +743,16 @@ export class ProductsComponent implements OnInit {
       this.selectedSectionCategories[index] = [];
     }
   }
+
+  generateTitleMessage():string{
+    let message:string = "";
+    message = "No Product";
+    if(this.products.products.length > 0){
+      message = this.products.products.length + " Product";
+      if(this.products.products.length > 1){
+        message += "s";
+      }
+    }
+    return message;
+  }
 }
