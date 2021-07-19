@@ -20,27 +20,8 @@ export class FeatureComponent implements OnInit {
   already_loaded: boolean = false;
   error_status: boolean = false;
 
-  constructor(private _serviceFeature: FeatureService, private serviceProduct: ProductsService,private featureUpdateService:FeatureUpdateService) {
+  constructor(private _serviceFeature: FeatureService, private serviceProduct: ProductsService) {
     console.log("Worked");
-    this.featureUpdateService.currentUpdateStatus.subscribe(msg => {
-      if(msg=="yes"){
-        this.view_status = true;
-        this.loading = true;
-        this._serviceFeature.getFeatureProduct().subscribe(
-          (data) => {
-            this.data = data;
-            this.loading = false;
-          },
-          (error) => {
-            this.loading = false;
-            this.error_status = true;
-          }
-        );
-      }else{
-        this.view_status = false;
-        this.loading = false;
-      }
-    });
   }
 
   ngOnInit(): void {   

@@ -1,3 +1,8 @@
+<!-----------------------header---------------------->
+<div class="banner">
+    <app-header style="width: 100%;"></app-header>
+</div>
+
 <div class="custom-container p-0 custom-container-height">
     <!-- Switch Button For Mobile View -->
     <div id="switch_button" class="optionClass d-md-none" *ngIf="mobile_filter_view">
@@ -48,7 +53,8 @@
                             <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
                         </div>
                         <div class="col-6 text-right text-md-center p-0">
-                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
+                            <button *ngIf="!mobile_filter_view" type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
+                            <button *ngIf="mobile_filter_view" type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter"></button>
                         </div>
                     </div>
                 </div>
@@ -139,35 +145,6 @@
                 </ng-template>
             </p-listbox>
         </div>
-        <!-- <div class="col-12 mb-2" *ngIf="sectionCategories[2].length!=0">
-            <p-listbox [options]="sectionCategories[2]" [(ngModel)]="selectedSectionCategories[2]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
-                [style]="{'width':'15rem','border':'none'}">
-                <ng-template pTemplate="header">
-                    <strong>{{sections[2]|titlecase }}</strong>
-                </ng-template>
-                <ng-template let-category pTemplate="item">
-                    <div class="category-item">
-                        <div>{{category.category_name|uppercase}}</div>
-                    </div>
-                </ng-template>
-            </p-listbox>
-        </div> -->
-        <!-- <div class="col-12 mb-2" *ngIf="sectionCategories[3].length!=0">
-            <p-listbox [options]="sectionCategories[3]" [(ngModel)]="selectedSectionCategories[3]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="category_name" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
-                [style]="{'width':'15rem','border':'none'}">
-                <ng-template pTemplate="header">
-                    <strong>{{sections[3]|titlecase }}</strong>
-                </ng-template>
-                <ng-template let-category pTemplate="item">
-                    <div class="category-item">
-                        <div>{{category.category_name|uppercase}}</div>
-                    </div>
-                </ng-template>
-            </p-listbox>
-        </div> 
-        <div class="col-12 mb-1">
-            <button type="button" class="button1" (click)="submitFilter()">Apply Filter</button>
-        </div>-->
         <div class="col-12">
             <button type="button" class="button1" (click)="clearFilter()">Clear Filter</button>
         </div>

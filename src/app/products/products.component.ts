@@ -85,10 +85,12 @@ export class ProductsComponent implements OnInit {
   // Selected Range Value for Price Slider in Filter Side bar
   selectedRangeValues: number[] = [0, 1];
 
+  searchQueryStringStatus: boolean = false;
+
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
     private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService
-    , private featureUpdateService: FeatureUpdateService) {
-    this.featureUpdateService.updateStatusText("no");
+  ) {
+
     if (deviceService.isMobile()) {
       this.mobile_filter_view = true;
     } else {
@@ -108,9 +110,11 @@ export class ProductsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params["q"]) {
         this.query = params["q"];
+
       }
       if (params["s"]) {
         this.searchText = params["s"];
+        this.searchQueryStringStatus = true;
         if (params["q"]) {
           this.query = "";
         }
@@ -147,7 +151,6 @@ export class ProductsComponent implements OnInit {
       if (this.data.length == 0) {
         this.getFilterData('', this.searchText != "" ? this.searchText : this.query);
       } else {
-
         this.getFilterData(this.data[0], this.searchText != "" ? this.searchText : this.query);
       }
     }, 50);
@@ -202,8 +205,15 @@ export class ProductsComponent implements OnInit {
     } else if (this.data.length > 0) {
       this.fetchBreadcrumbs(this.data[0]);
       if (this.sections.indexOf(this.data[0]) > 0 && this.searchText != "") {
-        this.fetchFilterCategoryProducts(this.data, "&q=" + this.searchText);
-        console.log("FETCH FILTER CATEGORY PRODUCTS WITH SEARCH TEXT");
+        if (this.searchQueryStringStatus) {
+          this.resetFilterParameter();
+          console.log("me Running");
+          this.searchQueryStringStatus = false;
+          this.fetchFilterCategoryProducts(this.data, this.prepareFilterQuery());
+        } else {
+          this.fetchFilterCategoryProducts(this.data, "&q=" + this.searchText);
+          console.log("FETCH FILTER CATEGORY PRODUCTS WITH SEARCH TEXT");
+        }
       }
       else if (this.filter_flag) {
         this.resetFilterParameter();
@@ -411,7 +421,7 @@ export class ProductsComponent implements OnInit {
     if (this.searchText != "") {
       section_search_set = true;
       query += "s=" + this.searchText;
-    }else if(this.query != ""){
+    } else if (this.query != "") {
       section_search_set = true;
       query += "s=" + this.query;
     }
@@ -537,17 +547,23 @@ export class ProductsComponent implements OnInit {
   }
 
   updateMetaTags() {
+    console.log("Reached Here..." + this.totalRecords);
     if (this.totalRecords > 0) {
       let category_name = "";
       if (this.data.length > 0) {
-        for (let product of this.products.products) {
-          if (product.slug == this.data[0]) {
-            category_name = product.category_name;
-            break;
+        if(this.sections.indexOf(this.data[0])>0){
+          category_name = this.data[0];
+        }else{
+          for (let product of this.products.products) {
+            if (product.slug == this.data[0]) {
+              category_name = product.category_name;
+              break;
+            }
           }
-        }
+        }        
         category_name = this.capitalizeWords(category_name);
       }
+      console.log(category_name);
       let brand_name = "";
       if (this.selectedBrand.length == 1) {
         brand_name = this.selectedBrand[0].brand;
@@ -625,13 +641,14 @@ export class ProductsComponent implements OnInit {
         this.location.replaceState(url_string + "/products/" + this.searchKey.toLowerCase() + "?s=" + this.searchText);
       } else {
         this.data = [];
-        this.getFilterData('',this.searchText);
+        this.getFilterData('', this.searchText);
         let url_string = this.route.url;
         if (url_string.indexOf("/") != -1) {
           url_string = url_string.substring(0, url_string.indexOf("/"));
         }
         this.location.replaceState(url_string + "/products/" + "?s=" + this.searchText);
       }
+      this.selectedBrand = [];
     } else {
       if (this.sections.indexOf(this.searchKey.toLowerCase()) > 0) {
         this.data[0] = this.searchKey.toLowerCase();
@@ -650,6 +667,7 @@ export class ProductsComponent implements OnInit {
         }
         this.location.replaceState(url_string + "/products");
       }
+      this.selectedBrand = [];
     }
   }
 
@@ -732,6 +750,7 @@ export class ProductsComponent implements OnInit {
       this.fetchFilterProducts(filter_query);
     }
   }
+
   resetFilterOptions(): void {
     this.brands = [];
     this.selectedRangeValues = [0, 0];
@@ -744,13 +763,15 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  generateTitleMessage():string{
-    let message:string = "";
+  generateTitleMessage(): string {
+    let message: string = "";
     message = "No Product";
-    if(this.products.products.length > 0){
-      message = this.products.products.length + " Product";
-      if(this.products.products.length > 1){
-        message += "s";
+    if (this.products.products) {
+      if (this.products.products.length > 0) {
+        message = this.products.products.length + " Product";
+        if (this.products.products.length > 1) {
+          message += "s";
+        }
       }
     }
     return message;
