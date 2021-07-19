@@ -25,6 +25,16 @@ export class FeatureComponent implements OnInit {
   }
 
   ngOnInit(): void {   
+    this._serviceFeature.getFeatureProduct().subscribe(
+      (data) => {
+        this.data = data;
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.error_status = true;
+      }
+    );
   }
 
   generateRequest(product: any): void {
@@ -33,7 +43,7 @@ export class FeatureComponent implements OnInit {
     formData.append(`id`, product.id);
     this.serviceProduct.updateCounterRequest(formData).subscribe(
       (data) => {
-        console.log(data);
+        console.log(data);        
       },
       (error) => {
         console.log(error);
