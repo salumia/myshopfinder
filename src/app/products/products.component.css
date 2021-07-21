@@ -186,3 +186,7 @@ input:checked+.slider1:before {
     padding-right: 5px;
     font: normal normal normal 14px/1 FontAwesome;
 }
+
+.p-inputtext {
+    font-size: 14px !important;
+}

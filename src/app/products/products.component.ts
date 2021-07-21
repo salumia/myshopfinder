@@ -575,7 +575,8 @@ export class ProductsComponent implements OnInit {
         this.metaService.addDescription(description);
       }
       else if (category_name != "") {
-        let description = `Shop thousands of ${category_name} from top brands. Get the latest prices, and find the hottest trending items now | MyShopFinder`;
+        let description = `Shop the best ${category_name} from the top brands in one place. Save with the latest offers for top products | MyShopFinder`;        
+        console.log(description);
         this.metaService.addTitle(category_name + environment.COMMON_TITLE);
         this.metaService.addDescription(description);
       }

@@ -631,6 +631,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
 .button-secondary {
     color: #000;
     border: none;
+    border: 1px solid #ced4da;
+    font-size: 14px;
     padding: 5px;
     background-color: #F1F3F5;
 }
@@ -948,6 +950,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 .p-inputtext {
     padding: 0.3rem 0.3rem;
+    font-size: 14px;
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -980,7 +983,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 .global-search .p-inputtext:enabled:focus {
     border-radius: 0;
     border-right: none;
-    padding: 8px;
+    padding: 10px;
     box-shadow: none;
     border-color: #ced4da;
 }
