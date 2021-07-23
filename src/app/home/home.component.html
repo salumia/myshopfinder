@@ -10,7 +10,7 @@
         <div *ngFor="let category of data.categories; index as i;" class="col-md-3 mb-2">
             <div class="col-md-12 categories_bg category-color text-center">
                 <img src="{{category.category_image}}" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
-                <h2 class="category_title">{{category.category_name}}</h2>
+                <h2 class="category_title text-overflow-elipsis">{{category.category_name}}</h2>
                 <h4 class="total_products">{{category.total_items}} Products</h4>
                 <a [routerLink]="['/products',encodeURLString(category.slug)]" class="button button-primary">Shop Now</a>
             </div>

@@ -554,16 +554,12 @@ export class ProductsComponent implements OnInit {
         if(this.sections.indexOf(this.data[0])>0){
           category_name = this.data[0];
         }else{
-          for (let product of this.products.products) {
-            if (product.slug == this.data[0]) {
-              category_name = product.category_name;
-              break;
-            }
-          }
+          category_name = this.data[0];
         }        
+        category_name = decodeURIComponent(category_name);
+        category_name = category_name.replace(/-/g," ");
         category_name = this.capitalizeWords(category_name);
       }
-      console.log(category_name);
       let brand_name = "";
       if (this.selectedBrand.length == 1) {
         brand_name = this.selectedBrand[0].brand;
