@@ -750,6 +750,7 @@ export class ProductsComponent implements OnInit {
 
   resetFilterOptions(): void {
     this.brands = [];
+    this.selectedBrand = [];
     this.selectedRangeValues = [0, 0];
     this.rangeValues = [0, 0];
     this.categories = [];
