@@ -169,8 +169,8 @@ export class ProductsComponent implements OnInit {
         // console.log(this.data);        
         if (data.status != 404) {
           this.brands = data.brand;
-          this.selectedRangeValues = [data.price[0].min_price, data.price[0].max_price];
-          this.rangeValues = [data.price[0].min_price, data.price[0].max_price];
+          this.selectedRangeValues = [Math.floor(data.price[0].min_price), Math.ceil(data.price[0].max_price)];
+          this.rangeValues = [Math.floor(data.price[0].min_price), Math.ceil(data.price[0].max_price)];
           this.categories = data.category;
           for (let category of this.categories) {
             let index = this.getSectionIndex(category.section);
@@ -551,13 +551,13 @@ export class ProductsComponent implements OnInit {
     if (this.totalRecords > 0) {
       let category_name = "";
       if (this.data.length > 0) {
-        if(this.sections.indexOf(this.data[0])>0){
+        if (this.sections.indexOf(this.data[0]) > 0) {
           category_name = this.data[0];
-        }else{
+        } else {
           category_name = this.data[0];
-        }        
+        }
         category_name = decodeURIComponent(category_name);
-        category_name = category_name.replace(/-/g," ");
+        category_name = category_name.replace(/-/g, " ");
         category_name = this.capitalizeWords(category_name);
       }
       let brand_name = "";
@@ -571,7 +571,7 @@ export class ProductsComponent implements OnInit {
         this.metaService.addDescription(description);
       }
       else if (category_name != "") {
-        let description = `Shop the best ${category_name} from the top brands in one place. Save with the latest offers for top products | MyShopFinder`;        
+        let description = `Shop the best ${category_name} from the top brands in one place. Save with the latest offers for top products | MyShopFinder`;
         console.log(description);
         this.metaService.addTitle(category_name + environment.COMMON_TITLE);
         this.metaService.addDescription(description);
@@ -596,7 +596,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  initializePageTitle(): void {
+  initializePageTitle(): void { 
     this.pageTitle = "All Products";
     if (this.data.length == 1) {
       if (this.sections.indexOf(this.data[0]) > 0) {
@@ -610,10 +610,10 @@ export class ProductsComponent implements OnInit {
           this.pageTitle = this.capitalizeWords(this.selectedBrand[0].brand) + " " + this.pageTitle;
         }
       }
-    } else if (this.filter_flag) {
+    } else {
       if (this.selectedBrand.length == 1) {
         this.pageTitle = "All Products of " + this.capitalizeWords(this.selectedBrand[0].brand);
-      } else {
+      } else if (this.filter_flag) {
         this.pageTitle = "Filtered Products";
       }
     }
@@ -763,12 +763,10 @@ export class ProductsComponent implements OnInit {
   generateTitleMessage(): string {
     let message: string = "";
     message = "No Product";
-    if (this.products.products) {
-      if (this.products.products.length > 0) {
-        message = this.products.products.length + " Product";
-        if (this.products.products.length > 1) {
-          message += "s";
-        }
+    if (this.totalRecords > 0) {
+      message = this.totalRecords + " Product";
+      if (this.totalRecords > 1) {
+        message += "s";
       }
     }
     return message;
