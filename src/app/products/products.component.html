@@ -64,21 +64,24 @@
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
-                    <img class="card-img-top rounded-0  img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
-                    <div class="product-grid-item-content card-body pt-2 p-0">
-                        <p class="text-dark font-weight-bolder text-overflow-elipsis">{{product.title|uppercase}}</p>
-                        <p class="text-secondary text-overflow-elipsis">{{product.brand|uppercase}}</p>
-                        <p class="font-weight-bold">
-                            <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
-                            <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
-                        </p>
-                    </div>
+                    <a href="{{product.link}}" target="_blank">
+                        <img class="card-img-top rounded-0  img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+                        <div class="product-grid-item-content card-body pt-2 p-0">
+                            <p class="text-dark font-weight-bolder text-overflow-elipsis">{{product.title|uppercase}}</p>
+                            <p class="text-secondary text-overflow-elipsis">{{product.brand|uppercase}}</p>
+                            <p class="font-weight-bold">
+                                <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
+                                <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                            </p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </ng-template>
         <!-- Mobile View Display For Single Product -->
         <ng-template let-product pTemplate="listItem">
             <div class="col-md-12 categories_bg category-color text-center">
+
                 <img [src]="product.image" [alt]="product.title" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
                 <h2 class="category_title text-dark">{{product.title}}</h2>
                 <h4 class="total_products">{{product.brand}}</h4>

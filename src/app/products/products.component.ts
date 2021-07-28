@@ -385,7 +385,7 @@ export class ProductsComponent implements OnInit {
     var formData: any = new FormData();
     formData.append(`id`, product.id);
     this._serviceProduct.updateCounterRequest(formData).subscribe();
-    window.open(product.link, "_blank");
+    //window.open(product.link, "_blank");
   }
 
   // Generate Breadcrumb Request on Click of Breadcrumb Link
