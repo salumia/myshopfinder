@@ -2,3 +2,14 @@
     color: #d3d3d3;
     font-weight: normal;
 }
+
+.button-dark {
+    color: white;
+    background-color: black;
+    padding: 2px;
+}
+
+.button-left-right-round {
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}

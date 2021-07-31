@@ -190,3 +190,34 @@ input:checked+.slider1:before {
 .p-inputtext {
     font-size: 14px !important;
 }
+
+.product-image {
+    width: 200px;
+    height: 300px;
+    object-fit: contain;
+}
+
+@media only screen and (max-width: 768px) {
+    .product-image {
+        width: 165px;
+        height: 248px;
+        object-fit: contain;
+    }
+}
+
+.no_right_padding {
+    padding-right: 0px;
+}
+
+.no_left_padding {
+    padding-left: 0px;
+}
+
+.border-tb {
+    border-top: 1px solid #ced4da;
+    border-bottom: 1px solid #ced4da;
+}
+
+.border-r {
+    border-right: 1px solid #ced4da;
+}

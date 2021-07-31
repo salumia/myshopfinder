@@ -147,11 +147,26 @@ a:hover {
 }
 
 .category_title {
-    font-size: 35px;
+    font-size: 20px;
     line-height: 50px;
     /* color: #ffffff; */
     font-weight: 700;
-    font-family: "Bebas Neue" !important;
+    /* font-family: "Arial" !important; */
+    color: #2e2e2ebf;
+}
+
+.feature-title {
+    font-family: 'Open Sans', system-ui, sans-serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.feature-description {
+    font-family: 'Open Sans', system-ui, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-bottom: 3.5rem;
 }
 
 .categories_bg {
@@ -493,7 +508,8 @@ header {
     color: white !important;
 }
 
-.fa {
+
+/* .fa {
     padding: 10px;
     width: 42.5px;
     height: 42.5px;
@@ -504,7 +520,7 @@ header {
     color: #07051a;
     text-align: center;
     font-size: 1.2em;
-}
+} */
 
 .search-form:hover {
     width: 300px;
@@ -1023,3 +1039,9 @@ header .breadcrumb-item+.breadcrumb-item::before {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: none !important;
+}
+
+.p-dropdown:not(.p-disabled):hover {}

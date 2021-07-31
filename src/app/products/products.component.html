@@ -43,7 +43,7 @@
                 <div class="col-md-4"></div>
             </div>
             <!-- Desktop View With Title -->
-            <div class="row d-md-flex p-2">
+            <div class="row d-md-flex p-2" *ngIf="!mobile_filter_view">
                 <div class="col-md-9 col-12 order-md-1 order-2 text-center text-md-left">
                     <p class="page-title-font">{{pageTitle}} ({{generateTitleMessage()}})</p>
                 </div>
@@ -53,8 +53,22 @@
                             <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
                         </div>
                         <div class="col-6 text-right text-md-center p-0">
-                            <button *ngIf="!mobile_filter_view" type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
-                            <button *ngIf="mobile_filter_view" type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter"></button>
+                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-md-flex" *ngIf="mobile_filter_view">
+                <div class="col-12 text-center  p-2 text-md-left">
+                    <p class="page-title-font">{{pageTitle}} ({{generateTitleMessage()}})</p>
+                </div>
+                <div class="col-12 mb-2 border-tb p-0">
+                    <div class="row">
+                        <div class="col-6 border-r p-0 text-center">
+                            <p-dropdown autoWidth="false" [style]="{'width':'80%','color':'black !important','background-color':'white','border':'none'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
+                        </div>
+                        <div class="col-6 p-0">
+                            <p (click)="openFilterSidebar()" class="text-center pt-1">Filter</p>
                         </div>
                     </div>
                 </div>
@@ -62,13 +76,13 @@
         </ng-template>
         <!-- Desktop View with Grid Manner-->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
-            <div class="col-6 col-md-3 d-inline-block h-100">
+            <div class="col-6 col-md-3 d-inline-block h-100" [class.no_right_padding]="mobile_filter_view && index % 2 == 0" [class.no_left_padding]="mobile_filter_view && index % 2 != 0">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
                     <a href="{{product.link}}" target="_blank">
-                        <img class="card-img-top rounded-0  img-fluid" style="width:300px;height:200px;object-fit:contain" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+                        <img class="card-img-top rounded-0 img-fluid product-image " [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                         <div class="product-grid-item-content card-body pt-2 p-0">
-                            <p class="text-dark font-weight-bolder text-overflow-elipsis">{{product.title|uppercase}}</p>
-                            <p class="text-secondary text-overflow-elipsis">{{product.brand|uppercase}}</p>
+                            <p class="text-dark text-overflow-elipsis">{{product.title}}</p>
+                            <p class="text-secondary text-overflow-elipsis">{{product.brand}} {{index}}</p>
                             <p class="font-weight-bold">
                                 <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
                                 <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
@@ -83,7 +97,7 @@
             <div class="col-md-12 categories_bg category-color text-center">
 
                 <img [src]="product.image" [alt]="product.title" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
-                <h2 class="category_title text-dark">{{product.title}}</h2>
+                <h2 class="category_title">{{product.title}}</h2>
                 <h4 class="total_products">{{product.brand}}</h4>
                 <h4 class="mb-3 ">
                     <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>

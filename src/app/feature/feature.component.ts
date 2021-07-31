@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { FeatureUpdateService } from '../services/feature-update.service';
@@ -13,28 +14,19 @@ import { ProductsService } from '../services/products.service';
 })
 export class FeatureComponent implements OnInit {
 
+  searchForm: FormGroup;
+  searchtext: string = "";
 
-  data: any = [];
-  loading: boolean = true;
-  view_status: boolean = true;
-  already_loaded: boolean = false;
-  error_status: boolean = false;
-
-  constructor(private _serviceFeature: FeatureService, private serviceProduct: ProductsService) {
+  constructor(private _serviceFeature: FeatureService, private serviceProduct: ProductsService, private formBuilder: FormBuilder,
+    private router: Router) {
     console.log("Worked");
+    this.searchForm = this.formBuilder.group({
+      searchtext: ['', []]
+    });
   }
 
-  ngOnInit(): void {   
-    this._serviceFeature.getFeatureProduct().subscribe(
-      (data) => {
-        this.data = data;
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-        this.error_status = true;
-      }
-    );
+  ngOnInit(): void {
+
   }
 
   generateRequest(product: any): void {
@@ -43,12 +35,19 @@ export class FeatureComponent implements OnInit {
     formData.append(`id`, product.id);
     this.serviceProduct.updateCounterRequest(formData).subscribe(
       (data) => {
-        console.log(data);        
+        console.log(data);
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  searchProduct():void{
+    this.searchtext = this.searchForm.value.searchtext;
+    if (this.searchtext != "") {
+      this.router.navigate(['/products'], { queryParams: { s: this.searchtext } });  
+    }
   }
 
 }
