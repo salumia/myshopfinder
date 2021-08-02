@@ -50,7 +50,7 @@ export class ProductsComponent implements OnInit {
   currentLayout: string = "grid";
   pageNumber: number = 1;
   limits: number = environment.LIMIT_RECORD;
-  totalRecords: number = environment.LIMIT_RECORD;
+  totalRecords: any = '';
   sort_order: string = "asc";
   sort_column: string = "id";
   first_time: boolean = true;
@@ -209,11 +209,13 @@ export class ProductsComponent implements OnInit {
         }
       }
       else if (this.filter_flag) {
+        console.log(this.paramBrands);
         this.resetFilterParameter();
         this.fetchFilterCategoryProducts(this.data, this.prepareFilterQuery());
         console.log("FETCH FILTER CATEGORY PRODUCTS WITH PREPARE FILTER QUERY");
         // this.searchText = "";
       } else {
+        console.log(this.paramBrands);
         this.fetchCategoryProducts(this.data);
         // this.searchText = "";
         console.log("FETCH FILTER CATEGORY PRODUCTS WITH DATA");
@@ -427,6 +429,7 @@ export class ProductsComponent implements OnInit {
         query += "&";
       }
       query += "mp=" + this.selectedRangeValues[0] + "&xp=" + this.selectedRangeValues[1];
+      this.filter_flag = true;
     }
     let brand_set = false;
     if (this.selectedBrand.length > 0) {
@@ -442,6 +445,7 @@ export class ProductsComponent implements OnInit {
           query += ",";
         }
       }
+      this.filter_flag = true;
     }
     return query;
   }
@@ -744,6 +748,7 @@ export class ProductsComponent implements OnInit {
     } else {
       this.fetchFilterProducts(filter_query);
     }
+    
   }
 
   resetFilterOptions(): void {
@@ -760,13 +765,17 @@ export class ProductsComponent implements OnInit {
   }
 
   generateTitleMessage(): string {
+    if(this.totalRecords==''){
+      return "";
+    }
     let message: string = "";
-    message = "No Product";
+    message = "(No Product)";
     if (this.totalRecords > 0) {
-      message = this.totalRecords + " Product";
+      message = "(" + this.totalRecords + " Product";
       if (this.totalRecords > 1) {
         message += "s";
       }
+      message += ")";
     }
     return message;
   }

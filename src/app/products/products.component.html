@@ -45,7 +45,7 @@
             <!-- Desktop View With Title -->
             <div class="row d-md-flex p-2" *ngIf="!mobile_filter_view">
                 <div class="col-md-9 col-12 order-md-1 order-2 text-center text-md-left">
-                    <p class="page-title-font">{{pageTitle}} ({{generateTitleMessage()}})</p>
+                    <p class="page-title-font">{{pageTitle}} {{generateTitleMessage()}}</p>
                 </div>
                 <div class="col-md-3 col-12 order-1 order-md-2 mb-2 p-0">
                     <div class="row">
@@ -60,7 +60,7 @@
             </div>
             <div class="row d-md-flex" *ngIf="mobile_filter_view">
                 <div class="col-12 text-center  p-2 text-md-left">
-                    <p class="page-title-font">{{pageTitle}} ({{generateTitleMessage()}})</p>
+                    <p class="page-title-font">{{pageTitle}} {{generateTitleMessage()}}</p>
                 </div>
                 <div class="col-12 mb-2 border-tb p-0">
                     <div class="row">
