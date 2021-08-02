@@ -82,7 +82,7 @@
                         <img class="card-img-top rounded-0 img-fluid product-image " [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                         <div class="product-grid-item-content card-body pt-2 p-0">
                             <p class="text-dark text-overflow-elipsis">{{product.title}}</p>
-                            <p class="text-secondary text-overflow-elipsis">{{product.brand}} {{index}}</p>
+                            <p class="text-secondary text-overflow-elipsis">{{product.brand}}</p>
                             <p class="font-weight-bold">
                                 <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
                                 <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>

@@ -1,25 +1,25 @@
 <div class="custom-container">
-    <div class="row mt-5 ">
+    <div class="row">
         <div class="col-md-12 feature">
-            <h2 class="text-center feature-title">Discover The Best Curated Products</h2>
+            <h2 class="text-center feature-title">Discover The Best <span style="color:#b958c7">Curated</span> Products</h2>
             <p class="text-center feature-description">We hand select the best brands in different categories to make shopping easier for you</p>
         </div>
-        <div class="col-md-12 mt-4">
+        <div class="col-md-12 mt-4 pt-4">
             <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
                     <form [formGroup]="searchForm" (ngSubmit)="searchProduct()" id="search_form">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search your product from here" value={{searchtext}} formControlName="searchtext">
+                            <input type="text" style="border:unset;box-shadow: 0 5px 5px #c4bebe;" class="form-control" placeholder="Search your product or brand" value={{searchtext}} formControlName="searchtext">
                             <div class="input-group-append">
-                                <button class="btn btn-dark button-left-right-round" (click)="searchProduct()" type="button">
+                                <button class="btn btn-dark button-left-right-round" style="box-shadow: 0 5px 5px #c4bebe;" (click)="searchProduct()" type="button">
                             <i class="fa fa-search"></i> Search
                           </button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-1"></div>
+                <div class="col-md-3"></div>
             </div>
 
         </div>

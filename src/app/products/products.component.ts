@@ -181,13 +181,6 @@ export class ProductsComponent implements OnInit {
         } else {
           this.resetFilterOptions();
         }
-        // this.sections = [""];
-        // this.sectionsDropDown = ["All"];
-        // for(let index = 0; index < data.active_sections.length; index++){
-        //   let section_text = data.active_sections[index].section;
-        //   this.sections.push(section_text);
-        //   this.sectionsDropDown.push(this.capitalizeWords(section_text));
-        // }
         this.fetchAllDetails();
       },
       (error) => {
@@ -271,8 +264,10 @@ export class ProductsComponent implements OnInit {
       this.selectedBrand = [];
       for (let value of values) {
         for (let brand of this.brands) {
-          if (brand.brand == value) {
+          let brand_value = this.encodeURLString(brand.brand);
+          if (brand_value == value) {
             this.selectedBrand.push(brand);
+            break;
           }
         }
       }
@@ -713,11 +708,14 @@ export class ProductsComponent implements OnInit {
   performBrandFilter(): void {
     let path = this.location.path();
     if (this.selectedBrand.length > 0) {
+      this.paramBrands = "";
       let query = "fb=";
       for (let i = 0; i < this.selectedBrand.length; i++) {
         query += this.encodeURLString(this.selectedBrand[i].brand);
+        this.paramBrands += this.encodeURLString(this.selectedBrand[i].brand);
         if (i < this.selectedBrand.length - 1) {
           query += ",";
+          this.paramBrands += ",";
         }
       }
       if (path.indexOf("?") != -1) {
