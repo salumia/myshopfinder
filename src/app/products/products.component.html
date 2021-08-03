@@ -85,7 +85,7 @@
                             <p class="text-secondary text-overflow-elipsis">{{product.brand}}</p>
                             <p class="font-weight-bold">
                                 <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
-                                <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                                <span *ngIf="product.original_price != 0" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                             </p>
                         </div>
                     </a>
@@ -101,7 +101,7 @@
                 <h4 class="total_products">{{product.brand}}</h4>
                 <h4 class="mb-3 ">
                     <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
-                    <span [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                    <span *ngIf="product.original_price != 0" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                 </h4>
                 <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)" class="button button-primary button-primary-style">Buy Now</a>
             </div>
