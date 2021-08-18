@@ -87,10 +87,32 @@ export class ProductsComponent implements OnInit {
 
   searchQueryStringStatus: boolean = false;
 
+  emptyStatusMessage: string = 'Fetching Products';
+
+  brandWithImageFlag: boolean = false;
+  brandWithImage: any = [];
+  responsiveOptions: any = [];
+
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
     private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService
   ) {
-
+    this.responsiveOptions = [
+      {
+        breakpoint: '960px',
+        numVisible: 6,
+        numScroll: 1
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 4,
+        numScroll: 1
+      },
+      {
+        breakpoint: '560px',
+        numVisible: 2,
+        numScroll: 1
+      }
+    ];
     if (deviceService.isMobile()) {
       this.mobile_filter_view = true;
     } else {
@@ -307,11 +329,15 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchProducts(): void {
+    this.emptyStatusMessage = 'Fetching Products';
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getAllProducts(offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
+        if (this.totalRecords == 0) {
+          this.emptyStatusMessage = "No Products Available";
+        }
         this.loading = false;
         this.updateMetaTags();
         this.initializePageTitle();
@@ -324,12 +350,16 @@ export class ProductsComponent implements OnInit {
   }
 
   searchProducts(query: string): void {
+    this.emptyStatusMessage = 'Fetching Products';
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getSearchProducts(query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
+        if (this.totalRecords == 0) {
+          this.emptyStatusMessage = "No Products Available";
+        }
         this.updateMetaTags();
         this.initializePageTitle();
       },
@@ -481,11 +511,15 @@ export class ProductsComponent implements OnInit {
 
   fetchFilterProducts(query: string) {
     let offset = (this.pageNumber - 1) * this.limits;
+    this.emptyStatusMessage = 'Fetching Products';
     this._serviceProduct.getSearchFilterProducts(query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
         this.loading = false;
+        if (this.totalRecords == 0) {
+          this.emptyStatusMessage = "No Products Available";
+        }
         this.updateMetaTags();
         this.initializePageTitle();
       },
@@ -499,6 +533,7 @@ export class ProductsComponent implements OnInit {
 
   fetchCategoryProducts(category: string[]): void {
     this.loading = true;
+    this.emptyStatusMessage = 'Fetching Products';
     var formData: any = new FormData();
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
@@ -506,8 +541,16 @@ export class ProductsComponent implements OnInit {
     let offset = (this.pageNumber - 1) * this.limits;
     this._serviceProduct.getCategoryProducts(formData, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
+        console.log(data);
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
+        if (this.totalRecords == 0) {
+          this.emptyStatusMessage = "No Products Available";
+        }
+        if (data.hasOwnProperty("brands")) {
+          this.brandWithImage = data["brands"];
+          this.brandWithImageFlag = true;
+        }
         this.loading = false;
         this.updateMetaTags();
         this.initializePageTitle();
@@ -521,6 +564,7 @@ export class ProductsComponent implements OnInit {
 
   fetchFilterCategoryProducts(category: string[], query: string): void {
     this.loading = true;
+    this.emptyStatusMessage = 'Fetching Products';
     var formData: any = new FormData();
     for (let i = 0; i < category.length; i++) {
       formData.append(`category[${i}]`, category[i]);
@@ -530,6 +574,9 @@ export class ProductsComponent implements OnInit {
       (data) => {
         this.products = data;
         this.totalRecords = this.products?.count[0]?.total;
+        if (this.totalRecords == 0) {
+          this.emptyStatusMessage = "No Products Available";
+        }
         this.loading = false;
         this.updateMetaTags();
         this.initializePageTitle();
@@ -595,7 +642,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  initializePageTitle(): void { 
+  initializePageTitle(): void {
     this.pageTitle = "All Products";
     if (this.data.length == 1) {
       if (this.sections.indexOf(this.data[0]) > 0) {
@@ -733,6 +780,7 @@ export class ProductsComponent implements OnInit {
         this.location.replaceState(path + "?" + query);
       }
     } else {
+      this.paramBrands = "";
       if (path.indexOf("&fb") != -1) {
         path = path.substring(0, path.indexOf("&fb"));
         this.location.replaceState(path);
@@ -743,12 +791,12 @@ export class ProductsComponent implements OnInit {
       }
     }
     let filter_query = this.prepareFilterQuery();
+    console.log(this.selectedBrand);
     if (this.data.length > 0) {
       this.fetchFilterCategoryProducts(this.data, filter_query);
     } else {
       this.fetchFilterProducts(filter_query);
     }
-    
   }
 
   resetFilterOptions(): void {
@@ -764,19 +812,53 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  jumpToProductBrand(name:string):void{
+    //console.log(this.route.url);
+    this.route.navigate([this.route.url], { queryParams: { fb: this.encodeURLString(name) } }); 
+  }
+
   generateTitleMessage(): string {
-    if(this.totalRecords==''){
+    if (this.totalRecords == '') {
       return "";
     }
     let message: string = "";
-    message = "(No Product)";
-    if (this.totalRecords > 0) {
-      message = "(" + this.totalRecords + " Product";
-      if (this.totalRecords > 1) {
-        message += "s";
-      }
-      message += ")";
-    }
+    // message = "(No Product)";
+    // if (this.totalRecords > 0) {
+    //   message = "(" + this.totalRecords + " Product";
+    //   if (this.totalRecords > 1) {
+    //     message += "s";
+    //   }
+    //   message += ")";
+    // }
     return message;
   }
+
+  generateStar(rating: number): string {
+    let output = "";
+    if (rating != 0) {
+      for (let count = 1; count <= rating; count++) {
+        output += `<i class="fa fa-star star-padding"></i>`;
+      }
+      for (let count = rating + 1; count <= 5; count++) {
+        output += `<i class="fa fa-star-o star-padding"></i>`;
+      }
+    }
+    return output;
+  }
+
+  generateReviewMessage(total_review: number): string {
+    let output = "";
+    if (total_review != 0) {
+      if (total_review >= 1000) {
+        output = " (1K+)";
+      } else if (total_review >= 2000) {
+        output = " (2K+)";
+      } else {
+        output = ` (${total_review})`;
+      }
+    }
+    return output;
+  }
+
+  
 }

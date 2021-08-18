@@ -30,6 +30,7 @@ import {MenubarModule} from 'primeng/menubar';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { SitemapComponent } from './sitemap/sitemap.component';
+import {CarouselModule} from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { SitemapComponent } from './sitemap/sitemap.component';
     InputTextModule,
     MenubarModule,
     ToastModule,
+    CarouselModule,
     BrowserAnimationsModule
   ],
   providers: [Meta,MessageService],

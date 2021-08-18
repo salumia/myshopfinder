@@ -10,11 +10,14 @@
             <input type="checkbox" [(ngModel)]="switchChecked" (change)="checkValue(switchChecked?'List':'Single')">
             <span class="slider1 round"></span>
             <span class="absolute-no">Single</span>
-          </label>
+        </label>
     </div>
+
     <!-- Data View For Displaying Product -->
-    <p-dataView #dv [value]="products.products" emptyMessage="No Products Available" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title" [sortField]="sortField" [lazy]="true" (onLazyLoad)="loadData($event)"
-        [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
+    <p-dataView #dv [value]="products.products" emptyMessage="{{emptyStatusMessage}}" (onPage)="paginate($event)"
+        [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title"
+        [sortField]="sortField" [lazy]="true" (onLazyLoad)="loadData($event)" [totalRecords]="totalRecords"
+        [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
             <!-- Bread Crumb For Desktop View -->
             <div class="row d-md-flex p-2">
@@ -23,10 +26,14 @@
                         <div class="row products_list">
                             <div class="col-12 p-0">
                                 <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="genereateBreadcrumbRequest('')">All</a></li>
-                                    <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="generateSectionRequest(breadcrumb_data.section)">{{breadcrumb_data.section}}</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)"
+                                            (click)="genereateBreadcrumbRequest('')">All</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0)"
+                                            (click)="generateSectionRequest(breadcrumb_data.section)">{{breadcrumb_data.section}}</a>
+                                    </li>
                                     <li class="breadcrumb-item" *ngFor="let bread of breadcrumb_data.data; index as i;">
-                                        <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)" [class.active]="checkLast(i)">{{bread.category_name}}</a>
+                                        <a href="javascript:void(0)" (click)="genereateBreadcrumbRequest(bread.slug)"
+                                            [class.active]="checkLast(i)">{{bread.category_name}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -35,9 +42,12 @@
                 </div>
                 <div class="col-md-4 col-12 mb-2 p-0 pl-md-2 pr-md-2">
                     <div class="p-inputgroup global-search">
-                        <input type="text" [(ngModel)]="searchText" pInputText placeholder="what are you looking for?" (keyup.enter)="searchBySection()">
-                        <p-dropdown autoWidth="true" [options]="sectionsDropDown" (onChange)="sectionChange($event)" [(ngModel)]="searchKey"></p-dropdown>
-                        <button type="button" (click)="searchBySection()" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>
+                        <input type="text" [(ngModel)]="searchText" pInputText placeholder="what are you looking for?"
+                            (keyup.enter)="searchBySection()">
+                        <p-dropdown autoWidth="true" [options]="sectionsDropDown" (onChange)="sectionChange($event)"
+                            [(ngModel)]="searchKey"></p-dropdown>
+                        <button type="button" (click)="searchBySection()" pButton pRipple icon="pi pi-search"
+                            styleClass="p-button-warn"></button>
                     </div>
                 </div>
                 <div class="col-md-4"></div>
@@ -50,10 +60,14 @@
                 <div class="col-md-3 col-12 order-1 order-md-2 mb-2 p-0">
                     <div class="row">
                         <div class="col-6 p-0 pr-md-2 text-left text-md-center">
-                            <p-dropdown autoWidth="false" [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
+                            <p-dropdown autoWidth="false"
+                                [style]="{'width':'100%','color':'black !important','background-color':'#F1F3F5'}"
+                                [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+                                (onChange)="onSortChange($event)"></p-dropdown>
                         </div>
                         <div class="col-6 text-right text-md-center p-0">
-                            <button type="button" (click)="openFilterSidebar()" class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
+                            <button type="button" (click)="openFilterSidebar()"
+                                class="button button-secondary pl-4 pr-4 button-filter">Filter </button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +79,10 @@
                 <div class="col-12 mb-2 border-tb p-0">
                     <div class="row">
                         <div class="col-6 border-r p-0 text-center">
-                            <p-dropdown autoWidth="false" [style]="{'width':'80%','color':'black !important','background-color':'white','border':'none'}" [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)"></p-dropdown>
+                            <p-dropdown autoWidth="false"
+                                [style]="{'width':'80%','color':'black !important','background-color':'white','border':'none'}"
+                                [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+                                (onChange)="onSortChange($event)"></p-dropdown>
                         </div>
                         <div class="col-6 p-0">
                             <p (click)="openFilterSidebar()" class="text-center pt-1">Filter</p>
@@ -73,19 +90,58 @@
                     </div>
                 </div>
             </div>
+            <!-- Brand Slider -->
+            <div class="row" *ngIf="!filter_flag && brandWithImageFlag">
+                <div class="col-md-12">
+                    <p-carousel [value]="brandWithImage" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1"
+                        [circular]="true" [autoplayInterval]="3000" [showIndicators]="false"
+                        [responsiveOptions]="responsiveOptions">
+                        <ng-template let-brand pTemplate="item">
+                            <div class="product-item">
+                                <table cellpadding="5">
+                                    <tr>
+                                        <td rowspan="2">
+                                            <img style="height:100px;width:100px;" [src]="brand.image" [alt]="brand.brand_name"
+                                            onerror="this.src='assets/images/placeholder.png';" class="brand-image" />
+                                        </td>
+                                        <td><p style="width:50px" title="{{brand.brand_name|uppercase}}" class="text-dark text-overflow-elipsis">{{brand.brand_name|uppercase}}</p></td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%">
+                                            <button (click)="jumpToProductBrand(brand.brand_name)" class="btn btn-danger text-white">View</button>
+                                        </td>
+                                    </tr>
+                                </table>  
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                </div>
+            </div>
         </ng-template>
         <!-- Desktop View with Grid Manner-->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
-            <div class="col-6 col-md-3 d-inline-block h-100" [class.no_right_padding]="mobile_filter_view && index % 2 == 0" [class.no_left_padding]="mobile_filter_view && index % 2 != 0">
-                <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
+            <div class="col-6 col-md-3 d-inline-block h-100"
+                [class.no_right_padding]="mobile_filter_view && index % 2 == 0"
+                [class.no_left_padding]="mobile_filter_view && index % 2 != 0">
+                <div class="product-grid-item card border-0 mb-1 mt-1  product-active"
+                    (click)="generateRequest(product)">
                     <a href="{{product.link}}" target="_blank">
-                        <img class="card-img-top rounded-0 img-fluid product-image " [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+                        <img class="card-img-top rounded-0 img-fluid product-image " [src]="product.image"
+                            [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
                         <div class="product-grid-item-content card-body pt-2 p-0">
+                            <p>
+                                <span class="star-color" [innerHTML]="generateStar(product.average_rating)"
+                                    *ngIf="product.average_rating != 0"></span>
+                                <span
+                                    class="text-secondary font-weight-bold">{{generateReviewMessage(product.total_review)}}</span>
+                            </p>
                             <p class="text-dark text-overflow-elipsis">{{product.title}}</p>
                             <p class="text-secondary text-overflow-elipsis">{{product.brand}}</p>
                             <p class="font-weight-bold">
-                                <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
-                                <span *ngIf="product.original_price != 0" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                                <span *ngIf="product.sale_price"
+                                    class="price-color color-purple mr-2">${{product.sale_price}}</span>
+                                <span *ngIf="product.original_price != 0"
+                                    [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                             </p>
                         </div>
                     </a>
@@ -96,14 +152,18 @@
         <ng-template let-product pTemplate="listItem">
             <div class="col-md-12 categories_bg category-color text-center">
 
-                <img [src]="product.image" [alt]="product.title" class="img-fluid" onerror="this.src='assets/images/placeholder.png';" />
+                <img [src]="product.image" [alt]="product.title" class="img-fluid"
+                    onerror="this.src='assets/images/placeholder.png';" />
                 <h2 class="category_title">{{product.title}}</h2>
                 <h4 class="total_products">{{product.brand}}</h4>
                 <h4 class="mb-3 ">
-                    <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
-                    <span *ngIf="product.original_price != 0" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
+                    <span *ngIf="product.sale_price"
+                        class="price-color color-purple mr-2">${{product.sale_price}}</span>
+                    <span *ngIf="product.original_price != 0"
+                        [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                 </h4>
-                <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)" class="button button-primary button-primary-style">Buy Now</a>
+                <a href="{{product.link}}" target="_blank" (click)="generateRequest(product)"
+                    class="button button-primary button-primary-style">Buy Now</a>
             </div>
         </ng-template>
     </p-dataView>
@@ -114,8 +174,10 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-9">
-                    <p class="ml-3 font-weight-bold mb-1">Price: ${{selectedRangeValues[0] + ' - $' + selectedRangeValues[1]}}</p>
-                    <p-slider [(ngModel)]="selectedRangeValues" [min]="rangeValues[0]" [max]="rangeValues[1]" [range]="true"></p-slider>
+                    <p class="ml-3 font-weight-bold mb-1">Price: ${{selectedRangeValues[0] + ' - $' +
+                        selectedRangeValues[1]}}</p>
+                    <p-slider [(ngModel)]="selectedRangeValues" [min]="rangeValues[0]" [max]="rangeValues[1]"
+                        [range]="true"></p-slider>
                     <br>
                 </div>
                 <div class="col-3">
@@ -124,7 +186,9 @@
             </div>
         </div>
         <div class="col-12 mb-2">
-            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" (onChange)="performBrandFilter()" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand" [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
+            <p-listbox [options]="brands" [(ngModel)]="selectedBrand" (onChange)="performBrandFilter()"
+                [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="true" optionLabel="brand"
+                [showToggleAll]="false" [listStyle]="{'max-height':'220px'}"
                 [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>Brand</strong>
@@ -137,7 +201,9 @@
             </p-listbox>
         </div>
         <div class="col-12 mb-2" *ngIf="sectionCategories[1].length!=0">
-            <p-listbox [options]="sectionCategories[1]" (onClick)="performFilter($event)" [(ngModel)]="selectedSectionCategories[1]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="false" optionLabel="category_name" [showToggleAll]="false"
+            <p-listbox [options]="sectionCategories[1]" (onClick)="performFilter($event)"
+                [(ngModel)]="selectedSectionCategories[1]" [metaKeySelection]="false" [checkbox]="true" [filter]="false"
+                [multiple]="false" optionLabel="category_name" [showToggleAll]="false"
                 [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>{{sections[1]|titlecase }}</strong>
@@ -150,7 +216,9 @@
             </p-listbox>
         </div>
         <div class="col-12 mb-2" *ngIf="sectionCategories[2].length!=0">
-            <p-listbox [options]="sectionCategories[2]" (onClick)="performFilter($event)" [(ngModel)]="selectedSectionCategories[2]" [metaKeySelection]="false" [checkbox]="true" [filter]="false" [multiple]="false" optionLabel="category_name" [showToggleAll]="false"
+            <p-listbox [options]="sectionCategories[2]" (onClick)="performFilter($event)"
+                [(ngModel)]="selectedSectionCategories[2]" [metaKeySelection]="false" [checkbox]="true" [filter]="false"
+                [multiple]="false" optionLabel="category_name" [showToggleAll]="false"
                 [listStyle]="{'max-height':'220px'}" [style]="{'width':'15rem','border':'none'}">
                 <ng-template pTemplate="header">
                     <strong>{{sections[2]|titlecase }}</strong>
