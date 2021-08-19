@@ -62,7 +62,7 @@ a:hover {
 
 .navbar-dark .navbar-nav .nav-link:focus {
     /* color: white !important; */
-    color:black !important;
+    color: black !important;
 }
 
 .navbar-dark .navbar-toggler-icon::after {
@@ -84,12 +84,12 @@ a:hover {
     font-size: 15px;
     letter-spacing: 2px;
     /* color: #fff; */
-    color:black;
+    color: black;
     font-weight: 500;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover{
-    color:black;
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: black;
 }
 
 
@@ -590,13 +590,12 @@ header .breadcrumb-item+.breadcrumb-item::before {
     top: -80px;
 }
 
-
 .optionClass {
     position: absolute;
     /* right: 15px;
     top: 30px; */
-    right:100px;
-    top:25px;
+    right: 100px;
+    top: 25px;
 }
 
 .p-dataview {
@@ -849,21 +848,21 @@ header .breadcrumb-item+.breadcrumb-item::before {
     font-size: 23px;
     line-height: 55px;
     /* color: #ffffff; */
-    color:black;
+    color: black;
     font-weight: 800;
 }
 
 .footer h2 {
     font-size: 35px;
     /* color: #ffffff; */
-    color:black;
+    color: black;
     font-weight: 800;
 }
 
 .footer label {
     font-size: 16px;
     /* color: #ffffff; */
-    color:black;
+    color: black;
     font-weight: 500;
 }
 
@@ -885,7 +884,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 .footer .form-control::placeholder {
     /* color: #ffffff; */
-    color:black;
+    color: black;
 }
 
 .footer .input-group-text {
@@ -894,7 +893,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
     background-color: black;
     font-size: 15px;
     /* color: #000000; */
-    color:white;
+    color: white;
     font-weight: 600;
 }
 
@@ -908,7 +907,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
     font-size: 20px !important;
     line-height: 55px !important;
     /* color: #ffffff !important; */
-    color:black !important;
+    color: black !important;
     font-weight: bold !important;
     margin-left: 50px;
 }
@@ -926,7 +925,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
     font-size: 20px;
     line-height: 45px;
     /* color: #CFCFCF; */
-    color:black;
+    color: black;
 }
 
 .footer li a {
@@ -1070,10 +1069,16 @@ header .breadcrumb-item+.breadcrumb-item::before {
 
 .p-dropdown:not(.p-disabled):hover {}
 
-.star-padding{
-    padding-right:2px;
+.star-padding {
+    padding-right: 2px;
 }
-.star-color{
-    color:#FFCD3C;
+
+.star-color {
+    color: #FFCD3C;
     /* color:#FEE715FF; */
+}
+
+#pr_id_2 .p-carousel-item {
+    margin-right: 30px;
+    background: #efececf0;
 }
