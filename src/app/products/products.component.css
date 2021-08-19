@@ -224,14 +224,50 @@ input:checked+.slider1:before {
     border-right: 1px solid #ced4da;
 }
 
-
-.product-item  .product-item-content {
+.product-item .product-item-content {
     margin: .3rem;
     text-align: center;
     padding: 2rem 0;
 }
 
-.product-item  .product-image {
+.product-item .product-image {
     width: 25%;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+}
+
+.brand_view_button {
+    border: 1px solid #ff2c53;
+    background-color: #ff2c53;
+    text-align: center;
+    display: inline-block;
+    color: white;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 2px;
+    margin-top: 3px;
+}
+
+.brand_name_color {
+    color: #050505;
+    font-family: 'Gilroy-Bold';
+    font-size: 15px;
+    word-wrap: break-word;
+    line-height: 1;
+}
+
+.brand-container {
+    display: flex;
+    align-items: center;
+}
+
+.brand-inner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 125px;
+    justify-content: center;
+}
+
+.product-item {
+    margin-right: 10px;
 }

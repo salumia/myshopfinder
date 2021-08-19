@@ -850,9 +850,9 @@ export class ProductsComponent implements OnInit {
     let output = "";
     if (total_review != 0) {
       if (total_review >= 1000) {
-        output = " (1K+)";
+        output = " (1k+)";
       } else if (total_review >= 2000) {
-        output = " (2K+)";
+        output = " (2k+)";
       } else {
         output = ` (${total_review})`;
       }
@@ -860,5 +860,20 @@ export class ProductsComponent implements OnInit {
     return output;
   }
 
+  spiltDataIntoLines(line:string):string{
+    let values = line.split(" ");
+    let output = "";
+    if(values.length>1){
+      for(let index = 0; index < values.length; index++){
+        output += values[index].toLowerCase();
+        if(index < values.length - 1){
+          output +=  '<br>';
+        }
+      }
+    }else{
+      output += values[0].toLowerCase();
+    }
+    return output;
+  }
   
 }
