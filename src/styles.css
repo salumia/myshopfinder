@@ -1079,7 +1079,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
 }
 
 .product-item {
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
 }
 
 .product-item .brand-image {
@@ -1111,4 +1111,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
         padding-right: 5px;
         max-width: 16.666666666666668%;
     }
+}
+
+.p-carousel-items-container {
+    justify-content: center;
 }
