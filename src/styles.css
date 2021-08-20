@@ -1078,7 +1078,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
     /* color:#FEE715FF; */
 }
 
-#pr_id_2 .p-carousel-item {
-    margin-right: 30px;
-    background: #efececf0;
+.p-carousel-item {
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: #efececa1;
 }
