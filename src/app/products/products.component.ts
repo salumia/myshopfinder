@@ -812,9 +812,13 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  jumpToProductBrand(name:string):void{
+  prepareBrandURL(brand_url:string,name:string):string{
     //console.log(this.route.url);
-    this.route.navigate([this.route.url], { queryParams: { fb: this.encodeURLString(name) } }); 
+    let jump_url = brand_url;
+    if( jump_url ==""){
+      jump_url = this.route.url + "?fb=" + this.encodeURLString(name);
+    }
+    return jump_url;
   }
 
   generateTitleMessage(): string {
@@ -833,14 +837,21 @@ export class ProductsComponent implements OnInit {
     return message;
   }
 
-  generateStar(rating: number): string {
+  generateFillStar(rating: number): string {
     let output = "";
     if (rating != 0) {
       for (let count = 1; count <= rating; count++) {
         output += `<i class="fa fa-star star-padding"></i>`;
       }
+    }
+    return output;
+  }
+
+  generateEmptyStar(rating: number): string {
+    let output = "";
+    if (rating != 0) {      
       for (let count = rating + 1; count <= 5; count++) {
-        output += `<i class="fa fa-star-o star-padding"></i>`;
+        output += `<i class="fa fa-star star-padding"></i>`;
       }
     }
     return output;

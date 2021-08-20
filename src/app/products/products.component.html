@@ -77,17 +77,19 @@
             </div>
             <!-- Brand Slider -->
             <div class="row" *ngIf="!filter_flag && brandWithImageFlag">
-                <div class="col-md-12">
-                    <p-carousel [value]="brandWithImage" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
+                <div class="col-md-12 p-0 pl-1 pr-1">
+
+                    <p-carousel [value]="brandWithImage" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [circular]="true" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
                         <ng-template let-brand pTemplate="item">
-                            <div class="product-item">
-                                <div class="brand-container">
-                                    <div style="margin:10px">
-                                        <img style="max-height:100%;max-width:100%;border-radius: 50%;" [src]="brand.image" [alt]="brand.brand_name" onerror="this.src='assets/images/placeholder.png';" class="brand-image" />
-                                    </div>
+                            <div class="row product-item">
+                                <div class="col-6 p-0 brand-image">
+                                    <img style="max-height:100%;max-width:100%;border-radius: 50%;" [src]="brand.image" [alt]="brand.brand_name" onerror="this.src='assets/images/placeholder.png';" class="brand-image" />
+
+                                </div>
+                                <div class="col-6 p-0 pl-1 pr-1">
                                     <div class="brand-inner-container">
                                         <p title="{{brand.brand_name}}" class="brand_name_color font-weight-bolder">{{brand.brand_name|lowercase}}</p>
-                                        <a href="{{brand.brand_url}}" target="_blank" class="brand_view_button">View</a>
+                                        <a href="{{prepareBrandURL(brand.brand_url,brand.brand_name)}}" target="_blank" class="brand_view_button">View</a>
                                     </div>
                                 </div>
                             </div>
@@ -100,12 +102,13 @@
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100" [class.no_right_padding]="mobile_filter_view && index % 2 == 0" [class.no_left_padding]="mobile_filter_view && index % 2 != 0">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
-                    <a href="{{product.link}}" target="_blank">
+                    <a href="{{product.link}}" class="text-center" target="_blank">
                         <img class="card-img-top rounded-0 img-fluid product-image " [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
-                        <div class="product-grid-item-content card-body pt-2 p-0">
+                        <div class="product-grid-item-content text-left card-body pt-2 p-0">
                             <p>
-                                <span class="star-color" [innerHTML]="generateStar(product.average_rating)" *ngIf="product.average_rating != 0"></span>
-                                <span class="text-secondary font-weight-bold">{{generateReviewMessage(product.total_review)}}</span>
+                                <span class="star-color" [innerHTML]="generateFillStar(product.average_rating)" *ngIf="product.average_rating != 0"></span>
+                                <span class="star-color-grey" [innerHTML]="generateEmptyStar(product.average_rating)" *ngIf="product.average_rating != 0"></span>
+                                <span class="text-secondary">{{generateReviewMessage(product.total_review)}}</span>
                             </p>
                             <p class="text-dark text-overflow-elipsis">{{product.title}}</p>
                             <p class="text-secondary text-overflow-elipsis">{{product.brand}}</p>
