@@ -843,6 +843,8 @@ export class ProductsComponent implements OnInit {
       for (let count = 1; count <= rating; count++) {
         output += `<i class="fa fa-star star-padding"></i>`;
       }
+    }else{
+      output = "   ";
     }
     return output;
   }
@@ -853,6 +855,8 @@ export class ProductsComponent implements OnInit {
       for (let count = rating + 1; count <= 5; count++) {
         output += `<i class="fa fa-star star-padding"></i>`;
       }
+    }else{
+      output = "<br>";
     }
     return output;
   }
