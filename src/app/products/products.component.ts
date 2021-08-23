@@ -91,6 +91,7 @@ export class ProductsComponent implements OnInit {
 
   brandWithImageFlag: boolean = false;
   brandWithImage: any = [];
+  brandLogolimit:number = 6;
   responsiveOptions: any = [];
 
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
@@ -115,8 +116,10 @@ export class ProductsComponent implements OnInit {
     ];
     if (deviceService.isMobile()) {
       this.mobile_filter_view = true;
+      this.brandLogolimit = 2;
     } else {
       this.mobile_filter_view = false;
+      this.brandLogolimit = 6;
     }
     this.first_time = true;
     this.selectedCategory = [];
