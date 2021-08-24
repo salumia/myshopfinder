@@ -1120,3 +1120,8 @@ header .breadcrumb-item+.breadcrumb-item::before {
 .center-items-container .p-carousel-items-container {
     justify-content: center;
 }
+
+.p-carousel .p-carousel-content .p-carousel-next:focus,
+.p-carousel .p-carousel-content .p-carousel-prev:focus {
+    box-shadow: none !important;
+}
