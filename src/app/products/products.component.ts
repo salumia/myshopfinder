@@ -894,4 +894,8 @@ export class ProductsComponent implements OnInit {
     return output;
   }
   
+
+  changeCarouselPage(event:any){
+    console.log(event);
+  }
 }

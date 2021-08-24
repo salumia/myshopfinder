@@ -78,7 +78,8 @@
             <!-- Brand Slider -->
             <div class="row" *ngIf="!filter_flag && brandWithImageFlag">
                 <div class="col-md-12 p-0 pl-1 pr-1">
-                    <p-carousel [value]="brandWithImage" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="responsiveOptions" [showNavigators]="brandWithImage.length > brandLogolimit">
+                    <p-carousel [value]="brandWithImage" [class.center-items-container]="brandWithImage.length < brandLogolimit" [numVisible]="brandLogolimit" (onPage)="changeCarouselPage($event)" styleClass="custom-carousel" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="responsiveOptions"
+                        [showNavigators]="brandWithImage.length > brandLogolimit">
                         <ng-template let-brand pTemplate="item">
                             <div class="row product-item">
                                 <div class="col-6 p-0 brand-image">

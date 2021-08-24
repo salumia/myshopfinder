@@ -1114,5 +1114,9 @@ header .breadcrumb-item+.breadcrumb-item::before {
 }
 
 .p-carousel-items-container {
+    /* justify-content: center; */
+}
+
+.center-items-container .p-carousel-items-container {
     justify-content: center;
 }
