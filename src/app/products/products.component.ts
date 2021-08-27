@@ -290,9 +290,10 @@ export class ProductsComponent implements OnInit {
       let values = this.paramBrands.split(",");
       this.selectedBrand = [];
       for (let value of values) {
+        let brand_param_value = this.encodeURLString(value);
         for (let brand of this.brands) {
-          let brand_value = this.encodeURLString(brand.brand);
-          if (brand_value == value) {
+          let brand_value = this.encodeURLString(brand.brand);          
+          if (brand_value == brand_param_value) {
             this.selectedBrand.push(brand);
             break;
           }
