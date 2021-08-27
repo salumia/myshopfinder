@@ -735,7 +735,7 @@ header .breadcrumb-item+.breadcrumb-item::before {
     }
     .active-link {
         border-bottom: none;
-        background-color: #7785dd;
+        background-color: #e5e5e5;
     }
     .product_slide {
         min-height: none;

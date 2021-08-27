@@ -205,8 +205,8 @@ input:checked+.slider1:before {
 
 @media only screen and (max-width: 768px) {
     .product-image {
-        width: 100%;
-        height: 248px;
+        width: auto;
+        height: auto;
         object-fit: cover;
     }
 }
