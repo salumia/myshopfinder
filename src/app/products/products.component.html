@@ -13,8 +13,45 @@
         </label>
     </div>
 
+    <!-- Data View For Displaying Skeleton -->
+    <p-dataView #dvs [value]="skeletonRecords" [layout]="currentLayout" [rows]="limits" *ngIf="loading">
+        <!-- Desktop View with Grid Manner-->
+        <ng-template let-record let-index="rowIndex" pTemplate="gridItem">
+            <div class="col-6 col-md-3 d-inline-block h-100" [class.no_right_padding]="mobile_filter_view && index % 2 == 0" [class.no_left_padding]="mobile_filter_view && index % 2 != 0">
+                <div class="product-grid-item card border-0 mb-1 mt-1  product-active">
+                    <p-skeleton width="100%" height="2rem" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="80%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="90%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="70%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
+                    <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
+        <!-- Mobile View Display For Single Skeleton -->
+        <ng-template let-product pTemplate="listItem">
+            <div class="col-md-12 categories_bg category-color text-center">
+                <p-skeleton width="100%" height="2rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="80%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="90%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="70%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
+                <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
+
+            </div>
+        </ng-template>
+    </p-dataView>
+
     <!-- Data View For Displaying Product -->
-    <p-dataView #dv [value]="products.products" emptyMessage="{{emptyStatusMessage}}" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" [loading]="loading" filterBy="title" [sortField]="sortField" [lazy]="true" (onLazyLoad)="loadData($event)"
+    <p-dataView #dv *ngIf="!loading" [value]="products.products" emptyMessage="{{emptyStatusMessage}}" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" filterBy="title" [sortField]="sortField" [lazy]="true" (onLazyLoad)="loadData($event)"
         [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
         <ng-template pTemplate="header">
             <!-- Bread Crumb For Desktop View -->
@@ -98,6 +135,7 @@
                 </div>
             </div>
         </ng-template>
+
         <!-- Desktop View with Grid Manner-->
         <ng-template let-product let-index="rowIndex" pTemplate="gridItem">
             <div class="col-6 col-md-3 d-inline-block h-100" [class.no_right_padding]="mobile_filter_view && index % 2 == 0" [class.no_left_padding]="mobile_filter_view && index % 2 != 0">

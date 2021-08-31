@@ -94,6 +94,9 @@ export class ProductsComponent implements OnInit {
   brandLogolimit:number = 6;
   responsiveOptions: any = [];
 
+  // Skeleton records
+  skeletonRecords:string[] = ["item1","item2","item3","item4","item1","item2","item3","item4"];
+
   constructor(private _serviceProduct: ProductsService, private activatedRoute: ActivatedRoute, private commonService: CommonDataService,
     private route: Router, private deviceService: DeviceDetectorService, private location: Location, private metaService: MetaServiceService
   ) {
