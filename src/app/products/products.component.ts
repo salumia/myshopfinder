@@ -844,8 +844,16 @@ export class ProductsComponent implements OnInit {
   generateFillStar(rating: number): string {
     let output = "";
     if (rating != 0) {
-      for (let count = 1; count <= rating; count++) {
+      let limit = Math.floor(rating);
+      for (let count = 1; count <= limit; count++) {
         output += `<i class="fa fa-star star-padding"></i>`;
+      }
+      if(limit < rating ){
+        output += `<i class="fa fa-star-half-full star-padding"></i>`;
+        limit++;
+      }
+      for(let count = limit + 1; count <= 5; count++){
+        output += `<i class="fa fa-star-o star-padding"></i>`;
       }
     }else{
       output = "   ";
@@ -855,13 +863,13 @@ export class ProductsComponent implements OnInit {
 
   generateEmptyStar(rating: number): string {
     let output = "";
-    if (rating != 0) {      
-      for (let count = rating + 1; count <= 5; count++) {
-        output += `<i class="fa fa-star star-padding"></i>`;
-      }
-    }else{
-      output = "<br>";
-    }
+    // if (rating != 0) {      
+    //   for (let count = rating + 1; count <= 5; count++) {
+    //     output += `<i class="fa fa-star star-padding"></i>`;
+    //   }
+    // }else{
+    //   output = "<br>";
+    // }
     return output;
   }
 
@@ -869,9 +877,8 @@ export class ProductsComponent implements OnInit {
     let output = "";
     if (total_review != 0) {
       if (total_review >= 1000) {
-        output = " (1k+)";
-      } else if (total_review >= 2000) {
-        output = " (2k+)";
+        let val = Math.floor(total_review / 1000);
+        output = ` (${val}k+)`;
       } else {
         output = ` (${total_review})`;
       }
