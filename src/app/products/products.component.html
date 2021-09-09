@@ -52,7 +52,7 @@
 
     <!-- Data View For Displaying Product -->
     <p-dataView #dv *ngIf="!loading" [value]="products.products" emptyMessage="{{emptyStatusMessage}}" (onPage)="paginate($event)" [layout]="currentLayout" [paginator]="true" [rows]="limits" filterBy="title" [sortField]="sortField" [lazy]="true" (onLazyLoad)="loadData($event)"
-        [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0">
+        [totalRecords]="totalRecords" [sortOrder]="sortOrder" class="p-0" [first]="skipRow">
         <ng-template pTemplate="header">
             <!-- Bread Crumb For Desktop View -->
             <div class="row d-md-flex p-2">

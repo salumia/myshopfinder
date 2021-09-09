@@ -94,6 +94,11 @@ export class ProductsComponent implements OnInit {
   brandLogolimit:number = 6;
   responsiveOptions: any = [];
 
+  testCounter : number = 0;
+  loadOffset:number =0;
+  lastEvent:any = {};
+  skipRow:number = 0;
+
   // Skeleton records
   skeletonRecords:string[] = ["item1","item2","item3","item4","item1","item2","item3","item4"];
 
@@ -148,6 +153,7 @@ export class ProductsComponent implements OnInit {
         }
       }
       this.commonService.updateSearchText(this.query);
+      console.log(params);
       if (params["pageNumber"]) {
         this.pageNumber = params["pageNumber"];
       }
@@ -194,7 +200,7 @@ export class ProductsComponent implements OnInit {
   getFilterData(query: string, search_text: string = ""): void {
     this._serviceProduct.getFilterData(query, search_text).subscribe(
       (data) => {
-        // console.log(this.data);        
+        console.log(this.data);        
         if (data.status != 404) {
           this.brands = data.brand;
           this.selectedRangeValues = [Math.floor(data.price[0].min_price), Math.ceil(data.price[0].max_price)];
@@ -220,10 +226,12 @@ export class ProductsComponent implements OnInit {
 
   fetchAllDetails(): void {
     if (this.query != "") {
+      this.all_product_status = true;
       this.searchProducts(this.query);
       this.commonService.updateSearchText(this.query);
       this.searchText = "";
     } else if (this.data.length > 0) {
+      this.all_product_status = false;
       this.fetchBreadcrumbs(this.data[0]);
       if (this.sections.indexOf(this.data[0]) > 0 && this.searchText != "") {
         if (this.searchQueryStringStatus) {
@@ -255,15 +263,13 @@ export class ProductsComponent implements OnInit {
       this.all_product_status = true;
       if (this.filter_flag) {
         this.resetFilterParameter();
-        this.fetchFilterProducts(this.prepareFilterQuery());
         console.log("FETCH FILTER PRODUCTS WITH DATA FILTER QUERY");
-        // this.searchText = "";
+        this.fetchFilterProducts(this.prepareFilterQuery());        
       } else if (this.searchText != "") {
         this.searchProducts(this.searchText);
       } else {
-        this.fetchProducts();
         console.log("FETCH ALL PRODUCTS");
-        // this.searchText = "";
+        this.fetchProducts();
       }
     }
   }
@@ -293,7 +299,10 @@ export class ProductsComponent implements OnInit {
       let values = this.paramBrands.split(",");
       this.selectedBrand = [];
       for (let value of values) {
-        let brand_param_value = this.encodeURLString(value);
+        let brand_param_value = value;
+        if(brand_param_value.indexOf("%")==-1){
+          brand_param_value = this.encodeURLString(value);
+        }
         for (let brand of this.brands) {
           let brand_value = this.encodeURLString(brand.brand);          
           if (brand_value == brand_param_value) {
@@ -348,6 +357,7 @@ export class ProductsComponent implements OnInit {
         this.loading = false;
         this.updateMetaTags();
         this.initializePageTitle();
+        console.log(" Reached Here Test Rule 1");
       },
       (error) => {
         console.log(error);
@@ -391,19 +401,9 @@ export class ProductsComponent implements OnInit {
     this.sort_column = this.sortField;
     this.sort_order = this.sortOrder == 1 ? "asc" : "desc";
     this.fetchAllDetails();
+    this.skipRow = 0;
   }
 
-
-  paginate(event: any): void {
-    let scrollToTop = window.setInterval(() => {
-      let pos = window.pageYOffset;
-      if (pos > 0) {
-        window.scrollTo(0, pos - 20); // how far to scroll on each step
-      } else {
-        window.clearInterval(scrollToTop);
-      }
-    }, 16);
-  }
 
   checkValue(event: any): void {
     if (event == 'List') {
@@ -510,7 +510,6 @@ export class ProductsComponent implements OnInit {
         this.location.replaceState(path + "?" + filter_query);
       }
       this.fetchFilterCategoryProducts(this.data, filter_query);
-
     }
     this.filter_sidebar = false;
     // this.searchText = "";
@@ -577,6 +576,7 @@ export class ProductsComponent implements OnInit {
       formData.append(`category[${i}]`, category[i]);
     }
     let offset = (this.pageNumber - 1) * this.limits;
+    console.log(" Fetch Filter Category Products is Called ");
     this._serviceProduct.getFilterCategoryProducts(formData, query, offset, this.limits, this.sort_column, this.sort_order).subscribe(
       (data) => {
         this.products = data;
@@ -600,7 +600,6 @@ export class ProductsComponent implements OnInit {
   }
 
   updateMetaTags() {
-    console.log("Reached Here..." + this.totalRecords);
     if (this.totalRecords > 0) {
       let category_name = "";
       if (this.data.length > 0) {
@@ -625,7 +624,7 @@ export class ProductsComponent implements OnInit {
       }
       else if (category_name != "") {
         let description = `Shop the best ${category_name} from the top brands in one place. Save with the latest offers for top products | MyShopFinder`;
-        console.log(description);
+        // console.log(description);
         this.metaService.addTitle(category_name + environment.COMMON_TITLE);
         this.metaService.addDescription(description);
       }
@@ -637,14 +636,30 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  paginate(event: any): void {
+    console.log("PAGE CALLED  EVENT ");
+    console.log(event);
+    // this.first_time = false;
+    let scrollToTop = window.setInterval(() => {
+      let pos = window.pageYOffset;
+      if (pos > 0) {
+        window.scrollTo(0, pos - 20); // how far to scroll on each step
+      } else {
+        window.clearInterval(scrollToTop);
+      }
+    }, 16);
+  }
+
   loadData(event: any) {
     // console.log("loadData: " + this.first_time);
-
+    console.log(event);
     if (this.first_time) {
       this.first_time = false;
     } else {
-      this.loading = true;
+      this.loading = true;   
+      this.skipRow = event.first;   
       this.pageNumber = Math.floor(event.first / this.limits) + 1;
+      this.first_time = true;      
       this.fetchAllDetails();
     }
   }
@@ -734,6 +749,10 @@ export class ProductsComponent implements OnInit {
     return window.encodeURIComponent(input);
   }
 
+  decodeURLString(input: string) {
+    return window.decodeURIComponent(input);
+  }
+
   clearFilter(): void {
     let path = this.location.path();
     if (path.indexOf("?") != -1) {
@@ -743,6 +762,9 @@ export class ProductsComponent implements OnInit {
     this.selectedBrand = [];
     this.selectedRangeValues = [this.rangeValues[0], this.rangeValues[1]];
     let filter_query = this.prepareFilterQuery();
+    console.log(" Filter : " + filter_query);
+    this.first_time = true;
+    this.skipRow = 0;
     if (this.data.length > 0) {
       this.fetchFilterCategoryProducts(this.data, filter_query);
     } else {
@@ -799,7 +821,9 @@ export class ProductsComponent implements OnInit {
     }
     let filter_query = this.prepareFilterQuery();
     console.log(this.selectedBrand);
-    if (this.data.length > 0) {
+    this.first_time = true;
+    this.pageNumber = 1;
+    if (this.data.length > 0) {      
       this.fetchFilterCategoryProducts(this.data, filter_query);
     } else {
       this.fetchFilterProducts(filter_query);
@@ -908,5 +932,11 @@ export class ProductsComponent implements OnInit {
 
   changeCarouselPage(event:any){
     console.log(event);
+  }
+
+
+  // Function to display Message
+  displayMessage(message:string){
+    console.log(message);
   }
 }
