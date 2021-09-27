@@ -150,7 +150,10 @@
                             </p>
                             <p class="text-dark text-overflow-elipsis">{{product.title}}</p>
                             <p class="text-secondary text-overflow-elipsis">{{product.brand}}</p>
-                            <p class="font-weight-bold">
+                            <p *ngIf="product.hide_price == 1" class="top-margin-10">
+                                <a href="{{product.link}}" target="_blank" class="button button-primary link-style">Check Price</a>
+                            </p>
+                            <p class="font-weight-bold" *ngIf="product.hide_price == 0">
                                 <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
                                 <span *ngIf="product.original_price != 0" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                             </p>
@@ -172,6 +175,7 @@
                 <h2 class="category_title">{{product.title}}</h2>
                 <h4 class="total_products">{{product.brand}}</h4>
                 <h4 class="mb-3 ">
+
                     <span *ngIf="product.sale_price" class="price-color color-purple mr-2">${{product.sale_price}}</span>
                     <span *ngIf="product.original_price != 0" [class]="product.sale_price ? 'color-light-grey' : 'color-black-bold'">${{product.original_price}}</span>
                 </h4>

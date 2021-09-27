@@ -277,3 +277,14 @@ input:checked+.slider1:before {
 .product-item {
     /* margin-right: 10px; */
 }
+
+.link-style {
+    font-size: 18px;
+    line-height: 17px;
+    padding: 12px 35px;
+    font-weight: 800;
+}
+
+.top-margin-10 {
+    margin-top: 10px;
+}
