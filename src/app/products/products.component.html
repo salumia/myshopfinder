@@ -45,7 +45,6 @@
                 <p-skeleton width="70%" styleClass="mb-2"></p-skeleton>
                 <p-skeleton width="50%" styleClass="mb-2"></p-skeleton>
                 <p-skeleton height="20%" styleClass="mb-2"></p-skeleton>
-
             </div>
         </ng-template>
     </p-dataView>
@@ -141,7 +140,10 @@
             <div class="col-6 col-md-3 d-inline-block h-100" [class.no_right_padding]="mobile_filter_view && index % 2 == 0" [class.no_left_padding]="mobile_filter_view && index % 2 != 0">
                 <div class="product-grid-item card border-0 mb-1 mt-1  product-active" (click)="generateRequest(product)">
                     <a href="{{product.link}}" class="text-center" target="_blank">
-                        <img class="card-img-top rounded-0 img-fluid product-image " [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+
+                        <div class="product-image-wrap">
+                            <img class="card-img-top rounded-0 img-fluid product-image" [src]="product.image" [alt]="product.title" onerror="this.src='assets/images/placeholder.png';">
+                        </div>
                         <div class="product-grid-item-content text-left card-body pt-2 p-0">
                             <p>
                                 <span class="star-color" [innerHTML]="generateFillStar(product.average_rating)"></span>
